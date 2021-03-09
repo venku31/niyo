@@ -1,0 +1,36 @@
+{
+ "creation": "2021-02-23 13:19:27.460046",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "round_number",
+  "round_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "round_number",
+   "fieldtype": "Data",
+   "label": "Round Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "round_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Round Name",
+   "options": "Interview Round Name"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-02-23 13:19:27.460046",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Interview Round Configuration",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

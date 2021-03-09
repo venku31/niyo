@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include niyopolymers *.css
+recursive-include niyopolymers *.csv
+recursive-include niyopolymers *.html
+recursive-include niyopolymers *.ico
+recursive-include niyopolymers *.js
+recursive-include niyopolymers *.json
+recursive-include niyopolymers *.md
+recursive-include niyopolymers *.png
+recursive-include niyopolymers *.py
+recursive-include niyopolymers *.svg
+recursive-include niyopolymers *.txt
+recursive-exclude niyopolymers *.pyc

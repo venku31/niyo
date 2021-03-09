@@ -1,0 +1,65 @@
+{
+ "autoname": "format:{employee}-{#####}",
+ "creation": "2021-02-23 00:51:26.030421",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "template",
+  "warning_number",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "warning_letter.template",
+   "fieldname": "template",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Template",
+   "options": "Warning Letter Template"
+  },
+  {
+   "fieldname": "warning_number",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Warning Number"
+  },
+  {
+   "fetch_from": "template.description",
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  }
+ ],
+ "modified": "2021-02-23 00:55:27.840272",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Warning Letter",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
