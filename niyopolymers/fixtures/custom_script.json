@@ -36,12 +36,12 @@
   "docstatus": 0,
   "doctype": "Custom Script",
   "dt": "Salary Slip",
-  "modified": "2021-03-09 15:15:48.150646",
+  "modified": "2021-03-09 15:26:55.189022",
   "name": "Salary Slip-Client",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on('Salary Slip', {\n\tonload(frm) {\n\t    if(!frm.doc.__islocal){\n    \t        frappe.call({\n    \t\t    'method': 'niyopolymers.hr.set_working_days',\n    \t\t    'args': {\n    \t\t        doc : frm.doc\n    \t\t    }\n    \t\t})\n    \t\t.success(success => {\n    \t\t    console.log(success.message)\n    \t\t  //  frm.refresh()\n    \t\t  frm.set_value('total_working_days', success.message)\n    \t\t  frm.save()\n    \t})\n    \t\n\t}\n\t}\n})"
+  "script": "frappe.ui.form.on('Salary Slip', {\n\tonload(frm) {\n\t    if(!frm.doc.__islocal){\n    \t        frappe.call({\n    \t\t    'method': 'niyopolymers.hr.set_working_days',\n    \t\t    'args': {\n    \t\t        doc : frm.doc\n    \t\t    }\n    \t\t})\n    \t\t.success(success => {\n    \t\t    console.log(success.message)\n    \t\t  //  frm.refresh()\n    \t\t  //frm.set_value('total_working_days', success.message)\n    \t\t  //frm.save()\n    \t})\n    \t\n\t}\n\t}\n})"
  },
  {
   "docstatus": 0,
