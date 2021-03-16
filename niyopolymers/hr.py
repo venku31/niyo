@@ -81,9 +81,9 @@ def before_save_salary_slip(doc, method):
                 splitdate = i[0].strftime('%Y-%m-%d')
                 holiday_.append(splitdate)
             total = date_diff(doc.end_date, doc.start_date) + 1 
-            print('total', total)
-            print('holiday', holiday_) 
             doc.total_working_days = total - len(holiday_)
+            if doc.leave_without_pay == 0:
+                doc.payment_days = total - len(holiday_)
 
     overtime_applicable = frappe.db.get_value('Employee', doc.employee, 'is_overtime_applicable')
     if overtime_applicable:
@@ -135,6 +135,8 @@ def before_insert_salary_slip(doc, method):
                 holiday_.append(splitdate)
             total = date_diff(doc.end_date, doc.start_date) + 1    
             doc.total_working_days = total - len(holiday_)
+            if doc.leave_without_pay == 0:
+                doc.payment_days = total - len(holiday_)
 
 
 @frappe.whitelist()
