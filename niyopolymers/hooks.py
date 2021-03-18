@@ -133,7 +133,8 @@ doc_events = {
 	},
 	"Salary Slip": {
 		"before_insert": "niyopolymers.hr.before_insert_salary_slip",
-		"get_emp_and_leave_details": "niyopolymers.hr.before_save_salary_slip"
+		"get_emp_and_leave_details": "niyopolymers.hr.before_save_salary_slip",
+		"before_save": "niyopolymers.hr.before_save"
 	},
 	"Employee": {
 		"on_update": "niyopolymers.hr.on_update_employee"
@@ -146,7 +147,50 @@ doc_events = {
 	},
 	"Salary Structure Assignment": {
 		"on_submit": "niyopolymers.hr.before_insert_salary_structure_assignment"
-	}
+	},
+	# "Asset Maintenance Log": {
+	# 	"after_insert": "niyopolymers.assets.before_save_asset_maintenance_log",
+	# 	"on_submit": "niyopolymers.assets.create_stock_entry"
+	# },
+	# "Asset Repair": {
+	# 	"on_submit": "niyopolymers.assets.create_stock_entry_from_asset_repair"
+	# },
+	# "Leave Allocation": {
+	# 	"on_submit": "niyopolymers.hr.before_submit_leave_allocation"
+	# },
+	# "*": {
+	# 	"before_submit": "niyopolymers.accounts.before_submit_all_doctypes"
+	# },
+	# "Payment Entry": {
+	# 	"validate": "niyopolymers.accounts.before_insert_payment_entry",
+	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
+	# },
+	# "Stock Entry": {
+	# 	"before_submit": "niyopolymers.accounts.before_submit_stock_entry"
+	# },
+	# "Sales Invoice": {
+	# 	"validate": "niyopolymers.accounts.before_insert_sales_invoice",
+	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
+	# },
+	# "Sales Order": {
+	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
+	# },
+	# "Purchase Order": {
+	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
+	# },	
+	# "Purchase Invoice": {
+	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
+	# },
+	# "Material Request": {
+	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
+	# },
+	# "Journal Entry": {
+	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
+	# },
+	# "Payment Request and Authorization": {
+	# 	"before_submit": "niyopolymers.utils.set_approver_name"
+	# }
+
 }
 
 doctype_list_js = {

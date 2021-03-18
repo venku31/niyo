@@ -70,6 +70,13 @@ def before_save_salary_slip(doc, method):
     # doc.total_working_sunday = 0
     # doc.total_working_holiday_days = 0
 
+    overtime_applicable = frappe.db.get_value('Employee', doc.employee, 'is_overtime_applicable')
+    if overtime_applicable:
+        daily_overtime(doc)
+        night_overtime(doc)
+        sunday_overtime(doc)
+        holiday_overtime(doc)
+
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
     if employee_holiday:
         hr_settings = frappe.db.get_single_value('HR Settings', 'include_holidays_in_total_working_days')
@@ -83,13 +90,9 @@ def before_save_salary_slip(doc, method):
             total = date_diff(doc.end_date, doc.start_date) + 1 
             doc.total_working_days = total - len(holiday_)
             doc.payment_days = doc.total_working_days - doc.leave_without_pay
-
-    overtime_applicable = frappe.db.get_value('Employee', doc.employee, 'is_overtime_applicable')
-    if overtime_applicable:
-        daily_overtime(doc)
-        night_overtime(doc)
-        sunday_overtime(doc)
-        holiday_overtime(doc)
+            doc.calculate_component_amounts("earnings")
+            doc.calculate_component_amounts("deductions")
+    
 
 def before_insert_salary_slip(doc, method):
     doc.normal_ot_hours = 0
@@ -122,6 +125,7 @@ def before_insert_salary_slip(doc, method):
         sunday_overtime(doc)
         holiday_overtime(doc)
 
+def before_save(doc, method):
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
     if employee_holiday:
         hr_settings = frappe.db.get_single_value('HR Settings', 'include_holidays_in_total_working_days')
@@ -132,10 +136,13 @@ def before_insert_salary_slip(doc, method):
             for i in holiday:
                 splitdate = i[0].strftime('%Y-%m-%d')
                 holiday_.append(splitdate)
+             
             total = date_diff(doc.end_date, doc.start_date) + 1    
             doc.total_working_days = total - len(holiday_)
             doc.payment_days = doc.total_working_days - doc.leave_without_pay
-
+            doc.calculate_component_amounts("earnings")
+            doc.calculate_component_amounts("deductions")
+            # doc.insert()
 
 @frappe.whitelist()
 def set_working_days(doc):
@@ -151,9 +158,6 @@ def set_working_days(doc):
                 splitdate = i[0].strftime('%Y-%m-%d')
                 holiday_.append(splitdate)
             total = date_diff(doc['end_date'], doc['start_date']) + 1  
-            print(total)
-            # print(len(holiday_))  
-            # doc.total_working_days = total - len(holiday_)
             frappe.db.set_value('Salary Slip', doc['name'], 'total_working_days', total - len(holiday_))
             frappe.db.commit()
             # return total - len(holiday_)
@@ -230,7 +234,6 @@ def daily_overtime(doc):
         ]
 
         attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours', 'shift'], as_list=True)
-        print('len',len(attendances))
         for i in attendances:
             shift_start = frappe.db.get_value('Shift Type',i[1],'start_time')
             shift_end = frappe.db.get_value('Shift Type',i[1],'end_time')
@@ -321,9 +324,6 @@ def holiday_overtime(doc):
     
     attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours'], as_list=True)
 
-    # if attendances:
-    #     doc.total_working_holiday_days = len(attendances)
-
     for i in attendances:
         doc.holiday_ot_hours_ += i[0]
 
@@ -337,7 +337,7 @@ def trigger_mail_if_absent_consecutive_5_days(doc, method):
     and status in ('Absent', 'On Leave') and docstatus = 1 and employee='{}' order by attendance_date;
 
     """.format(doc.employee), as_dict = 1)
-    print(attendance)
+
     if attendance[0]['count'] == 4:
         notification = frappe.get_doc('Notification', 'Consecutive Leave')
 
@@ -346,9 +346,7 @@ def trigger_mail_if_absent_consecutive_5_days(doc, method):
         recipients_list = list(recipients[0])
         message = 'Alert! {} has been on Leave for 5 consecutive days.'.format(doc.employee_name)
         get_employee_warnings = frappe.get_all('Warning Letter Detail', filters={'parent': doc.employee}, fields=['warning_number'], order_by='warning_number desc', page_length=1)
-        print('get employees', get_employee_warnings)
         warning_template = frappe.db.get_value('Warning Letter Template', 'Consecutive Leave', 'name')
-        print(warning_template)
         warning_letter = frappe.new_doc('Warning Letter')
         warning_letter.employee = doc.employee
         warning_letter.template = warning_template
