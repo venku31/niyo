@@ -1,0 +1,141 @@
+{
+ "autoname": "naming_series:",
+ "creation": "2021-03-16 16:19:30.219388",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "purchase_order_no",
+  "bl",
+  "purchase_invoice",
+  "usd_value",
+  "customs_declaration_no",
+  "column_break_6",
+  "supplier_name",
+  "grn",
+  "purchase_invoice_value",
+  "exchange_rate",
+  "data_11",
+  "import_cost_sheet_details",
+  "data_13",
+  "import_cost_sheet_items",
+  "data_15",
+  "net_total",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "purchase_order_no",
+   "fieldtype": "Data",
+   "label": "Purchase Order No"
+  },
+  {
+   "fieldname": "bl",
+   "fieldtype": "Data",
+   "label": "BL"
+  },
+  {
+   "fieldname": "purchase_invoice",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Purchase Invoice",
+   "options": "Purchase Invoice",
+   "reqd": 1
+  },
+  {
+   "fieldname": "usd_value",
+   "fieldtype": "Float",
+   "label": "USD Value"
+  },
+  {
+   "fieldname": "customs_declaration_no",
+   "fieldtype": "Data",
+   "label": "Customs Declaration No"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "supplier_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Supplier Name",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "grn",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "GRN",
+   "options": "Purchase Receipt",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "purchase_invoice.total",
+   "fieldname": "purchase_invoice_value",
+   "fieldtype": "Currency",
+   "label": "Purchase Invoice value"
+  },
+  {
+   "fieldname": "exchange_rate",
+   "fieldtype": "Currency",
+   "label": "Exchange Rate"
+  },
+  {
+   "fieldname": "data_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "import_cost_sheet_details",
+   "fieldtype": "Table",
+   "options": "Import Cost Sheet Details"
+  },
+  {
+   "fieldname": "data_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "import_cost_sheet_items",
+   "fieldtype": "Table",
+   "options": "Import Cost Sheet Items"
+  },
+  {
+   "fieldname": "data_15",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "net_total",
+   "fieldtype": "Currency",
+   "label": "Net Total"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "Import-.YYYY.-"
+  }
+ ],
+ "modified": "2021-03-16 16:26:38.108618",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Import Cost Sheet",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,75 @@
+{
+ "autoname": "naming_series:",
+ "creation": "2021-03-16 20:36:16.120868",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "name1",
+  "column_break_3",
+  "process1",
+  "section_break_5",
+  "content",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "date",
+   "fieldtype": "Data",
+   "label": "Date"
+  },
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "process1",
+   "fieldtype": "Select",
+   "label": "Process",
+   "options": "\nBuying\nMaintenance\nAccounts\nManufacturing\nSelling\nInventory\nHR\nFinance\nAdministration\nCo-operate Affairs"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "content",
+   "fieldtype": "Text Editor",
+   "label": "Content"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "Series",
+   "options": "SOP-.YYYY.-"
+  }
+ ],
+ "modified": "2021-03-16 20:36:22.749605",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "SOP",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
