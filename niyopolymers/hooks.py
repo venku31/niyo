@@ -229,7 +229,7 @@ fixtures = [
 			[
 			"dt",
 			"in",
-			['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening']
+			['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Sales Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
 			]
 		]
 	},
