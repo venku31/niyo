@@ -127,6 +127,8 @@ app_license = "MIT"
 # 	"Task": "niyopolymers.task.get_dashboard_data"
 # }
 
+app_include_js = "/assets/niyopolymers/js/transaction.js"
+
 doc_events = {
     "Payroll Entry": {
 		"before_submit": "niyopolymers.hr.update_salary_structure_assignment_rate"
@@ -148,48 +150,48 @@ doc_events = {
 	"Salary Structure Assignment": {
 		"on_submit": "niyopolymers.hr.before_insert_salary_structure_assignment"
 	},
-	# "Asset Maintenance Log": {
-	# 	"after_insert": "niyopolymers.assets.before_save_asset_maintenance_log",
-	# 	"on_submit": "niyopolymers.assets.create_stock_entry"
-	# },
-	# "Asset Repair": {
-	# 	"on_submit": "niyopolymers.assets.create_stock_entry_from_asset_repair"
-	# },
-	# "Leave Allocation": {
-	# 	"on_submit": "niyopolymers.hr.before_submit_leave_allocation"
-	# },
-	# "*": {
-	# 	"before_submit": "niyopolymers.accounts.before_submit_all_doctypes"
-	# },
-	# "Payment Entry": {
-	# 	"validate": "niyopolymers.accounts.before_insert_payment_entry",
-	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
-	# },
-	# "Stock Entry": {
-	# 	"before_submit": "niyopolymers.accounts.before_submit_stock_entry"
-	# },
-	# "Sales Invoice": {
-	# 	"validate": "niyopolymers.accounts.before_insert_sales_invoice",
-	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
-	# },
-	# "Sales Order": {
-	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
-	# },
-	# "Purchase Order": {
-	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
-	# },	
-	# "Purchase Invoice": {
-	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
-	# },
-	# "Material Request": {
-	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
-	# },
-	# "Journal Entry": {
-	# 	"before_submit": "niyopolymers.accounts.set_approver_name"
-	# },
-	# "Payment Request and Authorization": {
-	# 	"before_submit": "niyopolymers.utils.set_approver_name"
-	# }
+	"Asset Maintenance Log": {
+		"after_insert": "niyopolymers.assets.before_save_asset_maintenance_log",
+		"on_submit": "niyopolymers.assets.create_stock_entry"
+	},
+	"Asset Repair": {
+		"on_submit": "niyopolymers.assets.create_stock_entry_from_asset_repair"
+	},
+	"Leave Allocation": {
+		"on_submit": "niyopolymers.hr.before_submit_leave_allocation"
+	},
+	"*": {
+		"before_submit": "niyopolymers.accounts.before_submit_all_doctypes"
+	},
+	"Payment Entry": {
+		"validate": "niyopolymers.accounts.before_insert_payment_entry",
+		"before_submit": "niyopolymers.accounts.set_approver_name"
+	},
+	"Stock Entry": {
+		"before_submit": "niyopolymers.accounts.before_submit_stock_entry"
+	},
+	"Sales Invoice": {
+		"validate": "niyopolymers.accounts.before_insert_sales_invoice",
+		"before_submit": "niyopolymers.accounts.set_approver_name"
+	},
+	"Sales Order": {
+		"before_submit": "niyopolymers.accounts.set_approver_name"
+	},
+	"Purchase Order": {
+		"before_submit": "niyopolymers.accounts.set_approver_name"
+	},	
+	"Purchase Invoice": {
+		"before_submit": "niyopolymers.accounts.set_approver_name"
+	},
+	"Material Request": {
+		"before_submit": "niyopolymers.accounts.set_approver_name"
+	},
+	"Journal Entry": {
+		"before_submit": "niyopolymers.accounts.set_approver_name"
+	},
+	"Payment Request and Authorization": {
+		"before_submit": "niyopolymers.utils.set_approver_name"
+	}
 
 }
 
@@ -227,9 +229,9 @@ fixtures = [
 		"dt": "Custom Script",
 		"filters": [
 			[
-			"dt",
-			"in",
-			['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Sales Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
+				"dt",
+				"in",
+				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Sales Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
 			]
 		]
 	},
@@ -263,6 +265,4 @@ fixtures = [
 			]
 		]
 	},
-
-
 ]

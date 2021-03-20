@@ -14,10 +14,10 @@
   "supplier_name",
   "supplier_pi_no",
   "company",
-  "supplier_pi_date",
+  "data_12",
   "transaction_date",
   "schedule_date",
-  "data_12",
+  "supplier_pi_date",
   "order_confirmation_no",
   "order_confirmation_date",
   "amended_from",
@@ -290,7 +290,7 @@
   },
   {
    "fieldname": "data_12",
-   "fieldtype": "Data"
+   "fieldtype": "Column Break"
   },
   {
    "allow_on_submit": 1,
@@ -1509,7 +1509,7 @@
  ],
  "icon": "fa fa-file-text",
  "is_submittable": 1,
- "modified": "2021-03-16 15:47:30.823015",
+ "modified": "2021-03-20 11:03:46.087595",
  "modified_by": "Administrator",
  "module": "Niyopolymers",
  "name": "Import PO",
