@@ -386,34 +386,22 @@ def update_salary_structure_assignment_rate(doc, method):
                 frappe.db.commit()
 
 def shift_rotate():
-    print("rotate shift method call")
-    female_employee = frappe.db.get_all('Employee', filters = {'gender': 'Female', 'shift_rotate': 1}, fields=['name'], as_list=1)
-    if female_employee:
-        female_employee_store_in_list = [i[0] for i in female_employee]
-        female_employee_convert_tuple = tuple(female_employee_store_in_list)
-        print(female_employee_convert_tuple)
-        frappe.db.sql("""
-                        Update `tabEmployee` 
-                        SET default_shift = CASE 
-                        WHEN default_shift='A' THEN 'B' 
-                        WHEN default_shift='B' THEN 'A' 
-                        ELSE default_shift END where employee in {}
-                        """.format(female_employee_convert_tuple))
-        frappe.db.commit()
-
-    male_employee = frappe.db.get_all('Employee', filters = {'gender': 'Male','shift_rotate': 1}, fields=['name'], as_list=1)
-    if male_employee:
-        male_employee_store_in_list = [i[0] for i in male_employee]
-        male_employee_convert_tuple = tuple(male_employee_store_in_list)
-        frappe.db.sql("""
-                        Update `tabEmployee`
-                        SET default_shift = CASE 
-                        WHEN default_shift='A' THEN 'B' 
-                        WHEN default_shift='B' THEN 'C' 
-                        WHEN default_shift='C' THEN 'A' 
-                        ELSE default_shift END where employee in {} 
-                        """.format(male_employee_convert_tuple))
-        frappe.db.commit()
+    employee = frappe.db.get_all('Employee', filters = {'default_shift': ['is', 'set'], 'shift_rotate': 1}, fields=['name'], as_list=1)
+    if employee:
+        employee_store_in_list = [i[0] for i in employee]
+        employee_convert_tuple = tuple(employee_store_in_list)
+        shifts = frappe.db.get_all('Shift Type', filters={'name': ['in', ['Day Shift', 'Night Shift']]}, fields=['name'], as_list=1)
+        if shifts:
+            shift_store_in_list = [i[0] for i in shifts]
+            shift_convert_tuple = tuple(shift_store_in_list)
+            frappe.db.sql("""
+                            Update `tabEmployee` 
+                            SET default_shift = CASE 
+                            WHEN default_shift='{0}' THEN '{1}' 
+                            WHEN default_shift='{1}' THEN '{0}' 
+                            ELSE default_shift END where employee in {2}
+                            """.format(shift_convert_tuple[0], shift_convert_tuple[1], employee_convert_tuple))
+            frappe.db.commit()
 
 def get_employees(doc, **kwargs):
 		conditions, values = [], []
