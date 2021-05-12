@@ -902,7 +902,7 @@ def send_mail_to_employees_on_shift():
     now_datetime = frappe.utils.now_datetime()
     from_time = now_datetime.strftime('%H:%m:%S')
     print(from_time)
-    add_one_hour = frappe.utils.now_datetime() + timedelta(hours=1)
+    add_one_hour = frappe.utils.now_datetime() + timedelta(minutes=30)
     to_time = add_one_hour.strftime('%H:%m:%S')
     print(to_time)
     shift = frappe.db.sql("""
