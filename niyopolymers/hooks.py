@@ -210,7 +210,8 @@ scheduler_events = {
 		]
 	},
 	"hourly": [
-        "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays"
+        "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays",
+		"niyopolymers.hr.send_mail_to_employees_on_shift"
     ]
 }
 
