@@ -906,7 +906,7 @@ def send_mail_to_employees_on_shift():
     to_time = add_one_hour.strftime('%H:%m:%S')
     print(to_time)
     shift = frappe.db.sql("""
-        select name from `tabShift Type` where start_time between '23:05:59' and '23:35:59'
+        select name from `tabShift Type` where start_time between '19:35:59' and '20:35:59'
     """.format(from_time, to_time))
     if shift:
         notification = frappe.get_doc('Notification', 'Employees on Shift')
