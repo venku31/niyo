@@ -1,0 +1,43 @@
+[
+ {
+  "attach_print": 1,
+  "channel": "Email",
+  "condition": null,
+  "date_changed": null,
+  "days_in_advance": 0,
+  "docstatus": 0,
+  "doctype": "Notification",
+  "document_type": "Shift Type",
+  "enabled": 1,
+  "event": "Custom",
+  "is_standard": 0,
+  "message": "{% set now_datetime = frappe.utils.now_datetime() %}\n{% set from_time = now_datetime.strftime('%Y-%m-%d 00:00:00') %}\n{% set to_time = now_datetime.strftime('%Y-%m-%d %H:%m:%S') %}\n{% set employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name']) %}\n{% set checkins = frappe.get_all('Employee Checkin', filters={'log_type': 'IN', 'shift': doc.name, 'time': ('>=', from_time), 'time': ('<=', to_time)}, fields=['name', 'employee_name', 'time'], group_by='employee_name') %}\n{% set leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['name'] ) %}\n<h2>Dashboard</h2>\n\n<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\ntr:nth-child(even) {\n  background-color: #dddddd;\n}\n</style>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Shift Name</th>\n    <th style=\"text-align: center\">Shift Employees</th>\n    <th style=\"text-align: center\">Present</th>\n    <th style=\"text-align: center\">Absent</th>\n    <th style=\"text-align: center\">On Leave</th>\n  </tr>\n  <tr>\n    <td style=\"text-align: center\">{{ doc.name }}</td>\n    <td style=\"text-align: center\">{{ employees|length }}</td>\n    <td style=\"text-align: center\">{{ checkins|length }}</td>\n    <td style=\"text-align: center\">{{ (employees|length - checkins|length )-leaves_employees|length }}</td>\n    <td style=\"text-align: center\">{{ leaves_employees|length }}</td>\n  </tr>\n</table>\n\n<div class=\"col-md-4\">\n<ol>\n{% for i in employees %}\n<li>\n{{ i.employee_name }}\n</li>\n{% endfor %}\n</ol>\n</div>\n\n<div class=\"col-md-4\">\n<ol>\n{% for j in checkins %}\n<li>\n{{ j.employee_name }}\n</li>\n{% endfor %}\n</ol>\n</div>",
+  "method": null,
+  "modified": "2021-05-13 13:24:59.227778",
+  "module": null,
+  "name": "Employees on Shift",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "print_format": null,
+  "property_value": null,
+  "recipients": [
+   {
+    "bcc": null,
+    "cc": "halima.sayyed@atriina.com",
+    "condition": null,
+    "email_by_document_field": null,
+    "email_by_role": null,
+    "parent": "Employees on Shift",
+    "parentfield": "recipients",
+    "parenttype": "Notification"
+   }
+  ],
+  "sender": null,
+  "sender_email": null,
+  "set_property_after_alert": null,
+  "slack_webhook_url": null,
+  "subject": "Employees on {{doc.name}} Shift",
+  "value_changed": null
+ }
+]
