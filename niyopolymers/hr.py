@@ -901,14 +901,18 @@ def save_interview_round(formdata, job_applicant):
 def send_mail_to_employees_on_shift():
     now_datetime = frappe.utils.now_datetime()
     from_time = now_datetime.strftime('%H:%m:%S')
+    print(from_time)
     add_one_hour = frappe.utils.now_datetime() + timedelta(hours=1)
     to_time = add_one_hour.strftime('%H:%m:%S')
+    print(to_time)
     shift = frappe.db.sql("""
         select name from `tabShift Type` where start_time between '{0}' and '{1}'
     """.format(from_time, to_time))
     if shift:
         notification = frappe.get_doc('Notification', 'Employees on Shift')
         doc = frappe.get_doc('Shift Type', shift[0][0])
+        doc.from_time = from_time
+        doc.to_time = to_time
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
         print(cc)
