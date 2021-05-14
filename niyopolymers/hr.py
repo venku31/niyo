@@ -902,7 +902,7 @@ def send_mail_to_employees_on_shift():
     now_datetime = frappe.utils.now_datetime()
     from_time = now_datetime.strftime('%H:%m:%S')
     print(from_time)
-    add_one_hour = frappe.utils.now_datetime() + timedelta(hours=1)
+    add_one_hour = now_datetime + timedelta(hours=1)
     to_time = add_one_hour.strftime('%H:%m:%S')
     print(to_time)
     shift = frappe.db.sql("""
@@ -913,6 +913,12 @@ def send_mail_to_employees_on_shift():
         doc = frappe.get_doc('Shift Type', shift[0][0])
         doc.from_time = from_time
         doc.to_time = to_time
+        checkin_frm = frappe.utils.now_datetime().replace(hour=(doc.start_time.seconds//3600)-1, minute=(doc.start_time.seconds//60)%60,second =00,microsecond=00)
+        checkin_frm_str = checkin_frm.strftime("%Y-%m-%d %H:%M:%S")
+        checkin_to = frappe.utils.now_datetime().replace(hour=(doc.start_time.seconds//3600), minute=(doc.start_time.seconds//60)%60,second =00,microsecond=00)
+        checkin_to_str = checkin_to.strftime("%Y-%m-%d %H:%M:%S")
+        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where time >= '{0}' and time <= '{1}' """.format(checkin_frm_str,checkin_to_str),as_dict=1)
+        doc.checkins = checkin  
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
         print(cc)

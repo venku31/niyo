@@ -11,9 +11,9 @@
   "enabled": 1,
   "event": "Custom",
   "is_standard": 0,
-  "message": "{% set now_datetime = frappe.utils.now_datetime() %}\n{% set from_time = now_datetime.strftime('%Y-%m-%d 00:00:00') %}\n{% set to_time = now_datetime.strftime('%Y-%m-%d %H:%m:%S') %}\n{% set employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name']) %}\n{% set checkins = frappe.get_all('Employee Checkin', filters={'log_type': 'IN', 'shift': doc.name, 'time': ('>=', doc.from_time), 'time': ('<=', doc.to_time)}, fields=['name', 'employee_name', 'time'], group_by='employee_name') %}\n{% set leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['name'] ) %}\n{{ from_time }}\n{{ to_time }}\n{% set employees_list = [] %}\n    {% for i in employees %}\n    {% set a = employees_list.append(i.employee_name) %}\n    {% endfor %}\n{{ employees_list }}\n\n{% set checkins_list = [] %}\n    {% for i in checkins %}\n    {% set a = checkins_list.append(i.employee_name) %}\n    {% endfor %}\n{{ checkins_list }}\n\n{% set non_match = [] %}\n{% for i in employees_list %}\n{% if i not in checkins_list %}\n{% set b = non_match.append(i) %}\n{% endif %}\n{% endfor %}\n{{ non_match }}\n<h2>Dashboard</h2>\n\n<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\ntr:nth-child(even) {\n  background-color: #dddddd;\n}\n</style>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Shift Name</th>\n    <th style=\"text-align: center\">Shift Employees</th>\n    <th style=\"text-align: center\">Present</th>\n    <th style=\"text-align: center\">Absent</th>\n    <th style=\"text-align: center\">On Leave</th>\n  </tr>\n  <tr>\n    <td style=\"text-align: center\">{{ doc.name }}</td>\n    <td style=\"text-align: center\">{{ employees|length }}</td>\n    <td style=\"text-align: center\">{{ checkins|length }}</td>\n    <td style=\"text-align: center\">{{ (employees|length - checkins|length )-leaves_employees|length }}</td>\n    <td style=\"text-align: center\">{{ leaves_employees|length }}</td>\n  </tr>\n</table>\n\n<div class=\"col-md-4\">\n<ol>\n{% for i in employees %}\n<li>\n{{ i.employee_name }}\n</li>\n{% endfor %}\n</ol>\n</div>\n\n<div class=\"col-md-4\">\n<ol>\n{% for j in checkins %}\n<li>\n{{ j.employee_name }}\n</li>\n{% endfor %}\n</ol>\n</div>\n\n<div class=\"col-md-4\">\n<ol>\n{% for i in non_match %}\n<li>\n{{ i }}\n</li>\n{% endfor %}\n</ol>\n</div>",
+  "message": "{% set now_datetime = frappe.utils.now_datetime() %}\n{% set from_time = doc.from_time %}\n{% set to_time = doc.to_time %}\n{% set employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name']) %}\n{% set checkins = doc.checkins %}\n{% set leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['name'] ) %}\n{% set employees_list = [] %}\n    {% for i in employees %}\n    {% set a = employees_list.append(i.employee_name) %}\n    {% endfor %}\n\n{% set checkins_list = [] %}\n    {% for i in checkins %}\n    {% set a = checkins_list.append(i.employee_name) %}\n    {% endfor %}\n\n{% set non_match = [] %}\n{% for i in employees_list %}\n{% if i not in checkins_list %}\n{% set b = non_match.append(i) %}\n{% endif %}\n{% endfor %}\n<h2>Dashboard</h2>\n\n<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\ntr:nth-child(even) {\n  background-color: #dddddd;\n}\n</style>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Shift Name</th>\n    <th style=\"text-align: center\">Shift Employees</th>\n    <th style=\"text-align: center\">Present</th>\n    <th style=\"text-align: center\">Absent</th>\n    <th style=\"text-align: center\">On Leave</th>\n  </tr>\n  <tr>\n    <td style=\"text-align: center\">{{ doc.name }}</td>\n    <td style=\"text-align: center\">{{ employees|length }}</td>\n    <td style=\"text-align: center\">{{ checkins|length }}</td>\n    <td style=\"text-align: center\">{{ (employees|length - checkins|length )-leaves_employees|length }}</td>\n    <td style=\"text-align: center\">{{ leaves_employees|length }}</td>\n  </tr>\n</table>\n\n<div class=\"col-sm-3\">\n<a>Present Employees are: </a>\n<ol>\n{% for j in checkins %}\n<li>\n{{ j.employee_name }}\n</li>\n{% endfor %}\n</ol>\n</div>\n\n<div class=\"col-sm-3\">\n<a>Absent Employees are: </a>\n<ol>\n{% for i in non_match %}\n<li>\n{{ i }}\n</li>\n{% endfor %}\n</ol>\n</div>\n\n<div class=\"col-sm-3\">\n<a>Employees that are on leave are: </a>\n<ol>\n{% for i in leaves_employees %}\n<li>\n{{ i.employee_name }}\n</li>\n{% endfor %}\n</ol>\n</div>",
   "method": null,
-  "modified": "2021-05-13 15:25:31.753675",
+  "modified": "2021-05-14 16:18:28.623176",
   "module": null,
   "name": "Employees on Shift",
   "parent": null,
@@ -24,7 +24,17 @@
   "recipients": [
    {
     "bcc": null,
-    "cc": "halima.sayyed@atriina.com",
+    "cc": "karan.bhanushali@atriina.com",
+    "condition": null,
+    "email_by_document_field": null,
+    "email_by_role": null,
+    "parent": "Employees on Shift",
+    "parentfield": "recipients",
+    "parenttype": "Notification"
+   },
+   {
+    "bcc": null,
+    "cc": "pradnyesh.patil@atriina.com",
     "condition": null,
     "email_by_document_field": null,
     "email_by_role": null,
