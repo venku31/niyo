@@ -6,7 +6,7 @@ import frappe
 
 def execute(filters=None):
 	columns, data = [], []
-	columns = ['Employee:Link/Employee:250']+['Employee Name:Data:200']+['Shift:Link/Shift Type:250']+['Last In:Datetime:150']
+	columns = ['Employee:Link/Employee:250']+['Employee Name:Data:200']+['Shift:Link/Shift Type:250']+['First In:Datetime:150']
 	data = get_data(filters)
 	return columns, data
 
