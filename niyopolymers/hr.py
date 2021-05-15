@@ -913,12 +913,12 @@ def send_mail_to_employees_on_shift():
         doc = frappe.get_doc('Shift Type', shift[0][0])
         doc.from_time = from_time
         doc.to_time = to_time
-        checkin_frm = frappe.utils.now_datetime().replace(hour=(doc.start_time.seconds//3600)-1, minute=(doc.start_time.seconds//60)%60,second =00,microsecond=00)
-        checkin_frm_str = checkin_frm.strftime("%Y-%m-%d %H:%M:%S")
-        checkin_to = frappe.utils.now_datetime().replace(hour=(doc.start_time.seconds//3600), minute=(doc.start_time.seconds//60)%60,second =00,microsecond=00)
-        checkin_to_str = checkin_to.strftime("%Y-%m-%d %H:%M:%S")
-        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where time >= '{0}' and time <= '{1}' """.format(checkin_frm_str,checkin_to_str),as_dict=1)
-        doc.checkins = checkin  
+        checkin_frm = frappe.utils.now_datetime()..strftime('%Y-%m-%d 00:00:00')
+        checkin_to = frappe.utils.now_datetime()..strftime('%Y-%m-%d 00:00:00')
+        employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name'])
+        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where time >= '{0}' and time <= '{1}' """.format(checkin_frm,checkin_to),as_dict=1)
+        doc.checkins = checkin   
+        doc.employees = employees
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
         print(cc)
