@@ -913,8 +913,8 @@ def send_mail_to_employees_on_shift():
         doc = frappe.get_doc('Shift Type', shift[0][0])
         doc.from_time = from_time
         doc.to_time = to_time
-        checkin_frm = frappe.utils.now_datetime()..strftime('%Y-%m-%d 00:00:00')
-        checkin_to = frappe.utils.now_datetime()..strftime('%Y-%m-%d 00:00:00')
+        checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
+        checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
         employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name'])
         checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where time >= '{0}' and time <= '{1}' """.format(checkin_frm,checkin_to),as_dict=1)
         doc.checkins = checkin   
