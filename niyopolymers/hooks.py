@@ -276,4 +276,14 @@ fixtures = [
 			]
 		]
 	},
+	{
+		"dt": "Notification",
+		"filters": [
+			[
+				"name",
+				"in",
+				['Employees on Shift']
+			]
+		]
+	}
 ]
