@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-frappe.query_reports["Daily Attentance Report"] = {
+frappe.query_reports["Daily Checkins"] = {
 	"filters": [
 		{
 			"fieldname":"from_date",
