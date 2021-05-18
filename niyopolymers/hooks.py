@@ -247,16 +247,6 @@ fixtures = [
 		]
 	},
 	{
-		'dt': 'Notification',
-		"filters": [
-			[
-				'name',
-				'in', 
-				['Employees on Shift']
-			]
-		]
-	},
-	{
 		"dt": "Workflow",
 		"filters": [
 			[
@@ -276,14 +266,4 @@ fixtures = [
 			]
 		]
 	},
-	{
-		"dt": "Notification",
-		"filters": [
-			[
-				"name",
-				"in",
-				['Employees on Shift']
-			]
-		]
-	}
 ]
