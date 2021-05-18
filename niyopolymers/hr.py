@@ -334,7 +334,7 @@ def trigger_mail_if_absent_consecutive_5_days(doc, method):
     and status in ('Absent', 'On Leave') and docstatus = 1 and employee='{}' order by attendance_date;
 
     """.format(doc.employee), as_dict = 1)
-
+    print(attendance)
     if attendance[0]['count'] == 4:
         notification = frappe.get_doc('Notification', 'Consecutive Leave')
 

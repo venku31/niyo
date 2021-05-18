@@ -222,7 +222,7 @@ fixtures = [
 			[
 				"dt",
 				"in",
-				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Payroll Entry", "Employee", "Job Opening", "Salary Slip", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry"]
+				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Employee", "Job Opening", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry"]
 			]
 		]
 	},
@@ -266,4 +266,14 @@ fixtures = [
 			]
 		]
 	},
+	{
+		"dt": "Notification",
+		"filters": [
+			[
+				"name",
+				"in",
+				['Consecutive Leave']
+			]
+		]
+	}
 ]
