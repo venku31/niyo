@@ -265,15 +265,5 @@ fixtures = [
 				['Journal Entry Approver', 'Deputy PRA Approver', 'Accounts Viewer', 'Purchase Order Approver', 'PRA Approver', 'PRA Checker', 'CFO', 'Material Request Approver', 'Sales Invoice Approver', 'Sales Order Approver', 'Payment Entry Approver', 'Purchase Invoice Approver', 'CRV Approver', 'PCPV Approver', 'Chart of Accounts Manager', 'Document Deletor', 'Document canceller', 'Petty Cash Manager']
 			]
 		]
-	},
-	{
-		"dt": "Notification",
-		"filters": [
-			[
-				"name",
-				"in",
-				['Consecutive Leave']
-			]
-		]
 	}
 ]
