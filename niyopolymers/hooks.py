@@ -61,7 +61,7 @@ app_license = "MIT"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "niyopolymers.notifications.get_notification_config"
+notification_config = "niyopolymers.notifications.get_notification_config"
 
 # Permissions
 # -----------
@@ -144,9 +144,6 @@ doc_events = {
 	"Interview Configuration": {
         "before_save": "niyopolymers.niyopolymers.doctype.interview_configuration.interview_configuration.generate_round_numbers"
     },
-    "Attendance": {
-		"before_submit": "niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
-	},
 	"Salary Structure Assignment": {
 		"on_submit": "niyopolymers.hr.before_insert_salary_structure_assignment"
 	},
@@ -207,6 +204,9 @@ scheduler_events = {
 	"cron": {
 		"59 11 * * 0": [
 			"niyopolymers.hr.shift_rotate"
+		],
+		"0 0 * * *": [
+			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
 		]
 	},
 	"hourly": [

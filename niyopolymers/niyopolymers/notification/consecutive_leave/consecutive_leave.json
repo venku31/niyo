@@ -1,7 +1,7 @@
 {
  "attach_print": 0,
  "channel": "Email",
- "creation": "2021-05-18 19:27:40.110326",
+ "creation": "2021-05-19 18:54:29.025111",
  "days_in_advance": 0,
  "docstatus": 0,
  "doctype": "Notification",
@@ -10,15 +10,15 @@
  "event": "Custom",
  "idx": 0,
  "is_standard": 1,
- "message": "Alert! {{ doc.employee_name }} has been on Leave for 5 consecutive days.",
- "modified": "2021-05-19 09:29:29.523119",
+ "message": "Alert! The below employees has been on Leave for 5 or more consecutive days.\n{% for i in doc['employees'] %}\n<ol>{{ i['employee'] }}</ol>\n{% endfor %}",
+ "modified": "2021-05-20 11:38:30.457926",
  "modified_by": "Administrator",
  "module": "Niyopolymers",
  "name": "Consecutive Leave",
  "owner": "Administrator",
  "recipients": [
   {
-   "cc": "niyopolymers@gmail.com"
+   "cc": "halima.sayyed@atriina.com"
   }
  ],
  "subject": "{{ doc.employe }} Consecutive Leave"

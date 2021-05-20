@@ -324,54 +324,54 @@ def holiday_overtime(doc):
         for i in attendances:
             doc.holiday_ot_hours_ += i[0]
 
-@frappe.whitelist()
-def trigger_mail_if_absent_consecutive_5_days(doc, method):
+def trigger_mail_if_absent_consecutive_5_days():
 
     attendance = frappe.db.sql("""
-    select count(attendance_date) as count
+    select count(attendance_date) as count, employee, employee_name, name
     from `tabAttendance` 
     where  attendance_date >= DATE_SUB(CURDATE(), INTERVAL 5 DAY) 
-    and status in ('Absent', 'On Leave') and docstatus = 1 and employee='{}' order by attendance_date;
+    and status in ('Absent', 'On Leave') and docstatus = 1 group by employee order by attendance_date ;
 
-    """.format(doc.employee), as_dict = 1)
+    """, as_dict = 1)
     print(attendance)
-    if attendance[0]['count'] == 4:
+    if attendance:
+        employee = []
+        for i in attendance:
+            if i['count'] >= 5:
+                employee.append({'employee': i['employee_name']})
+                get_employee_warnings = frappe.get_all('Warning Letter Detail', filters={'parent': i['employee']}, fields=['warning_number'], order_by='warning_number desc', page_length=1)
+                warning_template = frappe.db.get_value('Warning Letter Template', 'Consecutive Leave', 'name')
+                warning_letter = frappe.new_doc('Warning Letter')
+                warning_letter.employee = i['employee']
+                warning_letter.template = warning_template
+
+                if not get_employee_warnings:
+                    # frappe.throw('ja na be')
+                    warning_letter.warning_number = 1
+                
+                else:
+                    warning_letter.warning_number = get_employee_warnings[0]['warning_number'] + 1
+                
+                warning_letter.save(ignore_permissions=True)
+
+                set_employee_warnings = frappe.get_doc('Employee', i['employee'])
+                set_employee_warnings.append('warnings', {
+                    'warning_letter': warning_letter.name
+                })
+                if not get_employee_warnings:
+                    set_employee_warnings.warnings_letters_given = 1
+                else:
+                    set_employee_warnings.warnings_letters_given = get_employee_warnings[0]['warning_number']+1
+                set_employee_warnings.save(ignore_permissions=True)
+
         notification = frappe.get_doc('Notification', 'Consecutive Leave')
-
+        doc = frappe.get_doc('Attendance', attendance[0]['name'])
+        doc.employees = employee
         args={'doc': doc}
-        recipients = notification.get_list_of_recipients(doc, args)
-        recipients_list = list(recipients[0])
-        message = 'Alert! {} has been on Leave for 5 consecutive days.'.format(doc.employee_name)
-        get_employee_warnings = frappe.get_all('Warning Letter Detail', filters={'parent': doc.employee}, fields=['warning_number'], order_by='warning_number desc', page_length=1)
-        warning_template = frappe.db.get_value('Warning Letter Template', 'Consecutive Leave', 'name')
-        warning_letter = frappe.new_doc('Warning Letter')
-        warning_letter.employee = doc.employee
-        warning_letter.template = warning_template
-
-        if not get_employee_warnings:
-            # frappe.throw('ja na be')
-            warning_letter.warning_number = 1
-           
-        else:
-            warning_letter.warning_number = get_employee_warnings[0]['warning_number'] + 1
-           
-        warning_letter.save(ignore_permissions=True)
-
-        set_employee_warnings = frappe.get_doc('Employee', doc.employee)
-        set_employee_warnings.append('warnings', {
-            'warning_letter': warning_letter.name
-        })
-        if not get_employee_warnings:
-            set_employee_warnings.warnings_letters_given = 1
-        else:
-            set_employee_warnings.warnings_letters_given = get_employee_warnings[0]['warning_number']+1
-        set_employee_warnings.save(ignore_permissions=True)
-
-        for user in recipients_list:
-            frappe.publish_realtime(event='msgprint',message=message,user=user)
-        frappe.enqueue(method=frappe.sendmail, recipients=recipients_list, sender=None, now=True,
-        subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
-
+        recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+        frappe.enqueue(method=frappe.sendmail, recipients=cc, sender=None, now=True,
+                subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+    
 @frappe.whitelist()
 def update_salary_structure_assignment_rate(doc, method):
     employee_list = frappe.db.get_all('Payroll Employee Detail', {'parent': doc.name}, ['employee'], as_list=1)
