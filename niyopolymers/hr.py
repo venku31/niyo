@@ -914,7 +914,7 @@ def send_mail_to_employees_on_shift():
         checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
         checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 23:59:59')
         employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name'])
-        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee_name """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
+        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
         doc.checkins = checkin
         doc.employees = employees
         args={'doc': doc}
