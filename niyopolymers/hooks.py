@@ -61,7 +61,9 @@ app_license = "MIT"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-notification_config = "niyopolymers.notifications.get_notification_config"
+# notification_config = "frappe.core.notifications.get_notification_config"
+
+# get_rooms = 'frappe.chat.doctype.chat_room.chat_room.get_rooms'
 
 # Permissions
 # -----------
@@ -127,6 +129,8 @@ notification_config = "niyopolymers.notifications.get_notification_config"
 # 	"Task": "niyopolymers.task.get_dashboard_data"
 # }
 
+# on_session_creation = 'niyopolymers.hr.successful_login'
+
 app_include_js = "/assets/niyopolymers/js/transaction.js"
 
 doc_events = {
@@ -163,9 +167,6 @@ doc_events = {
 	"Payment Entry": {
 		"validate": "niyopolymers.accounts.before_insert_payment_entry",
 		"before_submit": "niyopolymers.accounts.set_approver_name"
-	},
-	"Stock Entry": {
-		"before_submit": "niyopolymers.accounts.before_submit_stock_entry"
 	},
 	"Sales Invoice": {
 		"validate": "niyopolymers.accounts.before_insert_sales_invoice",
