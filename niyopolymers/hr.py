@@ -81,7 +81,8 @@ def before_save_salary_slip(doc, method):
     if employee_holiday:
         hr_settings = frappe.db.get_single_value('HR Settings', 'include_holidays_in_total_working_days')
         if hr_settings == 0:
-            holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': ['=','Sunday'], 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
+            holiday_day = frappe.db.get_value('Holiday List', {'name': employee_holiday}, 'weekly_off')
+            holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': holiday_day, 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
     
             holiday_ = []
             for i in holiday:
@@ -125,12 +126,21 @@ def before_insert_salary_slip(doc, method):
         sunday_overtime(doc)
         holiday_overtime(doc)
 
+    if doc.payroll_entry:  
+        payroll_entry = frappe.db.get_value('Payroll Entry', doc.payroll_entry, 'monthly_attendance_bonus')
+        if payroll_entry:
+            doc.attendance_bonus = payroll_entry
+        shift_allowance = frappe.db.get_value('Payroll Entry', doc.payroll_entry, 'allowance_per_night_shift')    
+        if shift_allowance:
+            doc.allowance_per_night_shift = shift_allowance
+
 def before_save(doc, method):
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
     if employee_holiday:
         hr_settings = frappe.db.get_single_value('HR Settings', 'include_holidays_in_total_working_days')
         if hr_settings == 0:
-            holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': ['=','Sunday'], 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
+            holiday_day = frappe.db.get_value('Holiday List', {'name': employee_holiday}, 'weekly_off')
+            holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': holiday_day, 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
     
             holiday_ = []
             for i in holiday:
@@ -143,24 +153,6 @@ def before_save(doc, method):
             doc.calculate_component_amounts("earnings")
             doc.calculate_component_amounts("deductions")
             # doc.insert()
-
-@frappe.whitelist()
-def set_working_days(doc):
-    doc = json.loads(doc)
-    employee_holiday = frappe.db.get_value('Employee', doc['employee'], 'holiday_list')
-    if employee_holiday:
-        hr_settings = frappe.db.get_single_value('HR Settings', 'include_holidays_in_total_working_days')
-        if hr_settings == 0:
-            holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': ['=','Sunday'], 'holiday_date': ('between',[ doc['start_date'], doc['end_date']])},  fields=['holiday_date'], as_list=1)
-    
-            holiday_ = []
-            for i in holiday:
-                splitdate = i[0].strftime('%Y-%m-%d')
-                holiday_.append(splitdate)
-            total = date_diff(doc['end_date'], doc['start_date']) + 1  
-            frappe.db.set_value('Salary Slip', doc['name'], 'total_working_days', total - len(holiday_))
-            frappe.db.commit()
-            # return total - len(holiday_)
 
 def process_lop_leave_for_attendance(attendance_name):
     attendance = frappe.get_doc('Attendance', attendance_name)
@@ -214,38 +206,39 @@ def on_update_employee(doc, method):
 
 def daily_overtime(doc):
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
-    holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
-    
-    holiday_ = []
-    for i in holiday:
-        splitdate = i[0].strftime('%Y-%m-%d')
-        holiday_.append(splitdate)
-    shift = frappe.db.get_value('Employee', {'employee': doc.employee}, ['default_shift'])
-    if shift: 
+    if employee_holiday:
+        holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
+        
+        holiday_ = []
+        for i in holiday:
+            splitdate = i[0].strftime('%Y-%m-%d')
+            holiday_.append(splitdate)
+        shift = frappe.db.get_value('Employee', {'employee': doc.employee}, ['default_shift'])
+        if shift: 
 
-        filters = [
-            ['employee', '=', doc.employee],
-            ['attendance_date', '<=', doc.end_date],
-            ['attendance_date', '>=', doc.start_date],
-            ['attendance_date', 'not in', holiday_],
-            ['docstatus', '!=', 2],
-            ['status', '=', 'Present'],
-            ['shift', '!=', 'Night Shift']
-        ]
+            filters = [
+                ['employee', '=', doc.employee],
+                ['attendance_date', '<=', doc.end_date],
+                ['attendance_date', '>=', doc.start_date],
+                ['attendance_date', 'not in', holiday_],
+                ['docstatus', '!=', 2],
+                ['status', '=', 'Present'],
+                ['shift', '!=', 'Night Shift']
+            ]
 
-        attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours', 'shift'], as_list=True)
-        for i in attendances:
-            shift_start = frappe.db.get_value('Shift Type',i[1],'start_time')
-            shift_end = frappe.db.get_value('Shift Type',i[1],'end_time')
-            if shift_end is not None and shift_start is not None:
-                shift_time = shift_end - shift_start
-                hours = shift_time.seconds
-                total = hours/3600
-                
-                if (i[0] > total):
-                    # doc.total_day_shift_days += 1
-                    doc.normal_ot_hours += (i[0] - total)
-                
+            attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours', 'shift'], as_list=True)
+            for i in attendances:
+                shift_start = frappe.db.get_value('Shift Type',i[1],'start_time')
+                shift_end = frappe.db.get_value('Shift Type',i[1],'end_time')
+                if shift_end is not None and shift_start is not None:
+                    shift_time = shift_end - shift_start
+                    hours = shift_time.seconds
+                    total = hours/3600
+                    
+                    if (i[0] > total):
+                        # doc.total_day_shift_days += 1
+                        doc.normal_ot_hours += (i[0] - total)
+                    
 def night_overtime(doc):
     holiday = frappe.db.get_all('Holiday', filters={'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
    
@@ -284,97 +277,101 @@ def night_overtime(doc):
     
 def sunday_overtime(doc):
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
-    holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': 'Sunday', 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
-   
-    holiday_ = []
-    for i in holiday:
-        splitdate = i[0].strftime('%Y-%m-%d')
-        holiday_.append(splitdate)
-
-    filters = [
-        ['employee', '=', doc.employee],
-        ['attendance_date', 'in', holiday_],
-        ['docstatus', '!=', 2],
-        ['status', '=', 'Present']
-    ]
+    if employee_holiday:
+        holiday_day = frappe.db.get_value('Holiday List', {'name': employee_holiday}, 'weekly_off')
+        holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': holiday_day, 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
     
-    attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours'], as_list=True)
-    
-    # if attendances:
-    #     doc.total_working_sunday = len(attendances)
+        holiday_ = []
+        for i in holiday:
+            splitdate = i[0].strftime('%Y-%m-%d')
+            holiday_.append(splitdate)
 
-    for i in attendances:    
-        doc.sunday_ot_hours += i[0]
+        filters = [
+            ['employee', '=', doc.employee],
+            ['attendance_date', 'in', holiday_],
+            ['docstatus', '!=', 2],
+            ['status', '=', 'Present']
+        ]
+        
+        attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours'], as_list=True)
+        
+        # if attendances:
+        #     doc.total_working_sunday = len(attendances)
+
+        for i in attendances:    
+            doc.sunday_ot_hours += i[0]
        
 def holiday_overtime(doc):
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
-    holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': ['!=','Sunday'], 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
-   
-    holiday_ = []
-    for i in holiday:
-        splitsundaydate = i[0].strftime('%Y-%m-%d')
-        holiday_.append(splitsundaydate)
+    if employee_holiday:
+        holiday_day = frappe.db.get_value('Holiday List', {'name': employee_holiday}, 'weekly_off')
+        holiday = frappe.db.get_all('Holiday', filters={'parent': employee_holiday, 'description': holiday_day, 'holiday_date': ('between',[ doc.start_date, doc.end_date])},  fields=['holiday_date'], as_list=1)
     
-    filters = [
-        ['employee', '=', doc.employee],
-        ['attendance_date', 'in', holiday_],
-        ['docstatus', '!=', 2],
-        ['status', '=', 'Present']
-    ]
-    
-    attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours'], as_list=True)
+        holiday_ = []
+        for i in holiday:
+            splitsundaydate = i[0].strftime('%Y-%m-%d')
+            holiday_.append(splitsundaydate)
+        
+        filters = [
+            ['employee', '=', doc.employee],
+            ['attendance_date', 'in', holiday_],
+            ['docstatus', '!=', 2],
+            ['status', '=', 'Present']
+        ]
+        
+        attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours'], as_list=True)
 
-    for i in attendances:
-        doc.holiday_ot_hours_ += i[0]
+        for i in attendances:
+            doc.holiday_ot_hours_ += i[0]
 
-@frappe.whitelist()
-def trigger_mail_if_absent_consecutive_5_days(doc, method):
+def trigger_mail_if_absent_consecutive_5_days():
 
     attendance = frappe.db.sql("""
-    select count(attendance_date) as count
+    select count(attendance_date) as count, employee, employee_name, name
     from `tabAttendance` 
     where  attendance_date >= DATE_SUB(CURDATE(), INTERVAL 5 DAY) 
-    and status in ('Absent', 'On Leave') and docstatus = 1 and employee='{}' order by attendance_date;
+    and status in ('Absent', 'On Leave') and docstatus = 1 group by employee order by attendance_date ;
 
-    """.format(doc.employee), as_dict = 1)
+    """, as_dict = 1)
+    print(attendance)
+    if attendance:
+        employee = []
+        for i in attendance:
+            if i['count'] >= 5:
+                employee.append({'employee': i['employee_name']})
+                get_employee_warnings = frappe.get_all('Warning Letter Detail', filters={'parent': i['employee']}, fields=['warning_number'], order_by='warning_number desc', page_length=1)
+                warning_template = frappe.db.get_value('Warning Letter Template', 'Consecutive Leave', 'name')
+                warning_letter = frappe.new_doc('Warning Letter')
+                warning_letter.employee = i['employee']
+                warning_letter.template = warning_template
 
-    if attendance[0]['count'] == 4:
+                if not get_employee_warnings:
+                    # frappe.throw('ja na be')
+                    warning_letter.warning_number = 1
+                
+                else:
+                    warning_letter.warning_number = get_employee_warnings[0]['warning_number'] + 1
+                
+                warning_letter.save(ignore_permissions=True)
+
+                set_employee_warnings = frappe.get_doc('Employee', i['employee'])
+                set_employee_warnings.append('warnings', {
+                    'warning_letter': warning_letter.name
+                })
+                if not get_employee_warnings:
+                    set_employee_warnings.warnings_letters_given = 1
+                else:
+                    set_employee_warnings.warnings_letters_given = get_employee_warnings[0]['warning_number']+1
+                set_employee_warnings.save(ignore_permissions=True)
+
         notification = frappe.get_doc('Notification', 'Consecutive Leave')
-
+        doc = frappe.get_doc('Attendance', attendance[0]['name'])
+        doc.employees = employee
         args={'doc': doc}
-        recipients = notification.get_list_of_recipients(doc, args)
-        recipients_list = list(recipients[0])
-        message = 'Alert! {} has been on Leave for 5 consecutive days.'.format(doc.employee_name)
-        get_employee_warnings = frappe.get_all('Warning Letter Detail', filters={'parent': doc.employee}, fields=['warning_number'], order_by='warning_number desc', page_length=1)
-        warning_template = frappe.db.get_value('Warning Letter Template', 'Consecutive Leave', 'name')
-        warning_letter = frappe.new_doc('Warning Letter')
-        warning_letter.employee = doc.employee
-        warning_letter.template = warning_template
-
-        if not get_employee_warnings:
-            # frappe.throw('ja na be')
-            warning_letter.warning_number = 1
-           
-        else:
-            warning_letter.warning_number = get_employee_warnings[0]['warning_number'] + 1
-           
-        warning_letter.save(ignore_permissions=True)
-
-        set_employee_warnings = frappe.get_doc('Employee', doc.employee)
-        set_employee_warnings.append('warnings', {
-            'warning_letter': warning_letter.name
-        })
-        if not get_employee_warnings:
-            set_employee_warnings.warnings_letters_given = 1
-        else:
-            set_employee_warnings.warnings_letters_given = get_employee_warnings[0]['warning_number']+1
-        set_employee_warnings.save(ignore_permissions=True)
-
-        for user in recipients_list:
-            frappe.publish_realtime(event='msgprint',message=message,user=user)
-        frappe.enqueue(method=frappe.sendmail, recipients=recipients_list, sender=None, now=True,
-        subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
-
+        recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+        frappe.enqueue(method=frappe.sendmail, recipients=cc, sender=None, now=True,
+                subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+    
 @frappe.whitelist()
 def update_salary_structure_assignment_rate(doc, method):
     employee_list = frappe.db.get_all('Payroll Employee Detail', {'parent': doc.name}, ['employee'], as_list=1)

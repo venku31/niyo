@@ -10,27 +10,24 @@ import itertools
 @frappe.whitelist()
 def before_submit_all_doctypes(doc, method):
     user = frappe.get_roles(frappe.session.user)
+    print(user)
+    # frappe.throw('ja')
     admin_settings = frappe.get_doc('Admin Settings')
     admin_settings_document = frappe.get_all('Admin Settings Document', {'parent': 'Admin Settings', 'document': doc.doctype}, ['date'], as_list=1)  
-   
+    closure_date = datetime.strptime(admin_settings.closure_date, '%Y-%m-%d')
     if admin_settings.applicable_for_role not in user:
         if admin_settings_document:
             if admin_settings_document[0][0] == 'posting_date':
-                if admin_settings.closure_date > doc.posting_date:
+                if closure_date.date() > doc.posting_date:
                     frappe.throw(frappe._("You are not authorized to add or update entries before {0}").format(formatdate(admin_settings.closure_date)))
             elif admin_settings_document[0][0] == 'transaction_date':
-                if admin_settings.closure_date > doc.transaction_date:
+                if closure_date.date() > doc.transaction_date:
                     frappe.throw(frappe._("You are not authorized to add or update entries before {0}").format(formatdate(admin_settings.closure_date)))
 
 @frappe.whitelist()
 def set_approver_name(doc, method):
     doc.approver_person = doc.modified_by
     doc.approver_date = doc.modified
-
-@frappe.whitelist()
-def before_submit_stock_entry(doc, method):
-    if doc.value_difference > 1:
-        frappe.throw('Incoming Value not equal to Outgoing Value! Please Correct the rate.')
 
 @frappe.whitelist()
 def before_insert_payment_entry(doc, method):

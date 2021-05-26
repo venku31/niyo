@@ -61,7 +61,9 @@ app_license = "MIT"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "niyopolymers.notifications.get_notification_config"
+# notification_config = "frappe.core.notifications.get_notification_config"
+
+# get_rooms = 'frappe.chat.doctype.chat_room.chat_room.get_rooms'
 
 # Permissions
 # -----------
@@ -127,6 +129,8 @@ app_license = "MIT"
 # 	"Task": "niyopolymers.task.get_dashboard_data"
 # }
 
+# on_session_creation = 'niyopolymers.hr.successful_login'
+
 app_include_js = "/assets/niyopolymers/js/transaction.js"
 
 doc_events = {
@@ -144,9 +148,6 @@ doc_events = {
 	"Interview Configuration": {
         "before_save": "niyopolymers.niyopolymers.doctype.interview_configuration.interview_configuration.generate_round_numbers"
     },
-    "Attendance": {
-		"before_submit": "niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
-	},
 	"Salary Structure Assignment": {
 		"on_submit": "niyopolymers.hr.before_insert_salary_structure_assignment"
 	},
@@ -166,9 +167,6 @@ doc_events = {
 	"Payment Entry": {
 		"validate": "niyopolymers.accounts.before_insert_payment_entry",
 		"before_submit": "niyopolymers.accounts.set_approver_name"
-	},
-	"Stock Entry": {
-		"before_submit": "niyopolymers.accounts.before_submit_stock_entry"
 	},
 	"Sales Invoice": {
 		"validate": "niyopolymers.accounts.before_insert_sales_invoice",
@@ -207,6 +205,9 @@ scheduler_events = {
 	"cron": {
 		"59 11 * * 0": [
 			"niyopolymers.hr.shift_rotate"
+		],
+		"0 0 * * *": [
+			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
 		]
 	},
 	"hourly": [
@@ -222,7 +223,7 @@ fixtures = [
 			[
 				"dt",
 				"in",
-				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Payroll Entry", "Employee", "Job Opening", "Salary Slip", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry"]
+				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Employee", "Job Opening", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry"]
 			]
 		]
 	},
@@ -265,5 +266,5 @@ fixtures = [
 				['Journal Entry Approver', 'Deputy PRA Approver', 'Accounts Viewer', 'Purchase Order Approver', 'PRA Approver', 'PRA Checker', 'CFO', 'Material Request Approver', 'Sales Invoice Approver', 'Sales Order Approver', 'Payment Entry Approver', 'Purchase Invoice Approver', 'CRV Approver', 'PCPV Approver', 'Chart of Accounts Manager', 'Document Deletor', 'Document canceller', 'Petty Cash Manager']
 			]
 		]
-	},
+	}
 ]
