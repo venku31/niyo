@@ -916,4 +916,15 @@ def send_mail_to_employees_on_shift():
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
-
+def maternity_leave_mail():
+    date_today = date.today()
+    next_month_date = date_today.replace(month = date_today.month +1)
+    leaves = frappe.db.get_list("Leave Application",{"to_date":next_month_date,"leave_type":"Maternity Leave"},["employee_name","name"])
+    notification = frappe.get_doc('Notification', 'Materinity leave Notification')
+    for i in leaves:
+        doc = frappe.get_doc('Leave Application', i.name)
+        args={'doc': doc}
+        # cc, bcc = notification.get_list_of_recipients(doc, args)
+        mail_id = frappe.db.get_value("User",{'full_name':i.employee_name},['email'])
+        frappe.enqueue(method=frappe.sendmail, recipients=mail_id, sender=None, 
+            subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))

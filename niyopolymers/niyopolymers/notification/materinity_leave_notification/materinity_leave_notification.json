@@ -1,0 +1,26 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2021-05-19 10:32:32.618536",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Leave Application",
+ "enabled": 1,
+ "event": "Custom",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<h3>Greetings,</h3>\n\n<p>Hope you are doing fine.This is a gentle reminder that your maternity leaves in <b> 1 month.</b></p>\n\n<p>Thanks</p>",
+ "modified": "2021-05-19 13:38:08.390312",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Materinity leave Notification",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "cc": "pradnyesh.patil@atriina.com",
+   "email_by_document_field": ""
+  }
+ ],
+ "subject": "Remainder for End of Maternity leave"
+}
