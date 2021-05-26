@@ -1,0 +1,155 @@
+{
+ "creation": "2021-03-15 19:54:52.946834",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "mf",
+  "rolling_ingot_weight",
+  "column_break_3",
+  "no_of_ingots_per_heat",
+  "section_break_5",
+  "shift_a_in_nos",
+  "column_break_7",
+  "shift_a_in_kg",
+  "section_break_9",
+  "shift_b_in_nos",
+  "column_break_11",
+  "shift_b_in_kg",
+  "section_break_13",
+  "shift_c_in_nos",
+  "column_break_15",
+  "shift_c_in_kg",
+  "section_break_17",
+  "total_pieces",
+  "total_weight",
+  "column_break_20",
+  "heats"
+ ],
+ "fields": [
+  {
+   "fieldname": "mf",
+   "fieldtype": "Select",
+   "label": "MF",
+   "options": "\n1\n2\n3\n4\n5\n6\n7\n8",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rolling_ingot_weight",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Rolling Ingot Weight",
+   "options": "\n7\n9.5\n13",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_ingots_per_heat",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "No of Ingots per heat",
+   "options": "\n30\n41",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "shift_a_in_nos",
+   "fieldtype": "Int",
+   "label": "Shift A - In Nos"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "shift_a_in_kg",
+   "fieldtype": "Float",
+   "label": "Shift A - In Kg"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "shift_b_in_nos",
+   "fieldtype": "Int",
+   "label": "Shift B - In Nos"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "shift_b_in_kg",
+   "fieldtype": "Float",
+   "label": "Shift B - In Kg"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "shift_c_in_nos",
+   "fieldtype": "Int",
+   "label": "Shift C - In Nos"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "shift_c_in_kg",
+   "fieldtype": "Float",
+   "label": "Shift C - In Kg"
+  },
+  {
+   "fieldname": "section_break_17",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_pieces",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Pieces",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Total Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "heats",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Heats",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-03-20 10:56:30.565185",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Melting Furnace Items",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

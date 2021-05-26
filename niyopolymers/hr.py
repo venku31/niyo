@@ -70,6 +70,13 @@ def before_save_salary_slip(doc, method):
     # doc.total_working_sunday = 0
     # doc.total_working_holiday_days = 0
 
+    overtime_applicable = frappe.db.get_value('Employee', doc.employee, 'is_overtime_applicable')
+    if overtime_applicable:
+        daily_overtime(doc)
+        night_overtime(doc)
+        sunday_overtime(doc)
+        holiday_overtime(doc)
+
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
     if employee_holiday:
         hr_settings = frappe.db.get_single_value('HR Settings', 'include_holidays_in_total_working_days')
@@ -81,16 +88,11 @@ def before_save_salary_slip(doc, method):
                 splitdate = i[0].strftime('%Y-%m-%d')
                 holiday_.append(splitdate)
             total = date_diff(doc.end_date, doc.start_date) + 1 
-            print('total', total)
-            print('holiday', holiday_) 
             doc.total_working_days = total - len(holiday_)
-
-    overtime_applicable = frappe.db.get_value('Employee', doc.employee, 'is_overtime_applicable')
-    if overtime_applicable:
-        daily_overtime(doc)
-        night_overtime(doc)
-        sunday_overtime(doc)
-        holiday_overtime(doc)
+            doc.payment_days = doc.total_working_days - doc.leave_without_pay
+            doc.calculate_component_amounts("earnings")
+            doc.calculate_component_amounts("deductions")
+    
 
 def before_insert_salary_slip(doc, method):
     doc.normal_ot_hours = 0
@@ -123,6 +125,7 @@ def before_insert_salary_slip(doc, method):
         sunday_overtime(doc)
         holiday_overtime(doc)
 
+def before_save(doc, method):
     employee_holiday = frappe.db.get_value('Employee', doc.employee, 'holiday_list')
     if employee_holiday:
         hr_settings = frappe.db.get_single_value('HR Settings', 'include_holidays_in_total_working_days')
@@ -133,9 +136,13 @@ def before_insert_salary_slip(doc, method):
             for i in holiday:
                 splitdate = i[0].strftime('%Y-%m-%d')
                 holiday_.append(splitdate)
+             
             total = date_diff(doc.end_date, doc.start_date) + 1    
             doc.total_working_days = total - len(holiday_)
-
+            doc.payment_days = doc.total_working_days - doc.leave_without_pay
+            doc.calculate_component_amounts("earnings")
+            doc.calculate_component_amounts("deductions")
+            # doc.insert()
 
 @frappe.whitelist()
 def set_working_days(doc):
@@ -151,9 +158,6 @@ def set_working_days(doc):
                 splitdate = i[0].strftime('%Y-%m-%d')
                 holiday_.append(splitdate)
             total = date_diff(doc['end_date'], doc['start_date']) + 1  
-            print(total)
-            # print(len(holiday_))  
-            # doc.total_working_days = total - len(holiday_)
             frappe.db.set_value('Salary Slip', doc['name'], 'total_working_days', total - len(holiday_))
             frappe.db.commit()
             # return total - len(holiday_)
@@ -226,11 +230,10 @@ def daily_overtime(doc):
             ['attendance_date', 'not in', holiday_],
             ['docstatus', '!=', 2],
             ['status', '=', 'Present'],
-            ['shift', '!=', 'Night shift']
+            ['shift', '!=', 'Night Shift']
         ]
 
         attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours', 'shift'], as_list=True)
-        print('len',len(attendances))
         for i in attendances:
             shift_start = frappe.db.get_value('Shift Type',i[1],'start_time')
             shift_end = frappe.db.get_value('Shift Type',i[1],'end_time')
@@ -260,7 +263,7 @@ def night_overtime(doc):
         ['attendance_date', 'not in', holiday_],
         ['docstatus', '!=', 2],
         ['status', '=', 'Present'],
-        ['shift', '=', 'Night shift']
+        ['shift', '=', 'Night Shift']
     ]
 
     attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours'], as_list=True)
@@ -269,8 +272,8 @@ def night_overtime(doc):
         for j in i:
             attendance_list.append(j)
 
-    shift_start = frappe.db.get_value('Shift Type','Night shift','start_time')
-    shift_end = frappe.db.get_value('Shift Type','Night shift','end_time')
+    shift_start = frappe.db.get_value('Shift Type','Night Shift','start_time')
+    shift_end = frappe.db.get_value('Shift Type','Night Shift','end_time')
     shift_time = shift_end - shift_start
     hours = shift_time.seconds//3600
     for i in attendance_list:
@@ -321,9 +324,6 @@ def holiday_overtime(doc):
     
     attendances = frappe.db.get_all('Attendance', filters=filters, fields=['working_hours'], as_list=True)
 
-    # if attendances:
-    #     doc.total_working_holiday_days = len(attendances)
-
     for i in attendances:
         doc.holiday_ot_hours_ += i[0]
 
@@ -337,7 +337,7 @@ def trigger_mail_if_absent_consecutive_5_days(doc, method):
     and status in ('Absent', 'On Leave') and docstatus = 1 and employee='{}' order by attendance_date;
 
     """.format(doc.employee), as_dict = 1)
-    print(attendance)
+
     if attendance[0]['count'] == 4:
         notification = frappe.get_doc('Notification', 'Consecutive Leave')
 
@@ -346,9 +346,7 @@ def trigger_mail_if_absent_consecutive_5_days(doc, method):
         recipients_list = list(recipients[0])
         message = 'Alert! {} has been on Leave for 5 consecutive days.'.format(doc.employee_name)
         get_employee_warnings = frappe.get_all('Warning Letter Detail', filters={'parent': doc.employee}, fields=['warning_number'], order_by='warning_number desc', page_length=1)
-        print('get employees', get_employee_warnings)
         warning_template = frappe.db.get_value('Warning Letter Template', 'Consecutive Leave', 'name')
-        print(warning_template)
         warning_letter = frappe.new_doc('Warning Letter')
         warning_letter.employee = doc.employee
         warning_letter.template = warning_template
@@ -388,34 +386,22 @@ def update_salary_structure_assignment_rate(doc, method):
                 frappe.db.commit()
 
 def shift_rotate():
-    print("rotate shift method call")
-    female_employee = frappe.db.get_all('Employee', filters = {'gender': 'Female', 'shift_rotate': 1}, fields=['name'], as_list=1)
-    if female_employee:
-        female_employee_store_in_list = [i[0] for i in female_employee]
-        female_employee_convert_tuple = tuple(female_employee_store_in_list)
-        print(female_employee_convert_tuple)
-        frappe.db.sql("""
-                        Update `tabEmployee` 
-                        SET default_shift = CASE 
-                        WHEN default_shift='A' THEN 'B' 
-                        WHEN default_shift='B' THEN 'A' 
-                        ELSE default_shift END where employee in {}
-                        """.format(female_employee_convert_tuple))
-        frappe.db.commit()
-
-    male_employee = frappe.db.get_all('Employee', filters = {'gender': 'Male','shift_rotate': 1}, fields=['name'], as_list=1)
-    if male_employee:
-        male_employee_store_in_list = [i[0] for i in male_employee]
-        male_employee_convert_tuple = tuple(male_employee_store_in_list)
-        frappe.db.sql("""
-                        Update `tabEmployee`
-                        SET default_shift = CASE 
-                        WHEN default_shift='A' THEN 'B' 
-                        WHEN default_shift='B' THEN 'C' 
-                        WHEN default_shift='C' THEN 'A' 
-                        ELSE default_shift END where employee in {} 
-                        """.format(male_employee_convert_tuple))
-        frappe.db.commit()
+    employee = frappe.db.get_all('Employee', filters = {'default_shift': ['is', 'set'], 'shift_rotate': 1}, fields=['name'], as_list=1)
+    if employee:
+        employee_store_in_list = [i[0] for i in employee]
+        employee_convert_tuple = tuple(employee_store_in_list)
+        shifts = frappe.db.get_all('Shift Type', filters={'name': ['in', ['Day Shift', 'Night Shift']]}, fields=['name'], as_list=1)
+        if shifts:
+            shift_store_in_list = [i[0] for i in shifts]
+            shift_convert_tuple = tuple(shift_store_in_list)
+            frappe.db.sql("""
+                            Update `tabEmployee` 
+                            SET default_shift = CASE 
+                            WHEN default_shift='{0}' THEN '{1}' 
+                            WHEN default_shift='{1}' THEN '{0}' 
+                            ELSE default_shift END where employee in {2}
+                            """.format(shift_convert_tuple[0], shift_convert_tuple[1], employee_convert_tuple))
+            frappe.db.commit()
 
 def get_employees(doc, **kwargs):
 		conditions, values = [], []
@@ -911,3 +897,26 @@ def save_interview_round(formdata, job_applicant):
         job_applicant.current_round = 'Round' + " " + rounds[0]['round_number']
         job_applicant.status = 'Round' + " " + rounds[0]['round_number'] + " " + 'Scheduled'    
         job_applicant.save(ignore_permissions=True)
+
+def send_mail_to_employees_on_shift():
+    now_datetime = frappe.utils.now_datetime()
+    from_time = now_datetime.strftime('%H:%m:%S')
+    print(from_time)
+    add_one_hour = frappe.utils.now_datetime() + timedelta(hours=1)
+    to_time = add_one_hour.strftime('%H:%m:%S')
+    print(to_time)
+    shift = frappe.db.sql("""
+        select name from `tabShift Type` where start_time between '{0}' and '{1}'
+    """.format(from_time, to_time))
+    if shift:
+        notification = frappe.get_doc('Notification', 'Employees on Shift')
+        doc = frappe.get_doc('Shift Type', shift[0][0])
+        doc.from_time = from_time
+        doc.to_time = to_time
+        args={'doc': doc}
+        recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+        print(cc)
+        frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
+        subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+
+
