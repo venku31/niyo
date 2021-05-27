@@ -917,9 +917,3 @@ def send_mail_to_employees_on_shift():
         print(cc)
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
-
-def successful_login():
-    print('==================')
-    frappe.publish_realtime(event='msgprint',message='hello',user='karan.bhanushali@atriina.com')
-    print(frappe.utils.get_url())
-    frappe.msgprint('helo')
