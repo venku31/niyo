@@ -1,6 +1,5 @@
 frappe.listview_settings['Leave Application'] = {
     onload(listview) {
-        console.log("leave application list")
         listview.page.add_menu_item(__("Leave Mail"), function() {
             frappe.call({
                 method: "niyopolymers.hr.maternity_leave_mail",

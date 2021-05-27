@@ -918,7 +918,6 @@ def send_mail_to_employees_on_shift():
 
 @frappe.whitelist()
 def maternity_leave_mail():
-    print("executing maternity leave method")
     date_today = date.today()
     next_month_date = date_today.replace(month = date_today.month +1)
     leaves = frappe.db.get_list("Leave Application",{"to_date":next_month_date,"leave_type":"Maternity Leave"},["employee_name","name"])
