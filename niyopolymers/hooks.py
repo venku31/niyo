@@ -61,7 +61,7 @@ app_license = "MIT"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "frappe.core.notifications.get_notification_config"
+# notification_config = "niyopolymers.notifications.get_notification_config"
 
 # get_rooms = 'frappe.chat.doctype.chat_room.chat_room.get_rooms'
 
@@ -194,7 +194,8 @@ doc_events = {
 }
 
 doctype_list_js = {
-    "Salary Structure Assignment" : "public/js/salary_structure_assignment_list.js"
+    "Salary Structure Assignment" : "public/js/salary_structure_assignment_list.js",
+	"Attendance": "public/js/attendance_list.js"
  	}
 
 override_doctype_dashboards = {
