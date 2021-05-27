@@ -206,6 +206,9 @@ scheduler_events = {
 		"59 11 * * 0": [
 			"niyopolymers.hr.shift_rotate"
 		],
+		"59 * * * *": [
+			"niyopolymers.hr.change_last_sync_of_checkin"
+		],
 		"0 0 * * *": [
 			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
 		]
