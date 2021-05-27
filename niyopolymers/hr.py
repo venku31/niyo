@@ -934,4 +934,8 @@ def maternity_leave_mail():
         # cc, bcc = notification.get_list_of_recipients(doc, args)
         mail_id = frappe.db.get_value("User",{'full_name':i.employee_name},['email'])
         frappe.enqueue(method=frappe.sendmail, recipients=mail_id, sender=None, 
+<<<<<<< HEAD
             subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+=======
+            subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+>>>>>>> facf89f94db2ad307741c4e409e98982eba0ca20
