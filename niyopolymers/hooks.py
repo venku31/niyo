@@ -194,7 +194,8 @@ doc_events = {
 }
 
 doctype_list_js = {
-    "Salary Structure Assignment" : "public/js/salary_structure_assignment_list.js"
+    "Salary Structure Assignment" : "public/js/salary_strucure_assignment_list.js",
+	"Leave Application" : "public/js/leave_application_list.js"
  	}
 
 override_doctype_dashboards = {
