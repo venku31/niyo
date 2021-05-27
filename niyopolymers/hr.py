@@ -901,19 +901,37 @@ def send_mail_to_employees_on_shift():
     now_datetime = frappe.utils.now_datetime()
     from_time = now_datetime.strftime('%H:%m:%S')
     print(from_time)
-    add_one_hour = frappe.utils.now_datetime() + timedelta(hours=1)
+    add_one_hour = now_datetime + timedelta(hours=1)
     to_time = add_one_hour.strftime('%H:%m:%S')
     print(to_time)
-    shift = frappe.db.sql("""
-        select name from `tabShift Type` where start_time between '{0}' and '{1}'
-    """.format(from_time, to_time))
+    shift = frappe.db.sql("""select name from `tabShift Type` where HOUR(start_time) = %s """,(int(now_datetime.hour) - 1))
     if shift:
         notification = frappe.get_doc('Notification', 'Employees on Shift')
         doc = frappe.get_doc('Shift Type', shift[0][0])
         doc.from_time = from_time
         doc.to_time = to_time
+        checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
+        checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 23:59:59')
+        employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name'])
+        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
+        doc.checkins = checkin
+        doc.employees = employees
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
         print(cc)
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+
+@frappe.whitelist()
+def maternity_leave_mail():
+    date_today = date.today()
+    next_month_date = date_today.replace(month = date_today.month +1)
+    leaves = frappe.db.get_list("Leave Application",{"to_date":next_month_date,"leave_type":"Maternity Leave"},["employee_name","name"])
+    notification = frappe.get_doc('Notification', 'Materinity leave Notification')
+    for i in leaves:
+        doc = frappe.get_doc('Leave Application', i.name)
+        args={'doc': doc}
+        # cc, bcc = notification.get_list_of_recipients(doc, args)
+        mail_id = frappe.db.get_value("User",{'full_name':i.employee_name},['email'])
+        frappe.enqueue(method=frappe.sendmail, recipients=mail_id, sender=None, 
+            subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
