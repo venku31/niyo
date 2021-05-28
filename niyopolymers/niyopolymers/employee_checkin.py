@@ -15,7 +15,6 @@ def process_auto_attendance_for_holidays():
         'skip_auto_attendance': '0',
         'attendance': ('is', 'not set'),
         'shift': ('is', 'not set'),
-        # 'time':("<",frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00'))
     }
     logs = frappe.db.get_list(
         'Employee Checkin', fields="*", filters=filters, order_by="employee,time")
