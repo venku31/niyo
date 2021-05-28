@@ -133,6 +133,10 @@ app_license = "MIT"
 
 app_include_js = "/assets/niyopolymers/js/transaction.js"
 
+doctype_js = {
+    'Sales Invoice': 'public/js/sales_invoice.js',
+}
+
 doc_events = {
     "Payroll Entry": {
 		"before_submit": "niyopolymers.hr.update_salary_structure_assignment_rate"
@@ -199,7 +203,7 @@ doctype_list_js = {
  	}
 
 override_doctype_dashboards = {
-	"Job Applicant": "niyopolymers.hr.override_job_applicant_dashboard"
+	"Job Applicant": "niyopolymers.hr.override_job_applicant_dashboard",
 }
 
 scheduler_events = {
@@ -237,7 +241,7 @@ fixtures = [
 			[
 				"dt",
 				"in",
-				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Sales Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
+				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
 			]
 		]
 	},
