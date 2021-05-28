@@ -69,12 +69,12 @@
   "docstatus": 0,
   "doctype": "Custom Script",
   "dt": "Sales Invoice",
-  "modified": "2021-03-19 12:18:37.357143",
+  "modified": "2021-05-28 10:34:28.225693",
   "name": "Sales Invoice-Client",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
-  "script": "frappe.ui.form.on('Sales Invoice', {\n        fs_number:function(frm) {\n\t\tvar a = frm.doc.fs_number;\n\t\tvar mystr = a.replace(/\\D/g,'');\n\t\tfrm.set_value('fs_number',mystr);\n\t\tfrm.refresh_field('fs_number')\n\t}\n});\n"
+  "script": "frappe.ui.form.on('Sales Invoice', {\n        fs_number:function(frm) {\n\t\tvar a = frm.doc.fs_number;\n\t\tvar mystr = a.replace(/\\D/g,'');\n\t\tfrm.set_value('fs_number',mystr);\n\t\tfrm.refresh_field('fs_number')\n\t},\n\tafter_workflow_action: function(frm){\n\t    if (frm.doc.docstatus == 1) {\n\t    frappe.call({\n\t\t\tmethod: \"erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry\",\n\t\t\targs: {\n\t\t\t\t\"dt\": frm.doc.doctype,\n\t\t\t\t\"dn\": frm.doc.name\n\t\t\t},\n\t\t\tcallback: function(r) {\n\t\t\t\tvar doclist = frappe.model.sync(r.message);\n\t\t\t\tfrappe.set_route(\"Form\", doclist[0].doctype, doclist[0].name);\n\t\t\t\t// cur_frm.refresh_fields()\n\t\t\t}\n\t    \t});\n\t    }\n\t}\n});\n"
  },
  {
   "docstatus": 0,
