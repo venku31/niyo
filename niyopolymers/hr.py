@@ -933,8 +933,7 @@ def change_last_sync_of_checkin():
         grace_time_int = int(grace_time.strftime("%H%M"))
         cur_time = frappe.utils.now_datetime().strftime("%H%M")
         cur_time_int = int(cur_time.strftime("%H%M"))
-        # if current time > grace time then do the below
-        if cur_time >= grace_time:
+        if cur_time_int >= grace_time_int:
             shit.last_sync_of_checkin = cur_time
 
 
