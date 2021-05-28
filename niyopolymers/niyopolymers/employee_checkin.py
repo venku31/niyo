@@ -34,7 +34,7 @@ def process_auto_attendance_for_holidays():
             grace_time = ans = frappe.utils.now_datetime().replace(hour=0,minute=0,second=0,microsecond=0)+shift.end_time + timedelta(minutes=shift.allow_check_out_after_shift_end_time)
             grace_time_int = int(grace_time.strftime("%H%M"))
             cur_time = frappe.utils.now_datetime().strftime("%H%M")
-            cur_time_int = int(cur_time.strftime("%H%M"))
+            cur_time_int = int(cur_time)
             if cur_time_int >= grace_time_int:
                 single_shift_logs = list(group)
                 attendance_status, working_hours, late_entry, early_exit = shift.get_attendance(
