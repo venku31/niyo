@@ -194,7 +194,8 @@ doc_events = {
 }
 
 doctype_list_js = {
-    "Salary Structure Assignment" : "public/js/salary_structure_assignment_list.js"
+    "Salary Structure Assignment" : "public/js/salary_strucure_assignment_list.js",
+	"Leave Application" : "public/js/leave_application_list.js"
  	}
 
 override_doctype_dashboards = {
@@ -216,6 +217,9 @@ scheduler_events = {
 	"hourly": [
         "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays",
 		"niyopolymers.hr.send_mail_to_employees_on_shift"
+    ],
+	"daily": [
+        "niyopolymers.hr.maternity_leave_mail"
     ]
 }
 
