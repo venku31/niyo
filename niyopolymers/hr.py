@@ -920,6 +920,24 @@ def send_mail_to_employees_on_shift():
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
+def change_last_sync_of_checkin():
+    shifts = frappe.db.get_list("Shift Type",as_list=1)
+    shift_list = []
+    for i in shifts:
+        for j in i:
+            shift_list.append(j)
+
+    for i in shift_list:
+        shift = frappe.get_doc("Shift Type",i)
+        grace_time = ans = frappe.utils.now_datetime().replace(hour=0,minute=0,second=0,microsecond=0)+shift.end_time + timedelta(minutes=shift.allow_check_out_after_shift_end_time)
+        grace_time_int = int(grace_time.strftime("%H%M"))
+        cur_time = frappe.utils.now_datetime().strftime("%H%M")
+        cur_time_int = int(cur_time)
+        if cur_time_int >= grace_time_int:
+            shift.last_sync_of_checkin = cur_time
+            shift.save()
+
+
 @frappe.whitelist()
 def maternity_leave_mail():
     date_today = date.today()
