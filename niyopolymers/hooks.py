@@ -15,8 +15,8 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/niyopolymers/css/niyopolymers.css"
-# app_include_js = "/assets/niyopolymers/js/niyopolymers.js"
+app_include_css = "/assets/css/world-calendar.min.css"
+app_include_js = "/assets/js/world-calendar.min.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/niyopolymers/css/niyopolymers.css"
