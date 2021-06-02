@@ -211,7 +211,8 @@ scheduler_events = {
 			"niyopolymers.hr.change_last_sync_of_checkin"
 		],
 		"0 0 * * *": [
-			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
+			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days",
+			"niyopolymers.utils.trigger_mail_of_pending_todo"
 		]
 	},
 	"hourly": [
