@@ -30,10 +30,15 @@ def process_auto_attendance_for_holidays():
         # mark attendance only if shift is assigned on the said date
         if shift_for_the_day:
             shift = frappe.get_doc('Shift Type', shift_for_the_day)
-            single_shift_logs = list(group)
-            attendance_status, working_hours, late_entry, early_exit = shift.get_attendance(
-                single_shift_logs)
-            mark_attendance_and_link_log(
-                single_shift_logs, attendance_status, key[1], working_hours, late_entry, early_exit, shift.name)
+            grace_time = ans = frappe.utils.now_datetime().replace(hour=0,minute=0,second=0,microsecond=0)+shift.end_time + timedelta(minutes=shift.allow_check_out_after_shift_end_time)
+            grace_time_int = int(grace_time.strftime("%H%M"))
+            cur_time = frappe.utils.now_datetime().strftime("%H%M")
+            cur_time_int = int(cur_time)
+            if cur_time_int >= grace_time_int:
+                single_shift_logs = list(group)
+                attendance_status, working_hours, late_entry, early_exit = shift.get_attendance(
+                    single_shift_logs)
+                mark_attendance_and_link_log(
+                    single_shift_logs, attendance_status, key[1], working_hours, late_entry, early_exit, shift.name)
 
     frappe.db.commit()

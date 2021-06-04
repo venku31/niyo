@@ -15,8 +15,8 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/niyopolymers/css/niyopolymers.css"
-# app_include_js = "/assets/niyopolymers/js/niyopolymers.js"
+app_include_css = "/assets/css/world-calendar.min.css"
+app_include_js = "/assets/js/world-calendar.min.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/niyopolymers/css/niyopolymers.css"
@@ -61,7 +61,7 @@ app_license = "MIT"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "frappe.core.notifications.get_notification_config"
+# notification_config = "niyopolymers.notifications.get_notification_config"
 
 # get_rooms = 'frappe.chat.doctype.chat_room.chat_room.get_rooms'
 
@@ -199,6 +199,7 @@ doc_events = {
 
 doctype_list_js = {
     "Salary Structure Assignment" : "public/js/salary_strucure_assignment_list.js",
+	"Attendance": "public/js/attendance_list.js",
 	"Leave Application" : "public/js/leave_application_list.js"
  	}
 
@@ -210,6 +211,9 @@ scheduler_events = {
 	"cron": {
 		"59 11 * * 0": [
 			"niyopolymers.hr.shift_rotate"
+		],
+		"59 * * * *": [
+			"niyopolymers.hr.change_last_sync_of_checkin"
 		],
 		"0 0 * * *": [
 			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
