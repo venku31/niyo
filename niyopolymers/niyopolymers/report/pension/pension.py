@@ -11,7 +11,7 @@ def execute(filters=None):
 	return columns, data
 
 def get_data(filters):
-	if filters:
+	if 'from_date' in filters and 'to_date' in filters:
 		return frappe.db.sql("""
 			Select
 				emp.tin_no,
