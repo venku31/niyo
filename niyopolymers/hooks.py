@@ -61,7 +61,7 @@ app_include_js = "/assets/js/world-calendar.min.js"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "frappe.core.notifications.get_notification_config"
+# notification_config = "niyopolymers.notifications.get_notification_config"
 
 # get_rooms = 'frappe.chat.doctype.chat_room.chat_room.get_rooms'
 
@@ -195,6 +195,7 @@ doc_events = {
 
 doctype_list_js = {
     "Salary Structure Assignment" : "public/js/salary_strucure_assignment_list.js",
+	"Attendance": "public/js/attendance_list.js",
 	"Leave Application" : "public/js/leave_application_list.js"
  	}
 
