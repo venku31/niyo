@@ -14,7 +14,6 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 		this._super(doc);
 	},
 	onload: function() {
-        console.log('jana===================')
 		var me = this;
 		this._super();
 
@@ -41,19 +40,19 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 		frm.set_value('fs_number',mystr);
 		frm.refresh_field('fs_number')
 	},
-	after_workflow_action: function(frm){
-	    if (frm.doc.docstatus == 1) {
-	    frappe.call({
-			method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry",
-			args: {
-				"dt": frm.doc.doctype,
-				"dn": frm.doc.name
-			},
-			callback: function(r) {
-				var doclist = frappe.model.sync(r.message);
-				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
-				// cur_frm.refresh_fields()
-			}
+	after_workflow_action: function(doc){
+	    if (doc.docstatus == 1) {
+			frappe.call({
+				method: "erpnext.accounts.doctype.payment_entry.payment_entry.get_payment_entry",
+				args: {
+					"dt": doc.doctype,
+					"dn": doc.name
+				},
+				callback: function(r) {
+					var doclist = frappe.model.sync(r.message);
+					frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
+					// cur_frm.refresh_fields()
+				}
 	    	});
 	    }
 	},
