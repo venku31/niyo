@@ -9,7 +9,7 @@ from frappe.model.document import Document
 class ShiftProduction(Document):
 	pass
 
-@frappe.whitelist()
+# @frappe.whitelist()
 def create_stock_entry(doc, handler=""):
     se = frappe.new_doc("Stock Entry")
     se.update({ "purpose": "Manufacture" , "stock_entry_type": "Manufacture"})
