@@ -58,23 +58,12 @@
   "docstatus": 0,
   "doctype": "Custom Script",
   "dt": "Asset Repair",
-  "modified": "2021-03-20 09:40:50.712183",
+  "modified": "2021-05-27 18:32:11.322134",
   "name": "Asset Repair-Client",
   "parent": null,
   "parentfield": null,
   "parenttype": null,
   "script": "frappe.ui.form.on('Asset Repair', {\n\tasset_name(frm) {\n\t\t// your code here\n\t\tif(frm.doc.asset_name) {\n\t\t    frappe.model.get_value('Asset', {'name': frm.doc.asset_name}, 'engineer', \n\t\t        function(res){\n\t\t            frm.set_value('assign_to', res.engineer)\n\t\t            \n                })\n\t\t}\n    },\n    refresh(frm) {\n\tif (frm.doc.docstatus===0) {\n\t\t\tfrm.add_custom_button(__('Stock Entry'), function() {\n\t\t\t   new frappe.ui.form.MultiSelectDialog({\n                    doctype: \"Stock Entry\",\n                    target: frm,\n                    setters: {},\n                    date_field: \"posting_date\",\n                    get_query() {\n                        return {\n                            filters: { docstatus: ['!=', 2] }\n                        }\n                    },\n                    action(selections) {\n                        console.log(selections);\n                       console.log(typeof(selections))\n                       for (var i in selections){\n                           console.log(selections[i])\n                           frappe.call({\n                               method: \"niyopolymers.assets.set_items_from_stock_entry\",\n                               args: {\n                                   name: selections[i]\n                               },\n                               callback: function(r){\n                                   console.log(r.message)\n                                  let op = r.message\n                                //   me.frm.add_child(\"part_used\").item = op['item_code'];\n                                //   me.frm.refresh_field(\"part_used\");\n                                var childTable = cur_frm.add_child(\"parts_used\");\n                                childTable.item=op['item_code']\n                                childTable.item_name=op['item_name']\n                                childTable.stock_entry = op['parent']\n                                childTable.item_group=op['item_group']\n                                childTable.dscription=op['description']\n                                childTable.uom=op['uom']\n                                childTable.quantity=op['qty']\n                                cur_frm.refresh_fields(\"part_used\");\n                                $('.modal').hide();\n                               }\n                           })\n                    }\n                    }\n                });\n\t\t\t}, __(\"Get items from\"));\n    \t}\n    }\n})\n\n"
- },
- {
-  "docstatus": 0,
-  "doctype": "Custom Script",
-  "dt": "Sales Invoice",
-  "modified": "2021-03-19 12:18:37.357143",
-  "name": "Sales Invoice-Client",
-  "parent": null,
-  "parentfield": null,
-  "parenttype": null,
-  "script": "frappe.ui.form.on('Sales Invoice', {\n        fs_number:function(frm) {\n\t\tvar a = frm.doc.fs_number;\n\t\tvar mystr = a.replace(/\\D/g,'');\n\t\tfrm.set_value('fs_number',mystr);\n\t\tfrm.refresh_field('fs_number')\n\t}\n});\n"
  },
  {
   "docstatus": 0,

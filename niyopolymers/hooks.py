@@ -15,8 +15,8 @@ app_license = "MIT"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/niyopolymers/css/niyopolymers.css"
-# app_include_js = "/assets/niyopolymers/js/niyopolymers.js"
+app_include_css = "/assets/css/world-calendar.min.css"
+app_include_js = "/assets/js/world-calendar.min.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/niyopolymers/css/niyopolymers.css"
@@ -61,7 +61,7 @@ app_license = "MIT"
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "frappe.core.notifications.get_notification_config"
+# notification_config = "niyopolymers.notifications.get_notification_config"
 
 # get_rooms = 'frappe.chat.doctype.chat_room.chat_room.get_rooms'
 
@@ -133,6 +133,10 @@ app_license = "MIT"
 
 app_include_js = "/assets/niyopolymers/js/transaction.js"
 
+doctype_js = {
+    'Sales Invoice': 'public/js/sales_invoice.js',
+}
+
 doc_events = {
     "Payroll Entry": {
 		"before_submit": "niyopolymers.hr.update_salary_structure_assignment_rate"
@@ -195,11 +199,12 @@ doc_events = {
 
 doctype_list_js = {
     "Salary Structure Assignment" : "public/js/salary_strucure_assignment_list.js",
+	"Attendance": "public/js/attendance_list.js",
 	"Leave Application" : "public/js/leave_application_list.js"
  	}
 
 override_doctype_dashboards = {
-	"Job Applicant": "niyopolymers.hr.override_job_applicant_dashboard"
+	"Job Applicant": "niyopolymers.hr.override_job_applicant_dashboard",
 }
 
 scheduler_events = {
@@ -240,7 +245,7 @@ fixtures = [
 			[
 				"dt",
 				"in",
-				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Sales Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
+				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
 			]
 		]
 	},

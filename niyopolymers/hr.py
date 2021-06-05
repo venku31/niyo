@@ -324,6 +324,7 @@ def holiday_overtime(doc):
         for i in attendances:
             doc.holiday_ot_hours_ += i[0]
 
+@frappe.whitelist(allow_guest=True)
 def trigger_mail_if_absent_consecutive_5_days():
 
     attendance = frappe.db.sql("""
@@ -363,15 +364,16 @@ def trigger_mail_if_absent_consecutive_5_days():
                 else:
                     set_employee_warnings.warnings_letters_given = get_employee_warnings[0]['warning_number']+1
                 set_employee_warnings.save(ignore_permissions=True)
-
-        notification = frappe.get_doc('Notification', 'Consecutive Leave')
-        doc = frappe.get_doc('Attendance', attendance[0]['name'])
-        doc.employees = employee
-        args={'doc': doc}
-        recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
-        frappe.enqueue(method=frappe.sendmail, recipients=cc, sender=None, now=True,
-                subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
-    
+        
+        if len(employee) >= 1:
+            notification = frappe.get_doc('Notification', 'Consecutive Leave')
+            doc = frappe.get_doc('Attendance', attendance[0]['name'])
+            doc.employees = employee
+            args={'doc': doc}
+            recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+            frappe.enqueue(method=frappe.sendmail, recipients=cc, sender=None, now=True,
+                    subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+        
 @frappe.whitelist()
 def update_salary_structure_assignment_rate(doc, method):
     employee_list = frappe.db.get_all('Payroll Employee Detail', {'parent': doc.name}, ['employee'], as_list=1)
