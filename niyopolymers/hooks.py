@@ -16,7 +16,11 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 app_include_css = "/assets/css/world-calendar.min.css"
-app_include_js = "/assets/js/world-calendar.min.js"
+app_include_js = [
+	"/assets/js/world-calendar.min.js",
+	"/assets/niyopolymers/js/transaction.js",
+	"/assets/niyopolymers/js/general_ledger.js"
+]	
 
 # include js, css files in header of web template
 # web_include_css = "/assets/niyopolymers/css/niyopolymers.css"
@@ -130,8 +134,6 @@ app_include_js = "/assets/js/world-calendar.min.js"
 # }
 
 # on_session_creation = 'niyopolymers.hr.successful_login'
-
-app_include_js = "/assets/niyopolymers/js/transaction.js"
 
 doctype_js = {
     'Sales Invoice': 'public/js/sales_invoice.js',
