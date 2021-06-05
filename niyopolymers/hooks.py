@@ -195,7 +195,11 @@ doc_events = {
 	},
 	"Payment Request and Authorization": {
 		"before_submit": "niyopolymers.utils.set_approver_name"
-	}
+	},
+	"Shift Production": {
+                "on_submit": "niyopolymers.niyopolymers.doctype.shift_production.shift_production.create_stock_entry"
+        }
+
 
 }
 
