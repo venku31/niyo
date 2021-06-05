@@ -933,8 +933,8 @@ def change_last_sync_of_checkin():
         shift = frappe.get_doc("Shift Type",i)
         grace_time = ans = frappe.utils.now_datetime().replace(hour=0,minute=0,second=0,microsecond=0)+shift.end_time + timedelta(minutes=shift.allow_check_out_after_shift_end_time)
         grace_time_int = int(grace_time.strftime("%H%M"))
-        cur_time = frappe.utils.now_datetime().strftime("%H%M")
-        cur_time_int = int(cur_time)
+        cur_time = frappe.utils.now_datetime()
+        cur_time_int = int(cur_time.strftime("%H%M"))
         if cur_time_int >= grace_time_int:
             shift.last_sync_of_checkin = cur_time
             shift.save()
