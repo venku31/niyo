@@ -6,7 +6,6 @@
 		"../node_modules/kbw-calendars/dist/js/jquery.plugin.min.js",
 		"../node_modules/kbw-calendars/dist/js/jquery.calendars.all.min.js",
 		"../node_modules/kbw-calendars/dist/js/jquery.calendars.ethiopian.min.js",
-		"public/js/world-calendar-date-input.js",
-		"public/js/reports-customization.js"
+		"public/js/world-calendar-date-input.js"
 	]
 }
