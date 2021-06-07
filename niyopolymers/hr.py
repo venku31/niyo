@@ -46,7 +46,8 @@ def before_submit_leave_allocation(doc, method):
     leave_date = frappe.db.get_value('Leave Allocation', doc.name, 'from_date')
     total_experience = calculate_years_of_experience(doj, leave_date)
     base_leave_count = 16
-    get_total_leaves = base_leave_count+(float(total_experience)/2)
+    # get_total_leaves = base_leave_count+(float(total_experience)/2)
+    get_total_leaves = base_leave_count+total_experience
     frappe.db.set_value('Leave Allocation', doc.name, 'new_leaves_allocated', get_total_leaves)
     frappe.db.set_value('Leave Allocation', doc.name, 'total_leaves_allocated', get_total_leaves)
 
@@ -933,8 +934,8 @@ def change_last_sync_of_checkin():
         shift = frappe.get_doc("Shift Type",i)
         grace_time = ans = frappe.utils.now_datetime().replace(hour=0,minute=0,second=0,microsecond=0)+shift.end_time + timedelta(minutes=shift.allow_check_out_after_shift_end_time)
         grace_time_int = int(grace_time.strftime("%H%M"))
-        cur_time = frappe.utils.now_datetime().strftime("%H%M")
-        cur_time_int = int(cur_time)
+        cur_time = frappe.utils.now_datetime()
+        cur_time_int = int(cur_time.strftime("%H%M"))
         if cur_time_int >= grace_time_int:
             shift.last_sync_of_checkin = cur_time
             shift.save()

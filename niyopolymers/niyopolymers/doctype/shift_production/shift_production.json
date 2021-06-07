@@ -90,8 +90,11 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_bulk_edit": 1,
+   "allow_on_submit": 1,
    "fieldname": "items",
    "fieldtype": "Table",
+   "ignore_user_permissions": 1,
    "label": "Items",
    "options": "Shift Production Details",
    "reqd": 1
@@ -107,8 +110,8 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2021-05-26 14:27:10.892964",
- "modified_by": "venkatesh.nayak@atriina.com",
+ "modified": "2021-05-31 22:42:02.201746",
+ "modified_by": "Administrator",
  "module": "Niyopolymers",
  "name": "Shift Production",
  "owner": "venkatesh.nayak@atriina.com",

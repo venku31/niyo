@@ -9,20 +9,29 @@
   "preform",
   "preforma_sign",
   "rejection",
+  "rejection_item",
   "column_break_4",
   "start_time",
   "end_time",
   "blowing",
   "blowing_sign",
   "white",
+  "rejection_white",
   "column_break_7",
   "counter_start",
   "counter_end",
   "blowing_perform",
   "blowing_perform_sign",
   "hot",
+  "rejection_hot",
   "section_break_18",
-  "remarks"
+  "remarks",
+  "section_break_20",
+  "uom",
+  "fg_warehouse",
+  "column_break_23",
+  "rm_warehouse",
+  "rejection_warehouse"
  ],
  "fields": [
   {
@@ -142,16 +151,81 @@
    "fieldname": "remarks",
    "fieldtype": "Data",
    "label": "Remarks"
+  },
+  {
+   "fetch_from": "product_code.stock_uom",
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_20",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "Finished Goods - NP",
+   "fieldname": "fg_warehouse",
+   "fieldtype": "Link",
+   "label": "FG Warehouse",
+   "options": "Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Stores - NP",
+   "fieldname": "rm_warehouse",
+   "fieldtype": "Link",
+   "label": "RM Warehouse",
+   "options": "Warehouse",
+   "read_only": 1
+  },
+  {
+   "default": "Scrap Warehouse - NP",
+   "fieldname": "rejection_warehouse",
+   "fieldtype": "Link",
+   "label": " Rejection Warehouse",
+   "options": "Warehouse",
+   "read_only": 1
+  },
+  {
+   "default": "Rejection",
+   "fieldname": "rejection_item",
+   "fieldtype": "Link",
+   "label": "Rejection Item",
+   "options": "Item",
+   "read_only": 1
+  },
+  {
+   "default": "Rejection White",
+   "fieldname": "rejection_white",
+   "fieldtype": "Link",
+   "label": "Rejection White",
+   "options": "Item",
+   "read_only": 1
+  },
+  {
+   "default": "Rejection Hot",
+   "fieldname": "rejection_hot",
+   "fieldtype": "Link",
+   "label": "Rejection Hot",
+   "options": "Item",
+   "read_only": 1
   }
  ],
  "istable": 1,
- "modified": "2021-05-20 13:44:28.560213",
+ "modified": "2021-05-31 22:46:40.729613",
  "modified_by": "Administrator",
  "module": "Niyopolymers",
  "name": "Shift Production Details",
  "owner": "venkatesh.nayak@atriina.com",
  "permissions": [],
  "quick_entry": 1,
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
