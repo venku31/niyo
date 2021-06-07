@@ -2,7 +2,7 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-frappe.query_reports["Consoliadated Report"] = {
+frappe.query_reports["Consolidated"] = {
 	"filters": [
 		{
 			"label": __("Employee"),
