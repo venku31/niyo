@@ -137,6 +137,7 @@ app_include_js = [
 
 doctype_js = {
     'Sales Invoice': 'public/js/sales_invoice.js',
+	'Purchase Invoice': 'public/js/purchase_invoice.js',
 }
 
 doc_events = {
