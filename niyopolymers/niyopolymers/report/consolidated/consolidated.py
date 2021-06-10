@@ -22,7 +22,6 @@ def get_data(filters):
 	""".format(filters['employee']), as_dict=1)
 	return_query = []
 	for i in query:
-		print(str(i['data']))
 		dict_convert = yaml.load(i['data'])
 		if 'changed' in dict_convert:
 			reporting_manager = [x for x in dict_convert['changed'] if "reporting_manager" in x]
