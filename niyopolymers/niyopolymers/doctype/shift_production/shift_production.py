@@ -25,5 +25,5 @@ def create_stock_entry(doc, handler=""):
         se.append("items", { "item_code":se_item.rejection_hot, "qty": se_item.hot, "t_warehouse": se_item.rejection_warehouse,"transfer_qty" : se_item.rejection_hot,"conversion_factor": 1,"uom" : se_item.uom})
 
 #    frappe.msgprint('Stock Entry is created please submit the stock entry')
-        se.docstatus=1
-        se.insert()
+    se.docstatus=1
+    se.insert()
