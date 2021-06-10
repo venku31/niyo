@@ -1,27 +1,26 @@
 frappe.ui.form.on('Purchase Invoice', {
     before_save:function(frm){
-        if(cur_frm.doc.withholding_category == "Purchase"){
+        if(frm.doc.withholding_category == "Purchase"){
 		    if(frm.doc.total <= 10000){
-		        console.log("Hello")
-		        cur_frm.set_value('taxes_and_charges','Vat @15% - NP')
+		        frm.set_value('taxes_and_charges','Vat @15% - NP')
 		    }
 		    if(frm.doc.total > 10000){
-		        if(cur_frm.doc.tax_id){
-		            cur_frm.set_value('taxes_and_charges','Vat @15% + Wht 2% - NP')
+		        if(frm.doc.tax_id){
+		            frm.set_value('taxes_and_charges','Vat @15% + Wht 2% - NP')
 		            
 		        }
 		        else{
-		            cur_frm.set_value('taxes_and_charges','Vat @15% + Wht 30% - NP')
+		            frm.set_value('taxes_and_charges','Vat @15% + Wht 30% - NP')
 		            
 		        }
 		    }
 		}
-		if(cur_frm.doc.withholding_category == "Service"){
+		else{
 		    if(frm.doc.total < 3000){
 		        frm.set_value('taxes_and_charges','Vat @15% - NP')
 		    }
 		    if(frm.doc.total > 3000){
-		        if(cur_frm.doc.tax_id){
+		        if(frm.doc.tax_id){
 		            frm.set_value('taxes_and_charges','Vat @15% + Wht 2% - NP')
 		        }
 		        else{
@@ -33,13 +32,16 @@ frappe.ui.form.on('Purchase Invoice', {
         method: "frappe.client.get",
         args: {
             doctype: "Purchase Taxes and Charges Template",
-            name: cur_frm.doc.taxes_and_charges,
+            name: frm.doc.taxes_and_charges,
         },
-        callback(r) {
-            if(r.message) {
-                var task = r.message;
-                cur_frm.set_value("taxes",task.taxes)
+        callback(response) {
+            if(response.message) {
+                var template = response.message;
+                cur_frm.set_value("taxes",template.taxes)
             }
+			else{
+				frappe.throw("Invalid Purchase Taxes and Charges Template")
+			}
         }
     });
 	}
