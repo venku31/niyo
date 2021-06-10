@@ -18,14 +18,14 @@ def get_data(filters):
 		where docname = '{}'
 		order by ver.docname
 	""".format(filters['employee']), as_dict=1)
-	lst = []
+	return_query = []
 	for i in query:
 		dict_convert = json.loads(i['data'])
 		if 'changed' in dict_convert:
-			for j in dict_convert['changed']:
-				if 'reporting_manager' in j:
-					emp_name = frappe.db.get_value('Employee', i['docname'], 'employee_name')
-					b = (i['docname'], emp_name, j[2], i['creation'])
-					lst.append(b)
-	return tuple(lst)			
+			reporting_manager = [x for x in dict_convert['changed'] if "reporting_manager" in x]
+			if len(reporting_manager) != 0:
+				emp_name = frappe.db.get_value('Employee', i['docname'], 'employee_name')
+				b = (i['docname'], emp_name, reporting_manager[0][2], i['creation'])
+				return_query.append(b)
+	return tuple(return_query)			
 
