@@ -901,10 +901,8 @@ def save_interview_round(formdata, job_applicant):
 def send_mail_to_employees_on_shift():
     now_datetime = frappe.utils.now_datetime()
     from_time = now_datetime.strftime('%H:%m:%S')
-    print(from_time)
     add_one_hour = now_datetime + timedelta(hours=1)
     to_time = add_one_hour.strftime('%H:%m:%S')
-    print(to_time)
     shift = frappe.db.sql("""select name from `tabShift Type` where HOUR(start_time) = %s """,(int(now_datetime.hour) - 1))
     if shift:
         notification = frappe.get_doc('Notification', 'Employees on Shift')
@@ -919,17 +917,14 @@ def send_mail_to_employees_on_shift():
         doc.employees = employees
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
-        print(cc)
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
 def send_mail_to_employees_on_shift_end():
     now_datetime = frappe.utils.now_datetime()
     from_time = now_datetime.strftime('%H:%m:%S')
-    print(from_time)
     add_one_hour = now_datetime + timedelta(hours=1)
     to_time = add_one_hour.strftime('%H:%m:%S')
-    print(to_time)
     shift = frappe.db.sql("""select name from `tabShift Type` where HOUR(end_time) = %s """,(int(now_datetime.hour) - 1))
     if shift:
         notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
@@ -939,7 +934,6 @@ def send_mail_to_employees_on_shift_end():
         doc.checkins = checkin
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
-        print(cc)
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
