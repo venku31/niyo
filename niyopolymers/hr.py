@@ -923,6 +923,27 @@ def send_mail_to_employees_on_shift():
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
+def send_mail_to_employees_on_shift_end():
+    now_datetime = frappe.utils.now_datetime()
+    from_time = now_datetime.strftime('%H:%m:%S')
+    print(from_time)
+    add_one_hour = now_datetime + timedelta(hours=1)
+    to_time = add_one_hour.strftime('%H:%m:%S')
+    print(to_time)
+    shift = frappe.db.sql("""select name from `tabShift Type` where HOUR(end_time) = %s """,(int(now_datetime.hour) - 1))
+    if shift:
+        notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
+        doc = frappe.get_doc('Shift Type', shift[0][0])
+        checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+        where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.utils.nowdate()),as_dict=1)
+        doc.checkins = checkin
+        args={'doc': doc}
+        recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+        print(cc)
+        frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
+        subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+
+
 def change_last_sync_of_checkin():
     shifts = frappe.db.get_list("Shift Type",as_list=1)
     shift_list = []
