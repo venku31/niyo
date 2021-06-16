@@ -969,12 +969,6 @@ def validate_leaves(doc, method):
         
         monthly_assign_leave = leave_allocation_period[0]['total_leaves_allocated'] / num_months
         print(monthly_assign_leave)
-        filters_ = {
-            'employee': doc.employee, 
-            'docstatus': 1,  
-            'leave_type': 'Annual Leave',
-            'from_date': ['between', [leave_allocation_period[0]['from_date'], frappe.utils.nowdate()]]
-            }
 
         leaves = frappe.db.sql("""
             select sum(total_leave_days )
