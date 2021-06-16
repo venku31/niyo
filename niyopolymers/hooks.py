@@ -137,6 +137,7 @@ app_include_js = [
 
 doctype_js = {
     'Sales Invoice': 'public/js/sales_invoice.js',
+	'Purchase Invoice': 'public/js/purchase_invoice.js',
 }
 
 doc_events = {
@@ -166,6 +167,9 @@ doc_events = {
 	},
 	"Leave Allocation": {
 		"on_submit": "niyopolymers.hr.before_submit_leave_allocation"
+	},
+	"Leave Application": {
+		"validate": "niyopolymers.hr.validate_leaves"
 	},
 	"*": {
 		"before_submit": "niyopolymers.accounts.before_submit_all_doctypes"
@@ -222,12 +226,14 @@ scheduler_events = {
 			"niyopolymers.hr.change_last_sync_of_checkin"
 		],
 		"0 0 * * *": [
-			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days"
+			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days",
+			"niyopolymers.utils.trigger_mail_of_pending_todo"
 		]
 	},
 	"hourly": [
         "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays",
-		"niyopolymers.hr.send_mail_to_employees_on_shift"
+		"niyopolymers.hr.send_mail_to_employees_on_shift",
+		"niyopolymers.hr.send_mail_to_employees_on_shift_end"
     ],
 	"daily": [
         "niyopolymers.hr.maternity_leave_mail"
