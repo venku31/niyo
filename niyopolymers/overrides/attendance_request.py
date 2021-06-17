@@ -3,7 +3,7 @@ from frappe.utils import date_diff, add_days, getdate
 import frappe
 
 def create_attendance(self):
-    attendance_list = frappe.db.get_all('Attendance', filters={'attendance_date': ['between', [self.from_date, self.to_date]], 'employee': self.employee, 'status': 'Absent', 'docstatus': 1}, fields=['name'])
+    attendance_list = frappe.db.get_all('Attendance', filters={'attendance_date': ['between', [self.from_date, self.to_date]], 'employee': self.employee, 'docstatus': 1}, fields=['name'])
    
     if attendance_list:
         for i in attendance_list:
