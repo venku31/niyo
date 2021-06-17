@@ -20,7 +20,7 @@ app_include_js = [
 	"/assets/js/world-calendar.min.js",
 	"/assets/niyopolymers/js/transaction.js",
 	"/assets/niyopolymers/js/general_ledger.js"
-]
+]	
 
 # include js, css files in header of web template
 # web_include_css = "/assets/niyopolymers/css/niyopolymers.css"

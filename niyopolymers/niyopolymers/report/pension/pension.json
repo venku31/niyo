@@ -1,0 +1,32 @@
+{
+ "add_total_row": 0,
+ "creation": "2021-05-31 11:17:44.503128",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "Niyo Polymer Letterhead",
+ "modified": "2021-05-31 14:48:12.626360",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Pension",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "Select\n    emp.tin_no as \"TIN NO:Int:150\",\n    emp.employee_name as \"Employee Name:Data:200\",\n    emp.date_of_joining as \"Date of Employeement:Date:100\",\n(select amount from `tabSalary Detail` where parent=ss.name and emp.name = ss.employee and salary_component='Basic (\u1218\u1230\u1228\u12ca)') as \"Monthly Salary (Silver):Float:150\",\n(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (\u12e8\u1321\u1228\u1273 \u12a0\u1260\u120d) (7%)' ) as \"Amount 7% (Birr):Float:100\",\n(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (\u12e8\u1321\u1228\u1273 \u12a0\u1260\u120d) (11%)' ) as \"Amount 7% (Birr):Float:100\",\n((select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (\u12e8\u1321\u1228\u1273 \u12a0\u1260\u120d) (7%)')+(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (\u12e8\u1321\u1228\u1273 \u12a0\u1260\u120d) (11%)'))\nfrom\n    `tabEmployee` as emp\njoin\n    `tabSalary Slip` as ss\non\n    emp.name = ss.employee\n",
+ "ref_doctype": "Employee",
+ "report_name": "Pension",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Employee"
+  },
+  {
+   "role": "HR User"
+  },
+  {
+   "role": "HR Manager"
+  }
+ ]
+}
