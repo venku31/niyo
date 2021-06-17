@@ -991,6 +991,7 @@ def validate_leaves(doc, method):
         """.format(doc.employee))    
        
         months = datetime.strptime(doc.from_date, '%Y-%m-%d')
+        
         per_month_leaves = 0
         for i in range(leave_allocation_period[0]['from_date'].month, months.month+1):
             per_month_leaves += monthly_assign_leave
