@@ -921,11 +921,11 @@ def send_mail_to_employees_on_shift():
         subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
 def send_mail_to_employees_on_shift_end():
-    now_datetime = frappe.utils.now_datetime()
-    from_time = now_datetime.strftime('%H:%m:%S')
-    add_one_hour = now_datetime + timedelta(hours=1)
-    to_time = add_one_hour.strftime('%H:%m:%S')
-    shift = frappe.db.sql("""select name from `tabShift Type` where HOUR(end_time) = %s """,(int(now_datetime.hour) - 1))
+    now = frappe.utils.now_datetime()
+    upto = now.strftime('%H:%M:%S')
+    from_time = now - timedelta(hours=1)
+    one_hour_before = from_time.strftime('%H:%M:%S')
+    shift = frappe.db.sql("""select name from `tabShift Type` where end_time >= %s and end_time < %s """,(one_hour_before,upto))
     if shift:
         notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
         doc = frappe.get_doc('Shift Type', shift[0][0])
