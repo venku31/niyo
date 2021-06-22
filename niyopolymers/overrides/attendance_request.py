@@ -14,7 +14,7 @@ def create_attendance(self):
     request_days = date_diff(self.to_date, self.from_date) + 1
     for number in range(request_days):
         attendance_date = add_days(self.from_date, number)
-        skip_attendance = validate_if_attendance_not_applicable(self, attendance_date)
+        skip_attendance = self.validate_if_attendance_not_applicable(attendance_date)
         if not skip_attendance:
             attendance = frappe.new_doc("Attendance")
             attendance.employee = self.employee
