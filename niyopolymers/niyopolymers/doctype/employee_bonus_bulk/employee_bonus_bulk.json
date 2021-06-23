@@ -1,0 +1,63 @@
+{
+ "creation": "2021-06-23 16:00:34.651414",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cycle_from_date",
+  "cycle_to_date",
+  "bonus_date",
+  "employees"
+ ],
+ "fields": [
+  {
+   "fieldname": "cycle_from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Cycle From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cycle_to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Cycle To Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bonus_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Bonus Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "employees",
+   "fieldtype": "Table",
+   "label": "Employees",
+   "options": "Bonus Employee Details"
+  }
+ ],
+ "modified": "2021-06-23 16:06:08.606725",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Employee Bonus Bulk",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

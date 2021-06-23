@@ -1,0 +1,35 @@
+{
+ "creation": "2021-06-23 16:05:19.605333",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "employee_name",
+  "bous"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "bous",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Bous"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-06-23 16:06:25.970820",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Bonus Employee Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
