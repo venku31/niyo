@@ -1,13 +1,17 @@
 {
+ "autoname": "EBB-.YY.-.MM.-.#####",
  "creation": "2021-06-23 16:00:34.651414",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "cycle_from_date",
-  "cycle_to_date",
   "bonus_date",
-  "employees"
+  "col_column",
+  "cycle_to_date",
+  "section_section",
+  "employees",
+  "amended_from"
  ],
  "fields": [
   {
@@ -36,15 +40,34 @@
    "fieldtype": "Table",
    "label": "Employees",
    "options": "Bonus Employee Details"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Employee Bonus Bulk",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_section",
+   "fieldtype": "Section Break"
   }
  ],
- "modified": "2021-06-23 16:06:08.606725",
- "modified_by": "Administrator",
+ "is_submittable": 1,
+ "modified": "2021-06-24 11:11:36.099754",
+ "modified_by": "pradnyesh.patil@atriina.com",
  "module": "Niyopolymers",
  "name": "Employee Bonus Bulk",
  "owner": "Administrator",
  "permissions": [
   {
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -54,6 +77,7 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
