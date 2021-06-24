@@ -996,8 +996,8 @@ def send_probation_peroid_end_notification():
     for employee in employees:
         doj= employee['date_of_joining']
         today = datetime.strptime(frappe.utils.today(), '%Y-%m-%d').date()
-        delta = today - doj
-        if delta.days == 59:
+        num_months = (today.year - doj.year) * 12 + (today.month - doj.month)
+        if num_months == 7:
             notification = frappe.get_doc('Notification', 'Probation Period Completion')
             doc = frappe.get_doc('Employee', employee['name'])
             args={'doc': doc}
