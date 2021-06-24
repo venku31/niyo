@@ -1,0 +1,25 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2021-06-24 14:04:04.220334",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Employee",
+ "enabled": 1,
+ "event": "Custom",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<h3> {{doc.employee_name}} has completed their Probation period today<h3>",
+ "modified": "2021-06-24 14:46:48.540597",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Probation Period Completion",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "cc": "niyopolymers@gmail.com"
+  }
+ ],
+ "subject": "{{doc.employee_name}} Probation Period Completion"
+}
