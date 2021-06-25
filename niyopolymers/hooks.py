@@ -235,8 +235,9 @@ scheduler_events = {
 		"niyopolymers.hr.send_mail_to_employees_on_shift",
 		"niyopolymers.hr.send_mail_to_employees_on_shift_end"
     ],
-	"daily": [
-        "niyopolymers.hr.maternity_leave_mail"
+	"monthly": [
+        "niyopolymers.hr.maternity_leave_mail",
+		"niyopolymers.hr.send_probation_peroid_end_notification"
     ]
 }
 

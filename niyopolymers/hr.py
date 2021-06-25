@@ -990,3 +990,18 @@ def validate_leaves(doc, method):
        
         if doc.total_leave_days > total_allowed_leaves:
               frappe.throw('You should take only {} leaves in this month'.format(total_allowed_leaves))          
+
+def send_probation_peroid_end_notification():
+    employees = frappe.db.get_all('Employee', fields=['employee_name', 'date_of_joining', 'name'])
+    for employee in employees:
+        doj= employee['date_of_joining']
+        today = datetime.strptime(frappe.utils.today(), '%Y-%m-%d').date()
+        num_months = (today.year - doj.year) * 12 + (today.month - doj.month)
+        if num_months == 7:
+            notification = frappe.get_doc('Notification', 'Probation Period Completion')
+            doc = frappe.get_doc('Employee', employee['name'])
+            args={'doc': doc}
+            recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+            frappe.enqueue(method=frappe.sendmail, cc=cc, sender=None, 
+                subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+ 
