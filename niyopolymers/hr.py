@@ -113,9 +113,7 @@ def before_insert_salary_slip(doc, method):
             doc.attendance_bonus = payroll_entry
         shift_allowance = frappe.db.get_value('Payroll Entry', doc.payroll_entry, 'allowance_per_night_shift')    
         if shift_allowance:
-            doc.allowance_per_night_shift = shift_allowance
-
-    before_save(doc, method)        
+            doc.allowance_per_night_shift = shift_allowance        
 
 def before_save(doc, method):
     company = frappe.defaults.get_user_default("company") 
