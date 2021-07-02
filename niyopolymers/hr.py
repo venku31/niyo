@@ -913,7 +913,11 @@ def send_mail_to_employees_on_shift_end():
     upto = now.strftime('%H:%M:%S')
     from_time = now - timedelta(hours=1)
     one_hour_before = from_time.strftime('%H:%M:%S')
-    shift = frappe.db.sql("""select name from `tabShift Type` where end_time >= %s and end_time < %s """,(one_hour_before,upto))
+
+    # In the below sql command we will be fetching shift type such that time upto which checking out is allowed after shift end, is between
+    # current time and one hour before current time
+    shift = frappe.db.sql("""select name from `tabShift Type` where ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000'))
+     <= %s and ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000')) > %s;""",(upto,one_hour_before))
     if shift:
         notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
         doc = frappe.get_doc('Shift Type', shift[0][0])
