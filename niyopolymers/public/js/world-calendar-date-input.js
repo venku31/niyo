@@ -34,6 +34,15 @@ frappe.ui.form.ControlWorldCalendarDate = frappe.ui.form.ControlData.extend({
 			this.datepicker.selectDate(frappe.datetime.str_to_obj(value));
 		}
 	},
+	get_calendar_instance: function() {
+		let sysdefaults = frappe.boot.sysdefaults;
+		let calendar_instance = null
+		if (sysdefaults.country == 'Ethiopia') {
+			calendar_instance = 'ethiopian'
+		}
+
+		return calendar_instance
+	},
 	set_date_options: function() {
 		// webformTODO:
 		let sysdefaults = frappe.boot.sysdefaults;
@@ -50,10 +59,7 @@ frappe.ui.form.ControlWorldCalendarDate = frappe.ui.form.ControlData.extend({
 		this.today_text = __("Today");
 		this.date_format = frappe.defaultDateFormat;
 
-		let calendar_instance = null
-		if (sysdefaults.country == 'Ethiopia') {
-			calendar_instance = 'ethiopian'
-		}
+		let calendar_instance = this.get_calendar_instance()
 
 		let now_date = $.calendars.instance(calendar_instance).fromJSDate(new Date())
 
@@ -143,5 +149,12 @@ frappe.ui.form.ControlWorldCalendarDate = frappe.ui.form.ControlData.extend({
 	get_value: function() {
 		var jsdate = $(this.$input).calendarsPicker('getDate')[0].toJSDate()
 		return $.calendars.instance().fromJSDate(jsdate).formatDate('yyyy-mm-dd')
-	}
+	},
+	set_value: function(value) {
+		let calendar_instance = this.get_calendar_instance()
+		let value_jsdate = new Date(value)
+		let value_ = $.calendars.instance(calendar_instance).fromJSDate(value_jsdate).formatDate('yyyy-mm-dd')
+		
+		return this.validate_and_set_in_model(value_);
+	},
 });
