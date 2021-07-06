@@ -12,7 +12,7 @@ def execute(filters=None):
 
 def get_data():
 	res = frappe.db.sql("""
-	select c.withholder_tax_account, p.tax_id, p.supplier, p.withholding_receipt_no, p.withholding_receipt_date, p.total, a.tax_amount from `tabPurchase Invoice` as p join `tabPurchase Taxes and Charges` as a on p.name = a.parent join `tabCompany` as c on p.company = c.name and a.description like '%With Holding%' and rate = 2
+	select c.withholder_tax_account, p.tax_id, p.supplier, p.withholding_receipt_no, p.withholding_receipt_date, p.total, a.tax_amount from `tabPurchase Invoice` as p join `tabPurchase Taxes and Charges` as a on p.name = a.parent join `tabCompany` as c on p.company = c.name and a.account_head = '21130-01 - With Holding Tax Payable - Hamle-2013 (08/07/2021 - 06/08/2021) - NP' and rate = 2
 	""")
 
 	return res
