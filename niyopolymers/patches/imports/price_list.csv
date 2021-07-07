@@ -1,0 +1,3 @@
+"Price List Name","Enabled","Currency","Buying","Selling","Price Not UOM Dependent","ID (Applicable for Countries)","Country (Applicable for Countries)"
+"Standard Selling",1,"ETB",0,1,0,"",""
+"Standard Buying",1,"ETB",1,0,0,"",""

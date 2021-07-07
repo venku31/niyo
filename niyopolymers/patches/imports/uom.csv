@@ -1,0 +1,241 @@
+"UOM Name","Must be Whole Number"
+"ml",0
+"Parts Per Million",0
+"Percent",0
+"Tesla",0
+"Gauss",0
+"Gamma",0
+"Milliampere",0
+"Kiloampere",0
+"EMU of current",0
+"Biot",0
+"Abampere",0
+"Ampere",0
+"Nanocoulomb",0
+"Millicoulomb",0
+"Megacoulomb",0
+"Kilocoulomb",0
+"Faraday",0
+"EMU Of Charge",0
+"Coulomb",0
+"Ampere-Second",0
+"Ampere-Minute",0
+"Ampere-Hour",0
+"Wavelength In Kilometres",0
+"Wavelength In Megametres",0
+"Wavelength In Gigametres",0
+"Megahertz",0
+"Kilohertz",0
+"Hertz",0
+"Millihertz",0
+"Nanohertz",0
+"Cycle/Second",0
+"Kelvin",0
+"Fahrenheit",0
+"Celsius",0
+"Ton (Long)/Cubic Yard",0
+"Ton (Short)/Cubic Yard",0
+"Slug/Cubic Foot",0
+"Psi/1000 Feet",0
+"Pound/Gallon (UK)",0
+"Pound/Gallon (US)",0
+"Pound/Cubic Yard",0
+"Pound/Cubic Foot",0
+"Pound/Cubic Inch",0
+"Ounce/Gallon (UK)",0
+"Ounce/Gallon (US)",0
+"Ounce/Cubic Foot",0
+"Ounce/Cubic Inch",0
+"Nanogram/Litre",0
+"Microgram/Litre",0
+"Milligram/Litre",0
+"Megagram/Litre",0
+"Milligram/Cubic Millimeter",0
+"Milligram/Cubic Centimeter",0
+"Milligram/Cubic Meter",0
+"Kilogram/Litre",0
+"Kilogram/Cubic Centimeter",0
+"Kilogram/Cubic Meter",0
+"Grain/Cubic Foot",0
+"Grain/Gallon (UK)",0
+"Grain/Gallon (US)",0
+"Gram/Litre",0
+"Gram/Cubic Millimeter",0
+"Gram/Cubic Centimeter",0
+"Gram/Cubic Meter",0
+"Hectogram/Litre",0
+"Dekagram/Litre",0
+"Decigram/Litre",0
+"Centigram/Litre",0
+"Watt",0
+"Volt-Ampere",0
+"Megawatt",0
+"Kilowatt",0
+"Horsepower",0
+"Calorie/Seconds",0
+"Btu/Seconds",0
+"Btu/Minutes",0
+"Btu/Hour",0
+"Watt-Hour",0
+"Megajoule",0
+"Litre-Atmosphere",0
+"Kilowatt-Hour",0
+"Kilocalorie",0
+"Kilojoule",0
+"Joule",0
+"Inch Pound-Force",0
+"Horsepower-Hours",0
+"Erg",0
+"Calorie (Food)",0
+"Calorie (Mean)",0
+"Calorie (Th)",0
+"Calorie (It)",0
+"Btu (Mean)",0
+"Btu (Th)",0
+"Btu (It)",0
+"Ton-Force (US)",0
+"Ton-Force (UK)",0
+"Tonne-Force(Metric)",0
+"Poundal",0
+"Pound-Force",0
+"Pond",0
+"Ounce-Force",0
+"Newton",0
+"Kilopound-Force",0
+"Kilopond",0
+"Kilogram-Force",0
+"Joule/Meter",0
+"Gram-Force",0
+"Dyne",0
+"Torr",0
+"Technical Atmosphere",0
+"Millimeter Of Water",0
+"Millimeter Of Mercury",0
+"Milibar",0
+"Microbar",0
+"Meter Of Water",0
+"Kilopascal",0
+"Inches Of Mercury",0
+"Iches Of Water",0
+"Hectopascal",0
+"Foot Of Water",0
+"Bar",0
+"Pascal",0
+"Atmosphere",0
+"Week",0
+"Nanosecond",0
+"Microsecond",0
+"Millisecond",0
+"Second",0
+"Minute",0
+"Hour",0
+"Day",0
+"Teaspoon",0
+"Tablespoon (US)",0
+"Quart Liquid (US)",0
+"Quart Dry (US)",0
+"Quart (UK)",0
+"Pint, Liquid (US)",0
+"Pint, Dry (US)",0
+"Pint (UK)",0
+"Peck",0
+"Millilitre",0
+"Litre",0
+"Gallon Liquid (US)",0
+"Gallon Dry (US)",0
+"Gallon (UK)",0
+"Fluid Ounce (US)",0
+"Fluid Ounce (UK)",0
+"Decilitre",0
+"Cup",0
+"Cubic Yard",0
+"Cubic Millimeter",0
+"Cubic Meter",0
+"Cubic Inch",0
+"Cubic Foot",0
+"Cubic Decimeter",0
+"Cubic Centimeter",0
+"Centilitre",0
+"Bushel (US Dry Level)",0
+"Bushel (UK)",0
+"Barrel (Oil)",0
+"Barrel(Beer)",0
+"Kip",0
+"Tonne",0
+"Stone",0
+"Slug",0
+"Pound",0
+"Pood",0
+"Ounce",0
+"Milligram",0
+"Microgram",0
+"Kg",0
+"Quintal",0
+"Hundredweight (US)",0
+"Hundredweight (UK)",0
+"Gram",0
+"Grain",0
+"Dram",0
+"Cental",0
+"Carat",0
+"Mile/Second",0
+"Mile/Minute",0
+"Knot",0
+"Mile/Hour",0
+"Foot/Second",0
+"Kilometer/Hour",0
+"Inch/Second",0
+"Foot/Minute",0
+"Inch/Minute",0
+"Meter/Second",0
+"Square Mile",0
+"Square Centimeter",0
+"Square Inch",0
+"Square Foot",0
+"Square Yard",0
+"Hectare",0
+"Acre (US)",0
+"Acre",0
+"Are",0
+"Square Kilometer",0
+"Caballeria",0
+"Manzana",0
+"Area",0
+"Centiarea",0
+"Square Meter",0
+"Medio Metro",0
+"Sazhen",0
+"Arshin",0
+"Yard",0
+"Versta",0
+"Vara",0
+"Rod",0
+"Nanometer",0
+"Millimeter",0
+"Mile (Nautical)",0
+"Mile",0
+"Micrometer",0
+"Link",0
+"Kilometer",0
+"Inch",0
+"Hectometer",0
+"Hand",0
+"Furlong",0
+"Foot",0
+"Fathom",0
+"Ems(Pica)",0
+"Ells (UK)",0
+"Decimeter",0
+"Chain",0
+"Centimeter",0
+"Cable Length",0
+"Cable Length (US)",0
+"Cable Length (UK)",0
+"Calibre",0
+"Barleycorn",0
+"Meter",0
+"Set",1
+"Pair",1
+"Nos",1
+"Box",1
+"Unit",1
