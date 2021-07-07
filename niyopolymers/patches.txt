@@ -1,5 +1,6 @@
 niyopolymers.patches.add_maternity_leave_type
 niyopolymers.patches.import_coa
+niyopolymers.patches.import_holiday_list
 niyopolymers.patches.import_item_group
 niyopolymers.patches.import_shift_type
 niyopolymers.patches.import_sales_taxes_and_charges_template
@@ -9,7 +10,6 @@ niyopolymers.patches.import_items
 niyopolymers.patches.import_leave_type
 niyopolymers.patches.import_salary_component
 niyopolymers.patches.import_salary_structure
-niyopolymers.patches.import_holiday_list
 niyopolymers.patches.import_leave_period
 niyopolymers.patches.import_fiscal_year
 niyopolymers.patches.import_role
