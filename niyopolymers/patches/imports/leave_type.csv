@@ -1,0 +1,8 @@
+"Leave Type Name","Max Leaves Allowed","Applicable After (Working Days)","Maximum Continuous Days Applicable","Is Carry Forward","Is Leave Without Pay","Is Optional Leave","Allow Negative Balance","Include holidays within leaves as leaves","Is Compensatory","Maximum Carry Forwarded Leaves","Expire Carry Forwarded Leaves (Days)","Allow Encashment","Encashment Threshold Days","Earning Component","Is Earned Leave","Earned Leave Frequency","Rounding"
+"Maternity Leave",0,0,0,0,0,0,0,0,0,0.0,0,0,0,"",0,"Monthly","0.5"
+"Annual Leave",0,0,0,1,0,0,0,0,0,0.0,365,0,0,"",1,"Monthly","0.5"
+"Leave Without Pay",0,0,0,0,1,0,0,1,0,0.0,0,0,0,"",0,"Monthly","0.5"
+"Privilege Leave",0,0,0,0,0,0,0,1,0,0.0,0,0,0,"",0,"Monthly","0.5"
+"Sick Leave",0,0,0,0,0,0,0,1,0,0.0,0,0,0,"",0,"Monthly","0.5"
+"Compensatory Off",0,0,0,0,0,0,0,1,1,0.0,0,0,0,"",0,"Monthly","0.5"
+"Casual Leave",0,0,3,1,0,0,0,1,0,0.0,0,1,0,"",0,"Monthly","0.5"
