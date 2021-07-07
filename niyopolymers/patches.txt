@@ -12,6 +12,8 @@ niyopolymers.patches.import_salary_component
 niyopolymers.patches.import_salary_structure
 niyopolymers.patches.import_leave_period
 niyopolymers.patches.import_fiscal_year
+niyopolymers.patches.import_workflow_state
+niyopolymers.patches.import_workflow_action_master
 niyopolymers.patches.import_role
 niyopolymers.patches.import_workflow
 niyopolymers.patches.import_loan_type
