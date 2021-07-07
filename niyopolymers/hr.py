@@ -113,9 +113,7 @@ def before_insert_salary_slip(doc, method):
             doc.attendance_bonus = payroll_entry
         shift_allowance = frappe.db.get_value('Payroll Entry', doc.payroll_entry, 'allowance_per_night_shift')    
         if shift_allowance:
-            doc.allowance_per_night_shift = shift_allowance
-
-    before_save(doc, method)        
+            doc.allowance_per_night_shift = shift_allowance        
 
 def before_save(doc, method):
     company = frappe.defaults.get_user_default("company") 
@@ -915,7 +913,11 @@ def send_mail_to_employees_on_shift_end():
     upto = now.strftime('%H:%M:%S')
     from_time = now - timedelta(hours=1)
     one_hour_before = from_time.strftime('%H:%M:%S')
-    shift = frappe.db.sql("""select name from `tabShift Type` where end_time >= %s and end_time < %s """,(one_hour_before,upto))
+
+    # In the below sql command we will be fetching shift type such that time upto which checking out is allowed after shift end, is between
+    # current time and one hour before current time
+    shift = frappe.db.sql("""select name from `tabShift Type` where ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000'))
+     <= %s and ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000')) > %s;""",(upto,one_hour_before))
     if shift:
         notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
         doc = frappe.get_doc('Shift Type', shift[0][0])
@@ -990,3 +992,18 @@ def validate_leaves(doc, method):
        
         if doc.total_leave_days > total_allowed_leaves:
               frappe.throw('You should take only {} leaves in this month'.format(total_allowed_leaves))          
+
+def send_probation_peroid_end_notification():
+    employees = frappe.db.get_all('Employee', fields=['employee_name', 'date_of_joining', 'name'])
+    for employee in employees:
+        doj= employee['date_of_joining']
+        today = datetime.strptime(frappe.utils.today(), '%Y-%m-%d').date()
+        num_months = (today.year - doj.year) * 12 + (today.month - doj.month)
+        if num_months == 7:
+            notification = frappe.get_doc('Notification', 'Probation Period Completion')
+            doc = frappe.get_doc('Employee', employee['name'])
+            args={'doc': doc}
+            recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+            frappe.enqueue(method=frappe.sendmail, cc=cc, sender=None, 
+                subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+ 

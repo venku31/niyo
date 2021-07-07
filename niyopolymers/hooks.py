@@ -231,12 +231,13 @@ scheduler_events = {
 		]
 	},
 	"hourly": [
-        "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays",
-		"niyopolymers.hr.send_mail_to_employees_on_shift",
-		"niyopolymers.hr.send_mail_to_employees_on_shift_end"
+        "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays"
+		# "niyopolymers.hr.send_mail_to_employees_on_shift",
+		# "niyopolymers.hr.send_mail_to_employees_on_shift_end"
     ],
-	"daily": [
-        "niyopolymers.hr.maternity_leave_mail"
+	"monthly": [
+        "niyopolymers.hr.maternity_leave_mail",
+		"niyopolymers.hr.send_probation_peroid_end_notification"
     ]
 }
 
@@ -247,7 +248,7 @@ fixtures = [
 			[
 				"dt",
 				"in",
-				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Employee", "Job Opening", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry"]
+				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Employee", "Job Opening", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry","Company"]
 			]
 		]
 	},
