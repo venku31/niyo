@@ -59,7 +59,7 @@ app_include_js = [
 # ------------
 
 # before_install = "niyopolymers.install.before_install"
-# after_install = "niyopolymers.install.after_install"
+after_install = "niyopolymers.install.after_install"
 
 # Desk Notifications
 # ------------------
