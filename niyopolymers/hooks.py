@@ -197,9 +197,6 @@ doc_events = {
 	"Journal Entry": {
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
-	"Payment Request and Authorization": {
-		"before_submit": "niyopolymers.utils.set_approver_name"
-	},
 	"Shift Production": {
                 "on_submit": "niyopolymers.niyopolymers.doctype.shift_production.shift_production.create_stock_entry"
         }
@@ -243,52 +240,12 @@ scheduler_events = {
 
 fixtures = [
 	{
-		"dt": "Custom Field",
-		"filters": [
-			[
-				"dt",
-				"in",
-				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Employee", "Job Opening", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry","Company"]
-			]
-		]
-	},
-	{
 		"dt": "Custom Script",
 		"filters": [
 			[
 				"dt",
 				"in",
-				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
-			]
-		]
-	},
-	{
-		'dt': 'Warning Letter Template',
-		"filters": [
-			[
-				'name',
-				'in', 
-				['Consecutive Leave']
-			]
-		]
-	},
-	{
-		"dt": "Workflow",
-		"filters": [
-			[
-				"document_type",
-				"in",
-				["Journal Entry", "Sales Order", "Sales Invoice", "Payment Entry", "Purchase Order", "Purchase Invoice", "Material Request", "Payment Request and Authorization"]
-			]
-		]
-	},
-	{
-		"dt": "Role",
-		"filters": [
-			[
-				"name",
-				"in",
-				['Journal Entry Approver', 'Deputy PRA Approver', 'Accounts Viewer', 'Purchase Order Approver', 'PRA Approver', 'PRA Checker', 'CFO', 'Material Request Approver', 'Sales Invoice Approver', 'Sales Order Approver', 'Payment Entry Approver', 'Purchase Invoice Approver', 'CRV Approver', 'PCPV Approver', 'Chart of Accounts Manager', 'Document Deletor', 'Document canceller', 'Petty Cash Manager']
+				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Purchase Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
 			]
 		]
 	}
