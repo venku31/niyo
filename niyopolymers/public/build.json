@@ -1,0 +1,11 @@
+{
+	"css/world-calendar.min.css": [
+		"../node_modules/kbw-calendars/dist/css/jquery.calendars.picker.css"
+	],
+	"js/world-calendar.min.js": [
+		"../node_modules/kbw-calendars/dist/js/jquery.plugin.min.js",
+		"../node_modules/kbw-calendars/dist/js/jquery.calendars.all.min.js",
+		"../node_modules/kbw-calendars/dist/js/jquery.calendars.ethiopian.min.js",
+		"public/js/world-calendar-date-input.js"
+	]
+}

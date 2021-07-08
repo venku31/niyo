@@ -1,0 +1,25 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2021-06-02 12:09:09.940216",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "ToDo",
+ "enabled": 1,
+ "event": "Custom",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<h2> The below ToDo list are pending...</h2>\n{% for i in doc.todos %}\n<ol> <a href=\"{{ frappe.utils.get_url(doc.get_url()) }}\">{{ i.description }} </a> </ol>\n{% endfor %}",
+ "modified": "2021-06-02 13:40:12.405997",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Pending ToDo",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "cc": "halima.sayyed@atriina.com"
+  }
+ ],
+ "subject": "List of Pending ToDo"
+}

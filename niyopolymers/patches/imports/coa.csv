@@ -1,0 +1,355 @@
+Account Name,Parent Account,Account Number,Is Group,Account Type,Root Type
+Application of Funds,,10000,1,,Asset
+Current Assets,Application of Funds,11000,1,,Asset
+Cash and Bank,Current Assets,11100,1,,Asset
+Cash,Cash and Bank,11110,1,,Asset
+Petty Cash - HO,Cash,11110-01,0,Cash,Asset
+Petty Cash - Tsion,Cash,11110-02,0,Cash,Asset
+Bank,Current Assets,11120,1,,Asset
+Abay Bank S C - UNIT 1,Bank,11120-01,0,Bank,Asset
+Awash Bank - UNIT 1,Bank,11120-02,0,Bank,Asset
+Berhan International Bank S C - UNIT 1,Bank,11120-03,0,Bank,Asset
+Commercial Bank of Ethiopia - UNIT 1,Bank,11120-04,0,Bank,Asset
+Commercial Bank of Ethiopia-Bole - UNIT 1,Bank,11120-05,0,Bank,Asset
+Dashen Bank - UNIT 1,Bank,11120-06,0,Bank,Asset
+NIB International Bank S C - UNIT 1,Bank,11120-07,0,Bank,Asset
+United Bank S.C. - UNIT 1,Bank,11120-08,0,Bank,Asset
+Wegagen Bank S C - UNIT 1,Bank,11120-09,0,Bank,Asset
+Zemen Bank - UNIT 1,Bank,11120-10,0,Bank,Asset
+Commercial Bank of Ethiopia-Bole - UNIT 2,Bank,11120-11,0,Bank,Asset
+Accounts Receivable,Current Assets,11200,1,,Asset
+Trade Debtors - UNIT 1,Accounts Receivable,11200-01,0,Receivable,Asset
+Trade Debtors - UNIT 2,Accounts Receivable,11200-02,0,Receivable,Asset
+Staff Debtors,Accounts Receivable,11200-03,0,Receivable,Asset
+Prepayments & Deposits,Accounts Receivable,11200-04,0,Receivable,Asset
+Telephone Deposit,Accounts Receivable,11200-05,0,Receivable,Asset
+Loans to  Employees,Accounts Receivable,11210,1,,Asset
+Loan to Samuel A,Loans to  Employees,11210-01,0,Receivable,Asset
+Loan to Tewodros T,Loans to  Employees,11210-02,0,Receivable,Asset
+Loan to Shareholders,Loans to  Employees,11210-03,0,Receivable,Asset
+Other Current Assets,Current Assets,11300,1,,Asset
+Preoperational Cost,Other Current Assets,11300-01,0,Capital Work in Progress,Asset
+Prepaid Expenses,Other Current Assets,11300-02,0,Receivable,Asset
+Suspense ,Other Current Assets,11300-03,0,Temporary,Asset
+Prepaid Rent,Other Current Assets,11300-04,0,Receivable,Asset
+Withholding Tax Receivable,Other Current Assets,11300-05,0,Receivable,Asset
+Withholding Tax Receivable (07 July 2020),Other Current Assets,11300-06,0,Receivable,Asset
+Goods in Transit,Current Assets,11400,1,,Asset
+GIT - Fixed Assets,Goods in Transit,11410,1,,Asset
+GIT - Inventory,Goods in Transit,11420,1,,Asset
+GIT-1 (Honey Jar Preform Cavity),GIT - Inventory,11420-01,0,Capital Work in Progress,Asset
+GIT-2 (Mould and Spares),GIT - Inventory,11420-02,0,Capital Work in Progress,Asset
+GIT - Jars,GIT - Inventory,11420-03,0,Capital Work in Progress,Asset
+GIT-Yasin 400ml Mould,GIT - Inventory,11420-04,0,Capital Work in Progress,Asset
+Stock Assets,Current Assets,11500,1,,Asset
+SA- Stock location - UNIT 1,Stock Assets,11510,1,,Asset
+Raw Material-1,SA- Stock location - UNIT 1,11510-01,0,Stock,Asset
+Work In Process-1,SA- Stock location - UNIT 1,11510-02,0,Stock,Asset
+Finished Goods-1,SA- Stock location - UNIT 1,11510-03,0,Stock,Asset
+Packaging-1,SA- Stock location - UNIT 1,11510-04,0,Stock,Asset
+Consumables-1,SA- Stock location - UNIT 1,11510-05,0,Stock,Asset
+Spare Parts-1,SA- Stock location - UNIT 1,11510-06,0,Stock,Asset
+SA-Stock Location - UNIT 2,Stock Assets,11520,1,,Asset
+Work In Process-2,SA-Stock Location - UNIT 2,11520-01,0,Stock,Asset
+Finished Goods-2,SA-Stock Location - UNIT 2,11520-02,0,Stock,Asset
+Packaging-2,SA-Stock Location - UNIT 2,11520-03,0,Stock,Asset
+Consumables-2,SA-Stock Location - UNIT 2,11520-04,0,Stock,Asset
+Spare Parts-2,SA-Stock Location - UNIT 2,11520-05,0,Stock,Asset
+Raw Material-2,SA-Stock Location - UNIT 2,11520-06,0,Stock,Asset
+Non-current Assets,Application of Funds,12000,1,,Asset
+Fixed Assets,Non-current Assets,12100,1,,Asset
+FA - Location - UNIT 1,Fixed Assets,12110,1,,Asset
+FA-Office Furniture and Equipment,FA - Location - UNIT 1,12111,1,,Asset
+CCTV Cameras - Hik Vision,FA-Office Furniture and Equipment,12111-01,0,Fixed Asset,Asset
+Electronic Equipments,FA-Office Furniture and Equipment,12111-02,0,Fixed Asset,Asset
+Furniture and Fixtures,FA-Office Furniture and Equipment,12111-03,0,Fixed Asset,Asset
+Office Furniture and Equipments,FA-Office Furniture and Equipment,12111-04,0,Fixed Asset,Asset
+FA-P&M - Moulds,FA - Location - UNIT 1,12112,1,,Asset
+1000ml Mould,FA-P&M - Moulds,12112-01,0,Fixed Asset,Asset
+250 Ml Dettol Shape Mould - 2 Nos,FA-P&M - Moulds,12112-02,0,Fixed Asset,Asset
+3 Ltr Oil Mould,FA-P&M - Moulds,12112-03,0,Fixed Asset,Asset
+3 Ltr Preform Mould,FA-P&M - Moulds,12112-04,0,Fixed Asset,Asset
+500 Ml Mould,FA-P&M - Moulds,12112-05,0,Fixed Asset,Asset
+500 Ml Square Mould,FA-P&M - Moulds,12112-06,0,Fixed Asset,Asset
+5 Ltr Handle Injection Mould,FA-P&M - Moulds,12112-07,0,Fixed Asset,Asset
+5 Ltr Injection Mould,FA-P&M - Moulds,12112-08,0,Fixed Asset,Asset
+5 Ltr Oil Mould,FA-P&M - Moulds,12112-09,0,Fixed Asset,Asset
+5 Ltr Preform Injection Mould,FA-P&M - Moulds,12112-10,0,Fixed Asset,Asset
+Injection Moulds - 3 Nos,FA-P&M - Moulds,12112-11,0,Fixed Asset,Asset
+Mold 1000ml Alcohol,FA-P&M - Moulds,12112-12,0,Fixed Asset,Asset
+Mold 1500ml,FA-P&M - Moulds,12112-13,0,Fixed Asset,Asset
+Mold 1 Ltr,FA-P&M - Moulds,12112-14,0,Fixed Asset,Asset
+Mold 2 Ltr,FA-P&M - Moulds,12112-15,0,Fixed Asset,Asset
+Mold 500ml Square,FA-P&M - Moulds,12112-16,0,Fixed Asset,Asset
+Mold 600ml,FA-P&M - Moulds,12112-17,0,Fixed Asset,Asset
+Plastic Injection Mould - 1 Set,FA-P&M - Moulds,12112-18,0,Fixed Asset,Asset
+Round and Square Jar Mould-2 Nos,FA-P&M - Moulds,12112-19,0,Fixed Asset,Asset
+Injection Mold with Temperature Controller,FA-P&M - Moulds,12112-20,0,Fixed Asset,Asset
+Injection Mould with Controller,FA-P&M - Moulds,12112-21,0,Fixed Asset,Asset
+Machine Upgradtion kit,FA-P&M - Moulds,12112-22,0,Fixed Asset,Asset
+FA-P&M - Air Compressor,FA - Location - UNIT 1,12113,1,,Asset
+Bare Block Air Compressor,FA-P&M - Air Compressor,12113-01,0,Fixed Asset,Asset
+Bare Block Air Compressor-2,FA-P&M - Air Compressor,12113-02,0,Fixed Asset,Asset
+Compressor Head,FA-P&M - Air Compressor,12113-03,0,Fixed Asset,Asset
+Cyclinder (8 Ton) - 2 Nos,FA-P&M - Air Compressor,12113-04,0,Fixed Asset,Asset
+Holder for PET Machine,FA-P&M - Air Compressor,12113-05,0,Fixed Asset,Asset
+M S Pipe,FA-P&M - Air Compressor,12113-06,0,Fixed Asset,Asset
+Plant & Machinery,FA-P&M - Air Compressor,12113-07,0,Fixed Asset,Asset
+Spare Parts,FA-P&M - Air Compressor,12113-08,0,Fixed Asset,Asset
+Water Chiller,FA-P&M - Air Compressor,12113-09,0,Fixed Asset,Asset
+FA-Computer & Accessories,FA - Location - UNIT 1,12114,1,,Asset
+FA-Motor Vehicles,FA - Location - UNIT 1,12115,1,,Asset
+FA - Location - UNIT 2,Fixed Assets,12120,1,,Asset
+FA-Head Office(HO),Fixed Assets,12130,1,,Asset
+FA-HO-Furniture & Fixtures,FA-Head Office(HO),12131,1,,Asset
+FA-HO-Motor Vehicles,FA-Head Office(HO),12132,1,,Asset
+FA-HO-IT Hardware and Software,FA-Head Office(HO),12133,1,,Asset
+Acc. Dep.-Location - UNIT 1,Fixed Assets,12140,1,,Asset
+Acc. Depn-Office Furniture and Equipment,Acc. Dep.-Location - UNIT 1,12141,1,,Asset
+CCTV Cameras - Hik Vision,Acc. Depn-Office Furniture and Equipment,12141-01,0,Accumulated Depreciation,Asset
+Electronic Equipments,Acc. Depn-Office Furniture and Equipment,12141-02,0,Accumulated Depreciation,Asset
+Furniture and Fixtures,Acc. Depn-Office Furniture and Equipment,12141-03,0,Accumulated Depreciation,Asset
+Office Furniture and Equipments,Acc. Depn-Office Furniture and Equipment,12141-04,0,Accumulated Depreciation,Asset
+Acc. Depn-P&M - Moulds,Acc. Dep.-Location - UNIT 1,12142,1,,Asset
+1000ml Mould,Acc. Depn-P&M - Moulds,12142-01,0,Accumulated Depreciation,Asset
+250 Ml Dettol Shape Mould - 2 Nos,Acc. Depn-P&M - Moulds,12142-02,0,Accumulated Depreciation,Asset
+3 Ltr Oil Mould,Acc. Depn-P&M - Moulds,12142-03,0,Accumulated Depreciation,Asset
+3 Ltr Preform Mould,Acc. Depn-P&M - Moulds,12142-04,0,Accumulated Depreciation,Asset
+500 Ml Mould,Acc. Depn-P&M - Moulds,12142-05,0,Accumulated Depreciation,Asset
+500 Ml Square Mould,Acc. Depn-P&M - Moulds,12142-06,0,Accumulated Depreciation,Asset
+5 Ltr Handle Injection Mould,Acc. Depn-P&M - Moulds,12142-07,0,Accumulated Depreciation,Asset
+5 Ltr Injection Mould,Acc. Depn-P&M - Moulds,12142-08,0,Accumulated Depreciation,Asset
+5 Ltr Oil Mould,Acc. Depn-P&M - Moulds,12142-09,0,Accumulated Depreciation,Asset
+5 Ltr Preform Injection Mould,Acc. Depn-P&M - Moulds,12142-10,0,Accumulated Depreciation,Asset
+Injection Moulds - 3 Nos,Acc. Depn-P&M - Moulds,12142-11,0,Accumulated Depreciation,Asset
+Mold 1000ml Alcohol,Acc. Depn-P&M - Moulds,12142-12,0,Accumulated Depreciation,Asset
+Mold 1500ml,Acc. Depn-P&M - Moulds,12142-13,0,Accumulated Depreciation,Asset
+Mold 1 Ltr,Acc. Depn-P&M - Moulds,12142-14,0,Accumulated Depreciation,Asset
+Mold 2 Ltr,Acc. Depn-P&M - Moulds,12142-15,0,Accumulated Depreciation,Asset
+Mold 500ml Square,Acc. Depn-P&M - Moulds,12142-16,0,Accumulated Depreciation,Asset
+Mold 600ml,Acc. Depn-P&M - Moulds,12142-17,0,Accumulated Depreciation,Asset
+Plastic Injection Mould - 1 Set,Acc. Depn-P&M - Moulds,12142-18,0,Accumulated Depreciation,Asset
+Round and Square Jar Mould-2 Nos,Acc. Depn-P&M - Moulds,12142-19,0,Accumulated Depreciation,Asset
+Injection Mold with Temperature Controller,Acc. Depn-P&M - Moulds,12142-20,0,Accumulated Depreciation,Asset
+Injection Mould with Controller,Acc. Depn-P&M - Moulds,12142-21,0,Accumulated Depreciation,Asset
+Machine Upgradtion kit,Acc. Depn-P&M - Moulds,12142-22,0,Accumulated Depreciation,Asset
+Acc. Depn-P&M - Air Compressor,Acc. Dep.-Location - UNIT 1,12143,1,,Asset
+Bare Block Air Compressor,Acc. Depn-P&M - Air Compressor,12143-01,0,Accumulated Depreciation,Asset
+Bare Block Air Compressor-2,Acc. Depn-P&M - Air Compressor,12143-02,0,Accumulated Depreciation,Asset
+Compressor Head,Acc. Depn-P&M - Air Compressor,12143-03,0,Accumulated Depreciation,Asset
+Cyclinder (8 Ton) - 2 Nos,Acc. Depn-P&M - Air Compressor,12143-04,0,Accumulated Depreciation,Asset
+Holder for PET Machine,Acc. Depn-P&M - Air Compressor,12143-05,0,Accumulated Depreciation,Asset
+M S Pipe,Acc. Depn-P&M - Air Compressor,12143-06,0,Accumulated Depreciation,Asset
+Plant & Machinery,Acc. Depn-P&M - Air Compressor,12143-07,0,Accumulated Depreciation,Asset
+Spare Parts,Acc. Depn-P&M - Air Compressor,12143-08,0,Accumulated Depreciation,Asset
+Water Chiller,Acc. Depn-P&M - Air Compressor,12143-09,0,Accumulated Depreciation,Asset
+Acc. Depn-Computer & Accessories,Acc. Dep.-Location - UNIT 1,12144,1,,Asset
+Acc. Depn-Motor Vehicles,Acc. Dep.-Location - UNIT 1,12145,1,,Asset
+Acc. Dep.-Location - UNIT 2,Fixed Assets,12150,1,,Asset
+Acc. Dep.-Head Office(HO),Fixed Assets,12160,1,,Asset
+Acc. Dep.-HO-Furniture & Fixtures,Acc. Dep.-Head Office(HO),12161,1,,Asset
+Acc. Dep.-HO-Motor Vehicles,Acc. Dep.-Head Office(HO),12162,1,,Asset
+Acc. Dep.-HO-IT Hardware and Software,Acc. Dep.-Head Office(HO),12163,1,,Asset
+Investments,Non-current Assets,12200,1,,Asset
+Sources of Funds,,20000,1,,Liability
+Current Liabilities,Sources of Funds,21000,1,,Liability
+Trade Creditors - UNIT 1,Current Liabilities,21000-01,0,Payable,Liability
+Trade Creditors - UNIT 2,Current Liabilities,21000-02,0,Payable,Liability
+Duties & Taxes Payable,Current Liabilities,21100,1,,Liability
+Income Tax Payable,Duties & Taxes Payable,21110,1,,Liability
+Income Tax Payable - 2021,Income Tax Payable,21110-01,0,Payable,Liability
+Income Tax Payable - Sululta,Income Tax Payable,21110-02,0,Payable,Liability
+Pension Payable,Duties & Taxes Payable,21120,1,,Liability
+Pension Payable @ 11%,Pension Payable,21120-01,0,Payable,Liability
+Pension Payable @ 7%,Pension Payable,21120-02,0,Payable,Liability
+Pension Payable - Sululta,Pension Payable,21120-03,0,Payable,Liability
+WTH Tax Payable,Duties & Taxes Payable,21130,1,,Liability
+With Holding Tax Payable - Hamle-2013 (08/07/2021 - 06/08/2021),WTH Tax Payable,21130-01,0,Payable,Liability
+With Holding Tax Payable - Nehase-2013(07/08/2021 - 10/09/2021),WTH Tax Payable,21130-02,0,Payable,Liability
+With Holding Tax Payable - Meskerem-2014 (11/09/2021 - 10/08/2021),WTH Tax Payable,21130-03,0,Payable,Liability
+With Holding Tax Payable - Tikimt-2014 (11/10/2021 - 09/11/2021),WTH Tax Payable,21130-04,0,Payable,Liability
+Withhold Tax Payable - Hidar-2014 (10/11/2021 - 09/12/2021),WTH Tax Payable,21130-05,0,Payable,Liability
+Withholding Tax Payable Tahisas-2014 (10/12/2021 - 08/01/2022),WTH Tax Payable,21130-06,0,Payable,Liability
+Withholding Tax Payable Tir-2014 (09/01/2022 - 07/02/2022),WTH Tax Payable,21130-07,0,Payable,Liability
+With Holding Tax Payable - Yekatit-2014 (08/02/2022 - 09/03/2022),WTH Tax Payable,21130-08,0,Payable,Liability
+With Holding Tax Payable - Megabit-2014 (10/03/2022 - 08/04/2022),WTH Tax Payable,21130-09,0,Payable,Liability
+With Holding Tax Payable - Miyaziya-2014 (09/04/2022 - 08/05/2022),WTH Tax Payable,21130-10,0,Payable,Liability
+With Holding Tax Payable - Ginbot-2014 (09/05/2022 - 07/06/2022),WTH Tax Payable,21130-11,0,Payable,Liability
+With Holding Tax Payable - Sene-2014 (08/04/2022 - 07/07/2022),WTH Tax Payable,21130-12,0,Payable,Liability
+With Holding Tax Not Paid,WTH Tax Payable,21130-13,0,Payable,Liability
+VAT Returns Payable,Duties & Taxes Payable,21140,1,,Liability
+Vat Claimable on General Expenses,VAT Returns Payable,21140-01,0,Payable,Liability
+Vat Claimable on Imports,VAT Returns Payable,21140-02,0,Payable,Liability
+Vat Claimable on Local Purchases,VAT Returns Payable,21140-03,0,Payable,Liability
+Vat Payable on Sales,VAT Returns Payable,21140-04,0,Payable,Liability
+Short Term Loans,Current Liabilities,21200,1,,Liability
+Other Liabilities,Current Liabilities,21300,1,,Liability
+Accruals,Current Liabilities,21400,1,,Liability
+Accrued Salary & Benefits,Accruals,21400-01,0,Payable,Liability
+Bonus Payable,Accruals,21400-02,0,Payable,Liability
+Sundry Creditors,Current Liabilities,21500,1,,Liability
+Long Term Liabilities,Sources of Funds,22000,1,,Liability
+Term Loans,Long Term Liabilities,22100,1,,Liability
+Shareholders Payable,Long Term Liabilities,21200,1,,Liability
+Shareholders Payable,Shareholders Payable,21200-01,0,Payable,Liability
+Equity,,30000,1,,Equity
+Equity Capital,Equity,31000,1,,Equity
+Registered Capital,Equity Capital,31100,1,,Equity
+Retained Earnings,Equity Capital,31200,1,,Equity
+Retained Earnings,Retained Earnings,31200-01,0,Equity,Equity
+Legal Reserve,Equity Capital,31300,1,,Equity
+Legal Reserve,Legal Reserve,31300-01,0,Equity,Equity
+Income,,40000,1,,Income
+Direct Income,Income,41000,1,,Income
+Cash and Check Sales,Direct Income,41100,1,,Income
+Cash Sales @ 15% - UNIT 1,Cash and Check Sales,41100-01,0,Income Account,Income
+Cash Sales @ 15% - UNIT 2,Cash and Check Sales,41100-02,0,Income Account,Income
+Check Sales @ 15% - UNIT 1,Cash and Check Sales,41100-03,0,Income Account,Income
+Check Sales @ 15% - UNIT 2,Cash and Check Sales,41100-04,0,Income Account,Income
+Credit Sales,Direct Income,41200,1,,Income
+Credit Sales @ 15% - UNIT 1,Credit Sales,41200-01,0,Income Account,Income
+Credit Sales @ 15% - UNIT 2,Credit Sales,41200-02,0,Income Account,Income
+Manual Sales,Direct Income,41300,1,,Income
+Manual Cash Sales @ 15% - UNIT 1,Manual Sales,41300-01,0,Income Account,Income
+Manual Cash Sales @ 15% - UNIT 2,Manual Sales,41300-02,0,Income Account,Income
+Manual Credit Sales @ 15% - UNIT 1,Manual Sales,41300-03,0,Income Account,Income
+Manual Credit Sales @ 15% - UNIT 2,Manual Sales,41300-04,0,Income Account,Income
+Sales Returns,Direct Income,41400,1,,Income
+Sales Returns - UNIT 1,Sales Returns,41400-01,0,Income Account,Income
+Sales Returns - UNIT 2,Sales Returns,41400-02,0,Income Account,Income
+Indirect Income,Income,42000,1,,Income
+Interest Income,Indirect Income,42000-01,0,Income Account,Income
+Gain on foreign exchange,Indirect Income,42000-02,0,Income Account,Income
+Other Income,Indirect Income,42000-03,0,Income Account,Income
+Expenses,,50000,1,,Expense
+Purchase,Expenses,51000,1,,Expense
+Cash Purchase,Purchase,51100,1,,Expense
+Cash Purchase - UNIT 1,Cash Purchase,51100-01,0,Cost of Goods Sold,Expense
+Cash Purchase - UNIT 2,Cash Purchase,51100-02,0,Cost of Goods Sold,Expense
+Credit Purchase,Purchase,51200,1,,Expense
+Credit Purchase - UNIT 1,Credit Purchase,51200-01,0,Cost of Goods Sold,Expense
+Credit Purchase - UNIT 2,Credit Purchase,51200-02,0,Cost of Goods Sold,Expense
+Direct Labour,Expenses,52000,1,,Expense
+Factory Labour Cost - UNIT 1,Direct Labour,52000-01,1,Expense Account,Expense
+Factory Labour Cost - UNIT 2,Direct Labour,52000-02,1,Expense Account,Expense
+Cost of Sales,Expenses,53000,1,,Expense
+Repairs & Maintenance,Cost of Sales,53100,1,,Expense
+Repair and Maintenance - Generator - UNIT 1,Repairs & Maintenance,53100-01,0,Expense Account,Expense
+Repair and Maintenance - Machinery - UNIT 1,Repairs & Maintenance,53100-02,0,Expense Account,Expense
+Repair and Maintenance - Office - UNIT 1,Repairs & Maintenance,53100-03,0,Expense Account,Expense
+Repair and Maintenance - Vehicle - UNIT 1,Repairs & Maintenance,53100-04,0,Expense Account,Expense
+Repair and Maintenance - Generator - UNIT 2,Repairs & Maintenance,53100-05,0,Expense Account,Expense
+Repair and Maintenance - Machinery - UNIT 2,Repairs & Maintenance,53100-06,0,Expense Account,Expense
+Repair and Maintenance - Office - UNIT 2,Repairs & Maintenance,53100-07,0,Expense Account,Expense
+Repair and Maintenance - Vehicle - UNIT 2,Repairs & Maintenance,53100-08,0,Expense Account,Expense
+Salary & Benefits,Cost of Sales,53200,1,,Expense
+Bonus Expenses - UNIT 1,Salary & Benefits,53200-01,0,Expense Account,Expense
+Company Pension Contribution - UNIT 1,Salary & Benefits,53200-02,0,Expense Account,Expense
+Salary Expenses (Basic) - UNIT 1,Salary & Benefits,53200-03,0,Expense Account,Expense
+Salary Expenses (Other Allowance) - UNIT 1,Salary & Benefits,53200-04,0,Expense Account,Expense
+Salary Expenses (House Allowance) - UNIT 1,Salary & Benefits,53200-05,0,Expense Account,Expense
+Salary Expenses (Overtime) - UNIT 1,Salary & Benefits,53200-06,0,Expense Account,Expense
+Bonus Expenses - UNIT 2,Salary & Benefits,53200-07,0,Expense Account,Expense
+Company Pension Contribution - UNIT 2,Salary & Benefits,53200-08,0,Expense Account,Expense
+Salary Expenses (Basic) - UNIT 2,Salary & Benefits,53200-09,0,Expense Account,Expense
+Salary Expenses (Other Allowance) - UNIT 2,Salary & Benefits,53200-10,0,Expense Account,Expense
+Salary Expenses (House Allowance) - UNIT 2,Salary & Benefits,53200-11,0,Expense Account,Expense
+Salary Expenses (Overtime) - UNIT 2,Salary & Benefits,53200-12,0,Expense Account,Expense
+Other Expenses,Cost of Sales,53300,1,,Expense
+Commission on Sales - UNIT 1,Other Expenses,53300-01,0,Expense Account,Expense
+Discount Allowed - UNIT 1,Other Expenses,53300-02,0,Expense Account,Expense
+Factory Rent Expenses - UNIT 1,Other Expenses,53300-03,0,Expense Account,Expense
+Fuel and Lubricants - Generator - UNIT 1,Other Expenses,53300-04,0,Expense Account,Expense
+Loading and Off Loading Expenses - UNIT 1,Other Expenses,53300-05,0,Expense Account,Expense
+Transport Charges - UNIT 1,Other Expenses,53300-06,0,Expense Account,Expense
+Commission on Sales - UNIT 2,Other Expenses,53300-07,0,Expense Account,Expense
+Discount Allowed - UNIT 2,Other Expenses,53300-08,0,Expense Account,Expense
+Factory Rent Expenses - UNIT 2,Other Expenses,53300-09,0,Expense Account,Expense
+Fuel and Lubricants - Generator - UNIT 2,Other Expenses,53300-10,0,Expense Account,Expense
+Loading and Off Loading Expenses - UNIT 2,Other Expenses,53300-11,0,Expense Account,Expense
+Transport Charges - UNIT 2,Other Expenses,53300-12,0,Expense Account,Expense
+General and Administrative Expenses,,60000,1,,Expense
+Salary and benefits,General and Administrative Expenses,61000,1,,Expense
+Employee Food - UNIT 1,Salary and benefits,61000-01,0,Expense Account,Expense
+Employee Water - UNIT 1,Salary and benefits,61000-02,0,Expense Account,Expense
+Employee Salary - UNIT 1,Salary and benefits,61000-03,0,Expense Account,Expense
+Staff Welfare Expenses - UNIT 1,Salary and benefits,61000-04,0,Expense Account,Expense
+Employee Food - UNIT 2,Salary and benefits,61000-05,0,Expense Account,Expense
+Employee Water - UNIT 2,Salary and benefits,61000-06,0,Expense Account,Expense
+Employee Salary - UNIT 2,Salary and benefits,61000-07,0,Expense Account,Expense
+Staff Welfare Expenses - UNIT 2,Salary and benefits,61000-08,0,Expense Account,Expense
+Travel & Immigration,General and Administrative Expenses,62000,1,,Expense
+Accomodation Expenses - UNIT 1,Travel & Immigration,62000-01,0,Expense Account,Expense
+Car Rent - UNIT 1,Travel & Immigration,62000-02,0,Expense Account,Expense
+Immigration Expenses - UNIT 1,Travel & Immigration,62000-03,0,Expense Account,Expense
+Travelling Expenses - UNIT 1,Travel & Immigration,62000-04,0,Expense Account,Expense
+Travelling Expenses - International - UNIT 1,Travel & Immigration,62000-05,0,Expense Account,Expense
+Accomodation Expenses - UNIT 2,Travel & Immigration,62000-06,0,Expense Account,Expense
+Car Rent - UNIT 2,Travel & Immigration,62000-07,0,Expense Account,Expense
+Immigration Expenses - UNIT 2,Travel & Immigration,62000-08,0,Expense Account,Expense
+Travelling Expenses - UNIT 2,Travel & Immigration,62000-09,0,Expense Account,Expense
+Travelling Expenses - International - UNIT 2,Travel & Immigration,62000-10,0,Expense Account,Expense
+Utilities,General and Administrative Expenses,63000,1,,Expense
+Addis Ababa Water and Sewerage Authority - UNIT 1,Utilities,63000-01,0,Expense Account,Expense
+Electricity Expenses - UNIT 1,Utilities,63000-02,0,Expense Account,Expense
+Addis Ababa Water and Sewerage Authority - UNIT 2,Utilities,63000-03,0,Expense Account,Expense
+Electricity Expenses - UNIT 2,Utilities,63000-04,0,Expense Account,Expense
+Telephone Exp - UNIT 1,Utilities,63000-05,0,Expense Account,Expense
+Telephone Exp - UNIT 2,Utilities,63000-06,0,Expense Account,Expense
+Bank Charges,General and Administrative Expenses,64000,1,,Expense
+Bank Charges-BOA - UNIT 1,Bank Charges,64000-01,0,Expense Account,Expense
+Bank Charges - CBE - UNIT 1,Bank Charges,64000-02,0,Expense Account,Expense
+Bank Charges - NIB - UNIT 1,Bank Charges,64000-03,0,Expense Account,Expense
+Bank Charges-CBE - BOLE ROAD - UNIT 2,Bank Charges,64000-04,0,Expense Account,Expense
+Depreciation expenses,General and Administrative Expenses,65000,1,,Expense
+Depreciation Exp - UNIT 1,Depreciation expenses,65000-01,0,Depreciation,Expense
+Amortisation Exp - UNIT 1,Depreciation expenses,65000-02,0,Depreciation,Expense
+Depreciation Exp - UNIT 2,Depreciation expenses,65000-03,0,Depreciation,Expense
+Amortisation Exp - UNIT 2,Depreciation expenses,65000-04,0,Depreciation,Expense
+Professional fees,General and Administrative Expenses,66000,1,,Expense
+Legal Expenses - UNIT 1,Professional fees,66000-01,0,Expense Account,Expense
+Professional Fees - UNIT 1,Professional fees,66000-02,0,Expense Account,Expense
+Legal Expenses - UNIT 2,Professional fees,66000-03,0,Expense Account,Expense
+Professional Fees - UNIT 2,Professional fees,66000-04,0,Expense Account,Expense
+Licensing & Registration expenses,General and Administrative Expenses,67000,1,,Expense
+License & Permit - UNIT 1,Licensing & Registration expenses,67000-01,0,Expense Account,Expense
+License & Permit - UNIT 2,Licensing & Registration expenses,67000-02,0,Expense Account,Expense
+General Expenses,General and Administrative Expenses,68000,1,,Expense
+Annual Support Fee - UNIT 1,General Expenses,68000-01,0,Expense Account,Expense
+Bad Debts - UNIT 1,General Expenses,68000-02,0,Expense Account,Expense
+Courier Expenses - UNIT 1,General Expenses,68000-03,0,Expense Account,Expense
+Fire & Safety Expenses - UNIT 1,General Expenses,68000-04,0,Expense Account,Expense
+Fuel and Lubricants - Car - UNIT 1,General Expenses,68000-05,0,Expense Account,Expense
+Medical Expenses - UNIT 1,General Expenses,68000-06,0,Expense Account,Expense
+Office Rent Expenses - UNIT 1,General Expenses,68000-07,0,Expense Account,Expense
+Security Expenses - UNIT 1,General Expenses,68000-08,0,Expense Account,Expense
+Penalty - UNIT 1,General Expenses,68000-09,0,Expense Account,Expense
+Interest - UNIT 1,General Expenses,68000-10,0,Expense Account,Expense
+Discount - UNIT 1,General Expenses,68000-11,0,Expense Account,Expense
+Rounding Off - UNIT 1,General Expenses,68000-12,0,Expense Account,Expense
+Translation Service - UNIT 1,General Expenses,68000-13,0,Expense Account,Expense
+Computer Running Expenses - UNIT 1,General Expenses,68000-14,0,Expense Account,Expense
+Printing and Stationery Expenses - UNIT 1,General Expenses,68000-15,0,Expense Account,Expense
+Cleaning Expenes - UNIT 1,General Expenses,68000-16,0,Expense Account,Expense
+Uniforms and Safety Equipments - UNIT 1,General Expenses,68000-17,0,Expense Account,Expense
+Advertisement Expenses - UNIT 1,General Expenses,68000-18,0,Expense Account,Expense
+Annual Support Fee - UNIT 2,General Expenses,68000-19,0,Expense Account,Expense
+Bad Debts - UNIT 2,General Expenses,68000-20,0,Expense Account,Expense
+Courier Expenses - UNIT 2,General Expenses,68000-21,0,Expense Account,Expense
+Fire & Safety Expenses - UNIT 2,General Expenses,68000-22,0,Expense Account,Expense
+Fuel and Lubricants - Car - UNIT 2,General Expenses,68000-23,0,Expense Account,Expense
+Medical Expenses - UNIT 2,General Expenses,68000-24,0,Expense Account,Expense
+Office Rent Expenses - UNIT 2,General Expenses,68000-25,0,Expense Account,Expense
+Security Expenses - UNIT 2,General Expenses,68000-26,0,Expense Account,Expense
+Penalty - UNIT 2,General Expenses,68000-27,0,Expense Account,Expense
+Interest - UNIT 2,General Expenses,68000-28,0,Expense Account,Expense
+Discount - UNIT 2,General Expenses,68000-29,0,Expense Account,Expense
+Rounding Off - UNIT 2,General Expenses,68000-30,0,Expense Account,Expense
+Translation Service - UNIT 2,General Expenses,68000-31,0,Expense Account,Expense
+Computer Running Expenses - UNIT 2,General Expenses,68000-32,0,Expense Account,Expense
+Printing and Stationery Expenses - UNIT 2,General Expenses,68000-33,0,Expense Account,Expense
+Cleaning Expenes - UNIT 2,General Expenses,68000-34,0,Expense Account,Expense
+Uniforms and Safety Equipments - UNIT 2,General Expenses,68000-35,0,Expense Account,Expense
+Advertisement Expenses - UNIT 2,General Expenses,68000-36,0,Expense Account,Expense
+Dummy 1,,99999-01,1,Stock Adjustment,Expense
+Dummy 2,,99999-02,1,Stock Received But Not Billed,Expense
