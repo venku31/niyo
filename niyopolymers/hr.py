@@ -46,11 +46,11 @@ def before_submit_leave_allocation(doc, method):
     doj = frappe.db.get_value('Employee', doc.employee, 'date_of_joining')
     leave_date = frappe.db.get_value('Leave Allocation', doc.name, 'from_date')
     total_experience = calculate_years_of_experience(doj, leave_date)
-    base_leave_count = 16
-    # get_total_leaves = base_leave_count+(float(total_experience)/2)
+    leave_policy = frappe.get_doc('Leave Policy', doc.leave_policy)
+    base_leave_count = leave_policy.leave_policy_details[0].annual_allocation
     get_total_leaves = base_leave_count+total_experience
-    frappe.db.set_value('Leave Allocation', doc.name, 'new_leaves_allocated', get_total_leaves)
-    frappe.db.set_value('Leave Allocation', doc.name, 'total_leaves_allocated', get_total_leaves)
+    doc.new_leaves_allocated = get_total_leaves
+    doc.set_total_leaves_allocated()
 
 @frappe.whitelist()
 def set_conversion_rate(employee):
@@ -989,7 +989,8 @@ def validate_leaves(doc, method):
             
         total_allowed_leaves = per_month_leaves + previous_leaves
         # Sauce: https://stackoverflow.com/a/24838652/9403680
-        total_allowed_leaves = round(total_allowed_leaves * 2) / 2
+        from math import floor
+        total_allowed_leaves = floor(total_allowed_leaves * 2) / 2
         if doc.total_leave_days > total_allowed_leaves:
             frappe.throw('You should take only {} leaves in this month'.format((total_allowed_leaves)))             
 

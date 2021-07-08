@@ -7,10 +7,12 @@ from frappe.utils import formatdate
 import ast
 import itertools
 
+@frappe.whitelist()
 def set_approver_name(doc, method):
     doc.approver_person = doc.modified_by
     doc.approver_date = doc.modified
 
+@frappe.whitelist()
 def before_insert_payment_entry(doc, method):
     if doc.naming_series.startswith('CPV') and doc.mode_of_payment == 'Cheque':
         payment_entries = frappe.db.get_value('Payment Entry', {'reference_no': doc.reference_no, 'docstatus': ['!=', '2']}, ['name'])

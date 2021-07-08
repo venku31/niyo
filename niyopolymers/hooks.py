@@ -136,6 +136,9 @@ after_install = "niyopolymers.install.after_install"
 # on_session_creation = 'niyopolymers.hr.successful_login'
 
 doc_events = {
+	"Delivery Note": {
+		"autoname": "niyopolymers.__init__.delivery_autoname"
+	},
     "Payroll Entry": {
 		"before_submit": "niyopolymers.hr.update_salary_structure_assignment_rate"
 	},
@@ -161,7 +164,7 @@ doc_events = {
 		"on_submit": "niyopolymers.assets.create_stock_entry_from_asset_repair"
 	},
 	"Leave Allocation": {
-		"on_submit": "niyopolymers.hr.before_submit_leave_allocation"
+		"before_submit": "niyopolymers.hr.before_submit_leave_allocation"
 	},
 	"Leave Application": {
 		"validate": "niyopolymers.hr.validate_leaves"
@@ -171,7 +174,7 @@ doc_events = {
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
 	"Sales Invoice": {
-		"before_insert": "niyopolymers.accounts.auto_set_fs_number",
+		"validate": "niyopolymers.accounts.before_insert_sales_invoice",
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
 	"Sales Order": {
