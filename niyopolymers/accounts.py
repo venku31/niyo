@@ -7,10 +7,12 @@ from frappe.utils import formatdate
 import ast
 import itertools
 
+@frappe.whitelist()
 def set_approver_name(doc, method):
     doc.approver_person = doc.modified_by
     doc.approver_date = doc.modified
 
+@frappe.whitelist()
 def before_insert_payment_entry(doc, method):
     if doc.naming_series.startswith('CPV') and doc.mode_of_payment == 'Cheque':
         payment_entries = frappe.db.get_value('Payment Entry', {'reference_no': doc.reference_no, 'docstatus': ['!=', '2']}, ['name'])
@@ -19,11 +21,10 @@ def before_insert_payment_entry(doc, method):
         elif payment_entries != doc.name:    
             frappe.throw('Cheque/Reference no must be unique')   
 
-def auto_set_fs_number(doc, method):
-    fs_number = 1
-    sales_invoice = frappe.db.get_all('Sales Invoice', filters={'docstatus': ['!=', 2]}, fields=['fs_number'], order_by ='fs_number desc')
-    if not sales_invoice:
-        doc.fs_number = "{0:08d}".format(fs_number)
-    else:
-        doc.fs_number = "{0:08d}".format(int(sales_invoice[0]['fs_number'])+1)
-        # doc.fs_number =  format(int(sales_invoice[0]['fs_number'])+1, '08d')
+def before_insert_sales_invoice(doc, method):
+    naming_series = doc.naming_series.split('.')
+    sales_invoice = frappe.db.get_value('Sales Invoice', {'fs_number': doc.fs_number, 'naming_series': ['like', '%'+naming_series[0]+'%'], 'docstatus': ['!=', '2']}, ['name'])
+    if sales_invoice == None:
+        return
+    elif sales_invoice != doc.name:    
+        frappe.throw('FS Numer must be unique')   
