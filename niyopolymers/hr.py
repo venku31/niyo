@@ -970,28 +970,27 @@ def validate_leaves(doc, method):
             'leave_type': 'Annual Leave',
             'docstatus': 1
         }
-        leave_allocation_period = frappe.db.get_all('Leave Allocation', filters=filters, fields=['from_date', 'to_date', 'total_leaves_allocated']) 
-      
+        leave_allocation_period = frappe.db.get_all('Leave Allocation', filters=filters, fields=['from_date', 'to_date', 'total_leaves_allocated'], order_by='name desc') 
+        
         num_months = (leave_allocation_period[0]['to_date'].year - leave_allocation_period[0]['from_date'].year) * 12 + (leave_allocation_period[0]['to_date'].month - leave_allocation_period[0]['from_date'].month)
         
         monthly_assign_leave = leave_allocation_period[0]['total_leaves_allocated'] / num_months
-        print(monthly_assign_leave)
-
+        
         leaves = frappe.db.sql("""
-            select sum(total_leave_days )
-            from `tabLeave Application` where docstatus = 1 and employee= '{}'
-        """.format(doc.employee))    
-       
+            select COALESCE(sum(total_leave_days), 0)
+            from `tabLeave Application` where docstatus = 1 and employee = %s and posting_date between %s and %s
+        """, (doc.employee, leave_allocation_period[0]['from_date'], leave_allocation_period[0]['to_date']))     
+        
         months = datetime.strptime(doc.from_date, '%Y-%m-%d')
         
         per_month_leaves = 0
         for i in range(leave_allocation_period[0]['from_date'].month, months.month+1):
-            per_month_leaves += monthly_assign_leave
+            per_month_leaves += monthly_assign_leave 
         
-        total_allowed_leaves =per_month_leaves - leaves[0][0] 
-       
+        total_allowed_leaves = per_month_leaves - leaves[0][0] 
+        
         if doc.total_leave_days > total_allowed_leaves:
-              frappe.throw('You should take only {} leaves in this month'.format(total_allowed_leaves))          
+              frappe.throw('You should take only {} leaves in this month'.format(float("{:.1f}".format(total_allowed_leaves))))          
 
 def send_probation_peroid_end_notification():
     employees = frappe.db.get_all('Employee', fields=['employee_name', 'date_of_joining', 'name'])
