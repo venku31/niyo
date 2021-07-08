@@ -25,8 +25,7 @@ def auto_set_fs_number(doc, method):
     selling_settings = frappe.get_single('Selling Settings')
     if selling_settings.last_fs_number:
         sales_invoice = frappe.db.get_all('Sales Invoice', filters={'docstatus': ['!=', 2]}, fields=['fs_number'], order_by ='fs_number desc')
-        if not sales_invoice:
+        if sales_invoice[0]['fs_number'] == None:
             doc.fs_number = "{0:08d}".format(int(selling_settings.last_fs_number)+1)
         else:
             doc.fs_number = "{0:08d}".format(int(sales_invoice[0]['fs_number'])+1)
-            # doc.fs_number =  format(int(sales_invoice[0]['fs_number'])+1, '08d')
