@@ -20,10 +20,11 @@ def before_insert_payment_entry(doc, method):
             frappe.throw('Cheque/Reference no must be unique')   
 
 def auto_set_fs_number(doc, method):
-    fs_number = 1
-    sales_invoice = frappe.db.get_all('Sales Invoice', filters={'docstatus': ['!=', 2]}, fields=['fs_number'], order_by ='fs_number desc')
-    if not sales_invoice:
-        doc.fs_number = "{0:08d}".format(fs_number)
-    else:
-        doc.fs_number = "{0:08d}".format(int(sales_invoice[0]['fs_number'])+1)
-        # doc.fs_number =  format(int(sales_invoice[0]['fs_number'])+1, '08d')
+    selling_settings = frappe.get_single('Selling Settings')
+    if selling_settings.last_fs_number:
+        sales_invoice = frappe.db.get_all('Sales Invoice', filters={'docstatus': ['!=', 2]}, fields=['fs_number'], order_by ='fs_number desc')
+        if not sales_invoice:
+            doc.fs_number = "{0:08d}".format(int(selling_settings.last_fs_number)+1)
+        else:
+            doc.fs_number = "{0:08d}".format(int(sales_invoice[0]['fs_number'])+1)
+            # doc.fs_number =  format(int(sales_invoice[0]['fs_number'])+1, '08d')
