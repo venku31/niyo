@@ -1,6 +1,7 @@
 execute:frappe.db.set_value('Currency', 'ETB', 'fraction', 'Cent')
 niyopolymers.patches.add_maternity_leave_type
 niyopolymers.patches.import_price_list
+niyopolymers.patches.create_warning_letter_template
 niyopolymers.patches.update_account_settings
 niyopolymers.patches.update_buying_settings
 niyopolymers.patches.update_selling_settings
