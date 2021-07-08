@@ -900,7 +900,13 @@ def send_mail_to_employees_on_shift():
         # checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
         # checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 23:59:59')
         employees = frappe.get_all('Employee', filters={'default_shift': doc.name,"status":"Active"}, fields=['employee_name','name'])
+
+        query = """select employee,employee_name from `tabEmployee Checkin` where date(time) = '{0}' and shift = '{1}' group by employee """.format(frappe.utils.nowdate(),doc.name)
+        debug_data = {'query': query, 'desc': 'description of location of code'}
+        frappe.logger().info(debug_data)
+
         checkin = frappe.db.sql("""select employee,employee_name from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
+
         leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['employee','employee_name'] )
         print("checkins = ",checkin)
     # calculating total employees name and count
@@ -977,8 +983,15 @@ def send_mail_to_employees_on_shift_end():
     if shift:
         notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
         doc = frappe.get_doc('Shift Type', shift[0][0])
+        
+        query = """Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+        where shift='{0}' and DATE(time) ='{1}' group by employee,DATE(time) order by time desc; """.format(doc.name,frappe.utils.nowdate())
+        debug_data = {'query': query, 'desc': 'description of location of code'}
+        frappe.logger().info(debug_data)
+
         checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
         where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.utils.nowdate()),as_dict=1)
+
         doc.checkins = checkin
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
