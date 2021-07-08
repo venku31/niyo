@@ -984,13 +984,20 @@ def validate_leaves(doc, method):
         months = datetime.strptime(doc.from_date, '%Y-%m-%d')
         
         per_month_leaves = 0
-        for i in range(leave_allocation_list[0]['from_date'].month, months.month):
+        for i in range(leave_allocation_list[0]['from_date'].month, months.month+1):
             per_month_leaves += monthly_assign_leave 
-        
+            
         total_allowed_leaves = per_month_leaves + previous_leaves
-       
+        # Sauce: https://stackoverflow.com/a/24838652/9403680
+        total_allowed_leaves = round(total_allowed_leaves * 2) / 2
         if doc.total_leave_days > total_allowed_leaves:
-            frappe.throw('You should take only {} leaves in this month'.format(float("{:.1f}".format(total_allowed_leaves))))              
+            frappe.throw('You should take only {} leaves in this month'.format((total_allowed_leaves)))             
+
+def formatNumber(num):
+    if num % 1 == 0:
+        return int(num)
+    else:
+        return num
 
 def send_probation_peroid_end_notification():
     employees = frappe.db.get_all('Employee', fields=['employee_name', 'date_of_joining', 'name'])
