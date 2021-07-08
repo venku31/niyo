@@ -174,7 +174,7 @@ doc_events = {
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
 	"Sales Invoice": {
-		"validate": "niyopolymers.accounts.before_insert_sales_invoice",
+		"before_insert": "niyopolymers.accounts.auto_set_fs_number",
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
 	"Sales Order": {
