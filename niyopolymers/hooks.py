@@ -136,6 +136,9 @@ after_install = "niyopolymers.install.after_install"
 # on_session_creation = 'niyopolymers.hr.successful_login'
 
 doc_events = {
+	"Delivery Note": {
+		"autoname": "niyopolymers.__init__.delivery_autoname"
+	},
     "Payroll Entry": {
 		"before_submit": "niyopolymers.hr.update_salary_structure_assignment_rate"
 	},
