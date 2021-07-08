@@ -895,14 +895,70 @@ def send_mail_to_employees_on_shift():
     if shift:
         notification = frappe.get_doc('Notification', 'Employees on Shift')
         doc = frappe.get_doc('Shift Type', shift[0][0])
-        doc.from_time = from_time
-        doc.to_time = to_time
-        checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
-        checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 23:59:59')
-        employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name'])
-        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
-        doc.checkins = checkin
-        doc.employees = employees
+        # doc.from_time = from_time
+        # doc.to_time = to_time
+        # checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
+        # checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 23:59:59')
+        employees = frappe.get_all('Employee', filters={'default_shift': doc.name,"status":"Active"}, fields=['employee_name','name'])
+        checkin = frappe.db.sql("""select employee,employee_name from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
+        leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['employee','employee_name'] )
+        print("checkins = ",checkin)
+    # calculating total employees name and count
+        if employees:
+            emp = {i.name:i.employee_name for i in employees}
+            emp_count = len(emp)
+            emp_values = [emp[i] for i in emp]
+        else:
+            emp_count = 0
+            emp_values = []
+        doc.emp_count = emp_count
+        doc.emp_values = emp_values
+
+    # calculating present employees name and count
+        if checkin:
+            chkn = {i.employee:i.employee_name for i in checkin}
+            chkn_count = len(chkn)
+            chkn_values = [chkn[i] for i in chkn]
+        else:
+            chkn={}
+            chkn_count = 0
+            chkn_values = []
+        doc.chkn_count = chkn_count
+        doc.chkn_values = chkn_values
+
+    # calculating on leave employees name and count    
+        if leaves_employees:
+            lv = {i.employee:i.employee_name for i in leave_employees}
+            lv_count = len(lv)
+            lv_values = [lv[i] for i in lv]
+        else:
+            lv = {}
+            lv_count = 0
+            lv_values = []
+        doc.lv_count = lv_count
+        doc.lv_values = lv_values
+        
+    # calculating absent employees name and count
+        absent = emp.copy()
+        for i in list(absent):
+            if i in chkn:
+                absent.pop(i,None)
+
+        for i in list(absent):
+            if i in lv:
+                absent.pop(i,None)
+
+        if absent:
+            absent_count = len(absent)
+            absent_values = [absent[i] for i in absent]
+
+        else:
+            absent_count = 0
+            absent_values = []   
+        doc.absent_count = absent_count
+        doc.absent_values = absent_values
+        # doc.checkins = checkin
+        # doc.employees = employees
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
