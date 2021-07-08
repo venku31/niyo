@@ -13,6 +13,6 @@ frappe.ui.form.on('Sales Invoice', {
 					// cur_frm.refresh_fields()
 				}
 	    	});
-	    }
-	},
+		}
+	}
 });
