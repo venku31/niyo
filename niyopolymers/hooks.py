@@ -135,11 +135,6 @@ after_install = "niyopolymers.install.after_install"
 
 # on_session_creation = 'niyopolymers.hr.successful_login'
 
-doctype_js = {
-    'Sales Invoice': 'public/js/sales_invoice.js',
-	'Purchase Invoice': 'public/js/purchase_invoice.js',
-}
-
 doc_events = {
     "Payroll Entry": {
 		"before_submit": "niyopolymers.hr.update_salary_structure_assignment_rate"
@@ -198,10 +193,22 @@ doc_events = {
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
 	"Shift Production": {
-                "on_submit": "niyopolymers.niyopolymers.doctype.shift_production.shift_production.create_stock_entry"
-        }
+		"on_submit": "niyopolymers.niyopolymers.doctype.shift_production.shift_production.create_stock_entry"
+	}
+}
 
-
+doctype_js = {
+	'Sales Invoice': 'public/js/sales_invoice.js',
+	'Purchase Invoice': 'public/js/purchase_invoice.js',
+	"Asset Maintenance Log" : "public/js/asset_maintenance_log.js",
+	"Asset Repair" : "public/js/asset_repair.js",
+	"Job Applicant" : "public/js/job_applicant.js",
+	"Salary Structure Assignment" : "public/js/salary_structure_assignment.js",
+	"Salary Structure": "public/js/salary_structure.js",
+	"Quotation" : "public/js/quotation.js",
+	"Job Opening" : "public/js/job_opening.js",
+	"Delivery Note": "public/js/delivery_note.js",
+	"Item" : "public/js/item.js"
 }
 
 doctype_list_js = {
@@ -237,16 +244,3 @@ scheduler_events = {
 		"niyopolymers.hr.send_probation_peroid_end_notification"
     ]
 }
-
-fixtures = [
-	{
-		"dt": "Custom Script",
-		"filters": [
-			[
-				"dt",
-				"in",
-				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Purchase Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
-			]
-		]
-	}
-]
