@@ -12,8 +12,10 @@ niyopolymers.patches.update_website_settings
 niyopolymers.patches.import_coa
 niyopolymers.patches.create_letter_head
 niyopolymers.patches.import_holiday_list
+niyopolymers.patches.import_employee_prerequisite_document
 niyopolymers.patches.import_email_account
 niyopolymers.patches.import_uoms
+niyopolymers.patches.import_parent_item_group
 niyopolymers.patches.import_item_group
 niyopolymers.patches.import_shift_type
 niyopolymers.patches.import_sales_taxes_and_charges_template
