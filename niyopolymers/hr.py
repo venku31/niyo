@@ -989,7 +989,8 @@ def validate_leaves(doc, method):
             
         total_allowed_leaves = per_month_leaves + previous_leaves
         # Sauce: https://stackoverflow.com/a/24838652/9403680
-        total_allowed_leaves = round(total_allowed_leaves * 2) / 2
+        from math import floor
+        total_allowed_leaves = floor(total_allowed_leaves * 2) / 2
         if doc.total_leave_days > total_allowed_leaves:
             frappe.throw('You should take only {} leaves in this month'.format((total_allowed_leaves)))             
 
