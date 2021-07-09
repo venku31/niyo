@@ -6,6 +6,13 @@ frappe.ui.form.on('Shift Production', {
 
 	// }
 });
+cur_frm.fields_dict.supervisor.get_query = function(doc) {
+ 	return {
+ 		filters: {
+			designation: "Reporting Manager" 
+			}
+ 	}
+ }
 frappe.ui.form.on('Shift Production Details', {
 	blowing:function(frm,cdt,cdn){
 		var d = locals[cdt][cdn];
