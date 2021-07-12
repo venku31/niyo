@@ -164,7 +164,7 @@ doc_events = {
 		"on_submit": "niyopolymers.assets.create_stock_entry_from_asset_repair"
 	},
 	"Leave Allocation": {
-		"on_submit": "niyopolymers.hr.before_submit_leave_allocation"
+		"before_submit": "niyopolymers.hr.before_submit_leave_allocation"
 	},
 	"Leave Application": {
 		"validate": "niyopolymers.hr.validate_leaves"

@@ -9,6 +9,7 @@ import ast
 import itertools
 from erpnext.hr.doctype.employee_checkin.employee_checkin import mark_attendance_and_link_log
 from frappe.utils.background_jobs import enqueue
+from erpnext.hr.doctype.leave_application.leave_application import get_leave_details
 
 def override_job_applicant_dashboard(data):
     print(data)
@@ -45,11 +46,11 @@ def before_submit_leave_allocation(doc, method):
     doj = frappe.db.get_value('Employee', doc.employee, 'date_of_joining')
     leave_date = frappe.db.get_value('Leave Allocation', doc.name, 'from_date')
     total_experience = calculate_years_of_experience(doj, leave_date)
-    base_leave_count = 16
-    # get_total_leaves = base_leave_count+(float(total_experience)/2)
+    leave_policy = frappe.get_doc('Leave Policy', doc.leave_policy)
+    base_leave_count = leave_policy.leave_policy_details[0].annual_allocation
     get_total_leaves = base_leave_count+total_experience
-    frappe.db.set_value('Leave Allocation', doc.name, 'new_leaves_allocated', get_total_leaves)
-    frappe.db.set_value('Leave Allocation', doc.name, 'total_leaves_allocated', get_total_leaves)
+    doc.new_leaves_allocated = get_total_leaves
+    doc.set_total_leaves_allocated()
 
 @frappe.whitelist()
 def set_conversion_rate(employee):
@@ -963,35 +964,41 @@ def maternity_leave_mail():
             subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
 def validate_leaves(doc, method):
-    if doc.leave_type == 'Annual Leave':
-    
+    leave_details = get_leave_details(doc.employee, doc.posting_date)
+    leave_details = frappe._dict(leave_details)
+    if 'Annual Leave' in leave_details.leave_allocation:
+        remaining_leaves = leave_details.leave_allocation['Annual Leave']['remaining_leaves']
+
         filters = {
             'employee': doc.employee,
             'leave_type': 'Annual Leave',
             'docstatus': 1
         }
-        leave_allocation_period = frappe.db.get_all('Leave Allocation', filters=filters, fields=['from_date', 'to_date', 'total_leaves_allocated']) 
-      
-        num_months = (leave_allocation_period[0]['to_date'].year - leave_allocation_period[0]['from_date'].year) * 12 + (leave_allocation_period[0]['to_date'].month - leave_allocation_period[0]['from_date'].month)
+        leave_allocation_list = frappe.db.get_all('Leave Allocation', filters=filters, fields=['from_date', 'to_date', 'new_leaves_allocated', 'total_leaves_allocated'], order_by='name desc') 
+        current_year_leaves = leave_allocation_list[0]['new_leaves_allocated']
+        previous_leaves = remaining_leaves - current_year_leaves
+        num_months = (leave_allocation_list[0]['to_date'].year - leave_allocation_list[0]['from_date'].year) * 12 + (leave_allocation_list[0]['to_date'].month - leave_allocation_list[0]['from_date'].month)
         
-        monthly_assign_leave = leave_allocation_period[0]['total_leaves_allocated'] / num_months
-        print(monthly_assign_leave)
-
-        leaves = frappe.db.sql("""
-            select sum(total_leave_days )
-            from `tabLeave Application` where docstatus = 1 and employee= '{}'
-        """.format(doc.employee))    
+        monthly_assign_leave = current_year_leaves / num_months
        
         months = datetime.strptime(doc.from_date, '%Y-%m-%d')
         
         per_month_leaves = 0
-        for i in range(leave_allocation_period[0]['from_date'].month, months.month+1):
-            per_month_leaves += monthly_assign_leave
-        
-        total_allowed_leaves =per_month_leaves - leaves[0][0] 
-       
+        for i in range(leave_allocation_list[0]['from_date'].month, months.month+1):
+            per_month_leaves += monthly_assign_leave 
+            
+        total_allowed_leaves = per_month_leaves + previous_leaves
+        # Sauce: https://stackoverflow.com/a/24838652/9403680
+        from math import floor
+        total_allowed_leaves = floor(total_allowed_leaves * 2) / 2
         if doc.total_leave_days > total_allowed_leaves:
-              frappe.throw('You should take only {} leaves in this month'.format(total_allowed_leaves))          
+            frappe.throw('You should take only {} leaves in this month'.format((total_allowed_leaves)))             
+
+def formatNumber(num):
+    if num % 1 == 0:
+        return int(num)
+    else:
+        return num
 
 def send_probation_peroid_end_notification():
     employees = frappe.db.get_all('Employee', fields=['employee_name', 'date_of_joining', 'name'])
