@@ -135,12 +135,10 @@ after_install = "niyopolymers.install.after_install"
 
 # on_session_creation = 'niyopolymers.hr.successful_login'
 
-doctype_js = {
-    'Sales Invoice': 'public/js/sales_invoice.js',
-	'Purchase Invoice': 'public/js/purchase_invoice.js',
-}
-
 doc_events = {
+	"Delivery Note": {
+		"autoname": "niyopolymers.__init__.delivery_autoname"
+	},
     "Payroll Entry": {
 		"before_submit": "niyopolymers.hr.update_salary_structure_assignment_rate"
 	},
@@ -166,13 +164,10 @@ doc_events = {
 		"on_submit": "niyopolymers.assets.create_stock_entry_from_asset_repair"
 	},
 	"Leave Allocation": {
-		"on_submit": "niyopolymers.hr.before_submit_leave_allocation"
+		"before_submit": "niyopolymers.hr.before_submit_leave_allocation"
 	},
 	"Leave Application": {
 		"validate": "niyopolymers.hr.validate_leaves"
-	},
-	"*": {
-		"before_submit": "niyopolymers.accounts.before_submit_all_doctypes"
 	},
 	"Payment Entry": {
 		"validate": "niyopolymers.accounts.before_insert_payment_entry",
@@ -197,14 +192,23 @@ doc_events = {
 	"Journal Entry": {
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
-	"Payment Request and Authorization": {
-		"before_submit": "niyopolymers.utils.set_approver_name"
-	},
 	"Shift Production": {
-                "on_submit": "niyopolymers.niyopolymers.doctype.shift_production.shift_production.create_stock_entry"
-        }
+		"on_submit": "niyopolymers.niyopolymers.doctype.shift_production.shift_production.create_stock_entry"
+	}
+}
 
-
+doctype_js = {
+	'Sales Invoice': 'public/js/sales_invoice.js',
+	'Purchase Invoice': 'public/js/purchase_invoice.js',
+	"Asset Maintenance Log" : "public/js/asset_maintenance_log.js",
+	"Asset Repair" : "public/js/asset_repair.js",
+	"Job Applicant" : "public/js/job_applicant.js",
+	"Salary Structure Assignment" : "public/js/salary_structure_assignment.js",
+	"Salary Structure": "public/js/salary_structure.js",
+	"Quotation" : "public/js/quotation.js",
+	"Job Opening" : "public/js/job_opening.js",
+	"Delivery Note": "public/js/delivery_note.js",
+	"Item" : "public/js/item.js"
 }
 
 doctype_list_js = {
@@ -240,56 +244,3 @@ scheduler_events = {
 		"niyopolymers.hr.send_probation_peroid_end_notification"
     ]
 }
-
-fixtures = [
-	{
-		"dt": "Custom Field",
-		"filters": [
-			[
-				"dt",
-				"in",
-				["Asset Repair", "Asset Maintenance Task", "Asset Maintenance Log", "Delivery Note", "Employee", "Job Opening", "Employee Grade", "Salary Structure Assignment", "Employee Tax Exemption Proof Submission", "Supplier", "Customer", "Item", "Payment Entry", "Print Settings", "Purchase Invoice", "Purchase Order", "Sales Order", "Sales Invoice", "Material Request", "Purchase Receipt", "Journal Entry","Company"]
-			]
-		]
-	},
-	{
-		"dt": "Custom Script",
-		"filters": [
-			[
-				"dt",
-				"in",
-				['Employee', 'Salary Structure', 'Salary Structure Assignment', 'Job Applicant', 'Job Opening', 'Payment Entry', 'Purchase Invoice', 'Asset Maintenance Log', 'Asset Repair', 'Quotation', 'Delivery Note', 'Item']
-			]
-		]
-	},
-	{
-		'dt': 'Warning Letter Template',
-		"filters": [
-			[
-				'name',
-				'in', 
-				['Consecutive Leave']
-			]
-		]
-	},
-	{
-		"dt": "Workflow",
-		"filters": [
-			[
-				"document_type",
-				"in",
-				["Journal Entry", "Sales Order", "Sales Invoice", "Payment Entry", "Purchase Order", "Purchase Invoice", "Material Request", "Payment Request and Authorization"]
-			]
-		]
-	},
-	{
-		"dt": "Role",
-		"filters": [
-			[
-				"name",
-				"in",
-				['Journal Entry Approver', 'Deputy PRA Approver', 'Accounts Viewer', 'Purchase Order Approver', 'PRA Approver', 'PRA Checker', 'CFO', 'Material Request Approver', 'Sales Invoice Approver', 'Sales Order Approver', 'Payment Entry Approver', 'Purchase Invoice Approver', 'CRV Approver', 'PCPV Approver', 'Chart of Accounts Manager', 'Document Deletor', 'Document canceller', 'Petty Cash Manager']
-			]
-		]
-	}
-]
