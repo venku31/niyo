@@ -6,7 +6,7 @@ import frappe
 
 def execute(filters=None):
 	columns, data = [], []
-	columns = ["Employer Tax Account::150"]+["Employer Enterprise No::150"]+["TIN NO::150"]+["Employee Name::200"]+["Start Date::100"]+["End Date:Date:100"]+["Basic::100"]+[" Employer contribution amount 7% ::100"]+[" Employer contribution amount 11%::100"]+[" Total Contribution::100"]
+	columns = ["Employer Tax Account::150"]+["Employer Enterprise No::150"]+["TIN NO::150"]+["Employee Name::200"]+["Start Date:Date:100"]+["End Date:Date:100"]+["Basic::100"]+[" Employer contribution amount 7% ::100"]+[" Employer contribution amount 11%::100"]+[" Total Contribution::100"]
 	data = get_data(filters)
 	return columns, data
 
@@ -14,12 +14,12 @@ def get_data(filters):
 	if 'start_date' in filters:
 		return frappe.db.sql("""
 			Select
-				c.employer_tax_Account,,
+				c.employer_tax_Account,
 				c.employer_enterprise_no,
 				emp.tin_no,
 				emp.employee_name,
 				ss.start_date,
-				ss.end_Date
+				ss.end_Date,
 				(select amount from `tabSalary Detail` where parent=ss.name and emp.name = ss.employee and salary_component='Basic (መሰረዊ)'),
 				(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (የጡረታ አበል) (7%)' ),
 				(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (የጡረታ አበል) (11%)' ),
@@ -39,12 +39,12 @@ def get_data(filters):
 	elif 'end_date' in filters:
 		return frappe.db.sql("""
 			Select
-				c.employer_tax_Account,,
+				c.employer_tax_Account,
 				c.employer_enterprise_no,
 				emp.tin_no,
 				emp.employee_name,
 				ss.start_date,
-				ss.end_Date
+				ss.end_Date,
 				(select amount from `tabSalary Detail` where parent=ss.name and emp.name = ss.employee and salary_component='Basic (መሰረዊ)'),
 				(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (የጡረታ አበል) (7%)' ),
 				(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (የጡረታ አበል) (11%)' ),
@@ -61,7 +61,7 @@ def get_data(filters):
 				ss.company = c.name
 			where ss.end_date ='{0}'
 		""".format(filters['end_date']))
-	elif 'start_date' in filters and 'end_date' in filters:
+	if 'start_date' in filters and 'end_date' in filters:
 		return frappe.db.sql("""
 			Select
 				c.employer_tax_Account,
@@ -69,7 +69,7 @@ def get_data(filters):
 				emp.tin_no,
 				emp.employee_name,
 				ss.start_date,
-				ss.end_Date
+				ss.end_Date,
 				(select amount from `tabSalary Detail` where parent=ss.name and emp.name = ss.employee and salary_component='Basic (መሰረዊ)'),
 				(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (የጡረታ አበል) (7%)' ),
 				(select sd.amount from `tabSalary Detail` sd where  sd.parent=ss.name and emp.name=ss.employee and sd.salary_component='Pension (የጡረታ አበል) (11%)' ),
