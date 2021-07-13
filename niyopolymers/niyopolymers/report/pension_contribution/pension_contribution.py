@@ -6,7 +6,7 @@ import frappe
 
 def execute(filters=None):
 	columns, data = [], []
-	columns = ["Employer Tax Account::150"]+["Employer Enterprise No::150"]+["TIN NO::150"]+["Employee Name::200"]+["Start Date:Date:100"]+["End Date:Date:100"]+["Basic::100"]+[" Employer contribution amount 7% ::100"]+[" Employer contribution amount 11%::100"]+[" Total Contribution::100"]
+	columns = ["Employer Tax Account::150"]+["Employer Enterprise No::150"]+["TIN NO::150"]+["Employee Name::200"]+["Start Date:Date:100"]+["End Date:Date:100"]+["Basic::100"]+[" Employee contribution amount 7% ::100"]+[" Employer contribution amount 11%::100"]+[" Total Contribution::100"]
 	data = get_data(filters)
 	return columns, data
 

@@ -7,7 +7,7 @@ import frappe
 def execute(filters=None):
 	columns, data = [], []
 	data = get_data(filters)
-	columns = ["Employer Tax Account::180"]+["Employer Enterprise No::150"]+["Employee's TIN::150"]+["Employee Name::150"]+["Start Date::150"]+["End Date::150"]+["Basic::150"]+["Total Transportation Allowance::150"]+["Taxable Transportation Allowance::150"]+["Overtime::150"]+["Other Taxable benefits::150"]+["Taxable Amount::150"]+["Tax Withheld::150"]+["Cost Sharing::150"]	
+	columns = ["Employer Tax Account::180"]+["Employer Enterprise No::150"]+["Employee's TIN::150"]+["Employee Name::150"]+["Start Date:Date:150"]+["End Date:Date:150"]+["Basic::150"]+["Total Transportation Allowance::150"]+["Taxable Transportation Allowance::150"]+["Overtime::150"]+["Other Taxable benefits::150"]+["Taxable Amount::150"]+["Tax Withheld::150"]+["Cost Sharing::150"]	
 	return columns, data
 
 def get_data(filters):
