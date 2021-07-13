@@ -906,7 +906,7 @@ def send_mail_to_employees_on_shift():
         debug_data = {'query': query, 'desc': 'description of location of code'}
         frappe.logger().info(debug_data)
 
-        checkin = frappe.db.sql("""select employee,employee_name from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
+        checkin = frappe.db.sql("""select employee,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
 
         leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['employee','employee_name'] )
         print("checkins = ",checkin)
@@ -926,12 +926,18 @@ def send_mail_to_employees_on_shift():
             chkn = {i.employee:i.employee_name for i in checkin}
             chkn_count = len(chkn)
             chkn_values = [chkn[i] for i in chkn]
+            chkn_time = [i.time.strftime('%Y-%m-%d %H:%m:%S') for i in checkin]
+            chkn_lst = []
+            for i in chkn_values:
+                chkn_lst.append([i,chkn_time[chkn_values.index(i)]])
+            
         else:
             chkn={}
             chkn_count = 0
-            chkn_values = []
+            chkn_list = []
         doc.chkn_count = chkn_count
         doc.chkn_values = chkn_values
+        doc.chkn_lst = chkn_lst
 
     # calculating on leave employees name and count    
         if leaves_employees:
