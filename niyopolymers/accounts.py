@@ -28,4 +28,12 @@ def auto_set_fs_number(doc, method):
         if sales_invoice[0]['fs_number'] == None:
             doc.fs_number = "{0:08d}".format(int(selling_settings.last_fs_number)+1)
         else:
+            lst = []
+            for i in sales_invoice:
+                if i['fs_number'] != None:
+                    lst.append("{0:08d}".format(int(i['fs_number']))) 
+            print(lst)    
+            a = sorted(set(range(lst[0], lst[-1])) - set(lst))
+            print(a)
             doc.fs_number = "{0:08d}".format(int(sales_invoice[0]['fs_number'])+1)
+            frappe.throw('ja na')
