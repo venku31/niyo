@@ -988,22 +988,45 @@ def send_mail_to_employees_on_shift_end():
     shift = frappe.db.sql("""select name from `tabShift Type` where ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000'))
      <= %s and ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000')) > %s;""",(upto,one_hour_before))
     if shift:
-        notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
-        doc = frappe.get_doc('Shift Type', shift[0][0])
-        
-        query = """Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
-        where shift='{0}' and DATE(time) ='{1}' group by employee,DATE(time) order by time desc; """.format(doc.name,frappe.utils.nowdate())
-        debug_data = {'query': query, 'desc': 'description of location of code'}
-        frappe.logger().info(debug_data)
+        if shift[0][0] == "Night Shift":
+            today = frappe.utils.today()
+            ans = datetime.strptime(today,"%Y-%m-%d")
+            previous_day = ans - timedelta(days=1)
+            previous_day = previous_day.strftime("%Y-%m-%d")
 
-        checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
-        where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.utils.nowdate()),as_dict=1)
+            notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
+            doc = frappe.get_doc('Shift Type', shift[0][0])
+            
+            query = """Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+            where shift='{0}' and DATE(time) ='{1}' group by employee,DATE(time) order by time desc; """.format(doc.name,previous_day)
+            debug_data = {'query': query, 'desc': 'description of location of code'}
+            frappe.logger().info(debug_data)
 
-        doc.checkins = checkin
-        args={'doc': doc}
-        recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
-        frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
-        subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+            checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.previous_day),as_dict=1)
+
+            doc.checkins = checkin
+            args={'doc': doc}
+            recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+            frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
+            subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+        else:
+            notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
+            doc = frappe.get_doc('Shift Type', shift[0][0])
+            
+            query = """Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+            where shift='{0}' and DATE(time) ='{1}' group by employee,DATE(time) order by time desc; """.format(doc.name,frappe.utils.nowdate())
+            debug_data = {'query': query, 'desc': 'description of location of code'}
+            frappe.logger().info(debug_data)
+
+            checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.utils.nowdate()),as_dict=1)
+
+            doc.checkins = checkin
+            args={'doc': doc}
+            recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+            frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
+            subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
 
 def change_last_sync_of_checkin():
