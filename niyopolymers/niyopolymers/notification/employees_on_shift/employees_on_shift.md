@@ -1,20 +1,3 @@
-{% set leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['name'] ) %}
-{% set employees_list = [] %}
-    {% for i in doc.employees %}
-    {% set a = employees_list.append(i.employee_name) %}
-    {% endfor %}
-
-{% set checkins_list = [] %}
-    {% for i in doc.checkins %}
-    {% set a = checkins_list.append(i.employee_name) %}
-    {% endfor %}
-
-{% set non_match = [] %}
-{% for i in employees_list %}
-{% if i not in checkins_list %}
-{% set b = non_match.append(i) %}
-{% endif %}
-{% endfor %}
 <h2>Dashboard</h2>
 
 <style>
@@ -44,42 +27,63 @@ tr:nth-child(even) {
   </tr>
   <tr>
     <td style="text-align: center">{{ doc.name }}</td>
-    <td style="text-align: center">{{ doc.employees|length }}</td>
-    <td style="text-align: center">{{ doc.checkins|length }}</td>
-    <td style="text-align: center">{{ (doc.employees|length - doc.checkins|length )-leaves_employees|length }}</td>
-    <td style="text-align: center">{{ leaves_employees|length }}</td>
+    <td style="text-align: center">{{ doc.emp_count}}</td>
+    <td style="text-align: center">{{ doc.chkn_count }}</td>
+    <td style="text-align: center">{{ doc.absent_count }}</td>
+    <td style="text-align: center">{{ doc.lv_count }}</td>
   </tr>
 </table>
 
-<div class="col-md-4">
-<a><b>Present Employees are: <b></a>
-<ol>
-{% for j in doc.checkins %}
-<li>
-{{ j.employee_name }}
-</li>
-{% endfor %}
-</ol>
-</div>
+<br>
+<p><b>Present Employees</b></p>
+<table>
+  <tr>
+    <th style="text-align: center">Employee Name</th>
+    <th style="text-align: center">Shift Incharge</th>
+    <th style="text-align: center">Reporting manager</th>
+    <th style="text-align: center">Checkin Time</th>
+  </tr>
+  {% for j in doc.chkn_lst %}
+  <tr>
+    <td style="text-align: center">{{ j[0] }}</td>
+    <td style="text-align: center">{{ frappe.db.get_value("Employee",{"employee_name":j[0]},["reporting_manager"]) }}</td>
+    <td style="text-align: center">{{ frappe.db.get_value("Employee",{"employee_name":j[0]},["shift_incharge_name"]) }}</td>
+    <td style="text-align: center">{{ j[1] }}</td>
+  </tr>
+  {% endfor %}
+</table>
 
-<div class="col-md-4">
-<a><b>Absent Employees are: <b></a>
-<ol>
-{% for i in non_match %}
-<li>
-{{ i }}
-</li>
-{% endfor %}
-</ol>
-</div>
 
-<div class="col-md-4">
-<a><b>Employees that are on leave are: <b></a>
-<ol>
-{% for i in leaves_employees %}
-<li>
-{{ i.name }}
-</li>
-{% endfor %}
-</ol>
-</div>
+<br>
+<p><b>Absent Employees</b></p>
+<table>
+  <tr>
+    <th style="text-align: center">Employee Name</th>
+    <th style="text-align: center">Shift Incharge</th>
+    <th style="text-align: center">Reporting manager</th>
+  </tr>
+  {% for i in doc.absent_values %}
+  <tr>
+    <td style="text-align: center">{{ i }}</td>
+    <td style="text-align: center">{{ frappe.db.get_value("Employee",{"employee_name":i},["reporting_manager"]) }}</td>
+    <td style="text-align: center">{{ frappe.db.get_value("Employee",{"employee_name":i},["shift_incharge_name"]) }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br>
+<p><b>Employees on leave</b></p>
+<table>
+  <tr>
+    <th style="text-align: center">Employee Name</th>
+    <th style="text-align: center">Shift Incharge</th>
+    <th style="text-align: center">Reporting manager</th>
+  </tr>
+  {% for i in doc.lv_values %}
+  <tr>
+    <td style="text-align: center">{{ i.name }}</td>
+    <td style="text-align: center">{{ frappe.db.get_value("Employee",{"employee_name":i.name},["reporting_manager"]) }}</td>
+    <td style="text-align: center">{{ frappe.db.get_value("Employee",{"employee_name":i.name},["shift_incharge_name"]) }}</td>
+  </tr>
+  {% endfor %}
+</table>

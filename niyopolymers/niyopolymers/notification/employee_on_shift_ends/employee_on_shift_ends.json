@@ -11,17 +11,17 @@
  "idx": 0,
  "is_standard": 1,
  "message": "<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\ntr:nth-child(even) {\n  background-color: #dddddd;\n}\n</style>\n\n{% if doc.checkins %}\n<table>\n  <tr>\n    <th style=\"text-align: center\">Employee Name</th>\n    <th style=\"text-align: center\">Shift</th>\n    <th style=\"text-align: center\">Checkin</th>\n    <th style=\"text-align: center\">Checkout</th>\n  </tr>\n  {% for j in doc.checkins %}\n  <tr>\n    <td style=\"text-align: center\">{{ j.employee_name }}</td>\n    <td style=\"text-align: center\">{{ j.shift }}</td>\n    <td style=\"text-align: center\">{{ j.checkin.strftime('%Y-%m-%d %H:%m:%S') }}</td>\n    <td style=\"text-align: center\">{{ j.checkout.strftime('%Y-%m-%d %H:%m:%S') }}</td>\n  </tr>\n  {% endfor %}\n</table>\n{% else %}\n<b>No employee checkin checkout found for {{ doc.name }} </b>\n{% endif %}",
- "modified": "2021-06-23 10:38:07.952461",
+ "modified": "2021-07-08 12:39:05.887940",
  "modified_by": "pradnyesh.patil@atriina.com",
  "module": "Niyopolymers",
  "name": "Employee on Shift Ends",
  "owner": "pradnyesh.patil@atriina.com",
  "recipients": [
   {
-   "cc": "niyopolymers@gmail.com"
+   "cc": "karan.bhanushali@atriina.com"
   },
   {
-   "cc": "karan.bhanushali@atriina.com"
+   "cc": "pradnyesh.patil@atriina.com"
   }
  ],
  "subject": "Employees after {{doc.name}} Shift end"

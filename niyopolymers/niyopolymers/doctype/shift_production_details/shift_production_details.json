@@ -1,232 +1,230 @@
 {
- "creation": "2021-05-19 09:38:49.657292",
- "doctype": "DocType",
- "editable_grid": 1,
- "engine": "InnoDB",
- "field_order": [
-  "product_code",
-  "target_qty",
-  "preform",
-  "preforma_sign",
-  "rejection",
-  "rejection_item",
-  "column_break_4",
-  "start_time",
-  "end_time",
-  "blowing",
-  "blowing_sign",
-  "white",
-  "rejection_white",
-  "column_break_7",
-  "counter_start",
-  "counter_end",
-  "blowing_perform",
-  "blowing_perform_sign",
-  "hot",
-  "rejection_hot",
-  "section_break_18",
-  "remarks",
-  "section_break_20",
-  "uom",
-  "fg_warehouse",
-  "column_break_23",
-  "rm_warehouse",
-  "rejection_warehouse"
- ],
- "fields": [
-  {
-   "columns": 2,
-   "fieldname": "product_code",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Product Code",
-   "options": "Item",
-   "reqd": 1
-  },
-  {
-   "columns": 1,
-   "fieldname": "target_qty",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Target Qty",
-   "width": "1"
-  },
-  {
-   "columns": 2,
-   "fieldname": "preform",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Preform",
-   "options": "Item",
-   "width": "1"
-  },
-  {
-   "fieldname": "preforma_sign",
-   "fieldtype": "Link",
-   "label": "Preforma Sign",
-   "options": "Employee"
-  },
-  {
-   "fieldname": "rejection",
-   "fieldtype": "Int",
-   "label": "Rejection"
-  },
-  {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "columns": 1,
-   "fieldname": "start_time",
-   "fieldtype": "Time",
-   "in_list_view": 1,
-   "label": "Start Time",
-   "width": "1"
-  },
-  {
-   "columns": 1,
-   "fieldname": "end_time",
-   "fieldtype": "Time",
-   "in_list_view": 1,
-   "label": "End Time",
-   "width": "1"
-  },
-  {
-   "fieldname": "blowing",
-   "fieldtype": "Int",
-   "label": "Blowing "
-  },
-  {
-   "fieldname": "blowing_sign",
-   "fieldtype": "Link",
-   "label": "Blowing Sign",
-   "options": "Employee"
-  },
-  {
-   "fieldname": "white",
-   "fieldtype": "Int",
-   "label": "White"
-  },
-  {
-   "fieldname": "column_break_7",
-   "fieldtype": "Column Break"
-  },
-  {
-   "columns": 1,
-   "fieldname": "counter_start",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Counter Start",
-   "width": "1"
-  },
-  {
-   "columns": 1,
-   "fieldname": "counter_end",
-   "fieldtype": "Int",
-   "in_list_view": 1,
-   "label": "Counter End",
-   "width": "1"
-  },
-  {
-   "fieldname": "blowing_perform",
-   "fieldtype": "Int",
-   "label": "Blowing Perform"
-  },
-  {
-   "fieldname": "blowing_perform_sign",
-   "fieldtype": "Link",
-   "label": "Blowing Perform Sign",
-   "options": "Employee"
-  },
-  {
-   "fieldname": "hot",
-   "fieldtype": "Int",
-   "label": "Hot"
-  },
-  {
-   "fieldname": "section_break_18",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "remarks",
-   "fieldtype": "Data",
-   "label": "Remarks"
-  },
-  {
-   "fetch_from": "product_code.stock_uom",
-   "fieldname": "uom",
-   "fieldtype": "Link",
-   "label": "UOM",
-   "options": "UOM",
-   "read_only": 1
-  },
-  {
-   "fieldname": "section_break_20",
-   "fieldtype": "Section Break"
-  },
-  {
-   "default": "Finished Goods - NP",
-   "fieldname": "fg_warehouse",
-   "fieldtype": "Link",
-   "label": "FG Warehouse",
-   "options": "Warehouse",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_23",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "Stores - NP",
-   "fieldname": "rm_warehouse",
-   "fieldtype": "Link",
-   "label": "RM Warehouse",
-   "options": "Warehouse",
-   "read_only": 1
-  },
-  {
-   "default": "Scrap Warehouse - NP",
-   "fieldname": "rejection_warehouse",
-   "fieldtype": "Link",
-   "label": " Rejection Warehouse",
-   "options": "Warehouse",
-   "read_only": 1
-  },
-  {
-   "default": "Rejection",
-   "fieldname": "rejection_item",
-   "fieldtype": "Link",
-   "label": "Rejection Item",
-   "options": "Item",
-   "read_only": 1
-  },
-  {
-   "default": "Rejection White",
-   "fieldname": "rejection_white",
-   "fieldtype": "Link",
-   "label": "Rejection White",
-   "options": "Item",
-   "read_only": 1
-  },
-  {
-   "default": "Rejection Hot",
-   "fieldname": "rejection_hot",
-   "fieldtype": "Link",
-   "label": "Rejection Hot",
-   "options": "Item",
-   "read_only": 1
-  }
- ],
- "istable": 1,
- "modified": "2021-05-31 22:46:40.729613",
- "modified_by": "Administrator",
- "module": "Niyopolymers",
- "name": "Shift Production Details",
- "owner": "venkatesh.nayak@atriina.com",
- "permissions": [],
- "quick_entry": 1,
- "show_preview_popup": 1,
- "sort_field": "modified",
- "sort_order": "DESC",
- "track_changes": 1
-}
+    "creation": "2021-05-19 09:38:49.657292",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+     "product_code",
+     "target_qty",
+     "preform",
+     "rejection",
+     "preforma_sign",
+     "rejection_item",
+     "column_break_4",
+     "start_time",
+     "end_time",
+     "blowing",
+     "white",
+     "blowing_sign",
+     "rejection_white",
+     "column_break_7",
+     "counter_start",
+     "counter_end",
+     "blowing_perform",
+     "hot",
+     "blowing_perform_sign",
+     "rejection_hot",
+     "section_break_20",
+     "uom",
+     "fg_warehouse",
+     "basic_rate",
+     "column_break_23",
+     "rm_warehouse",
+     "rejection_warehouse"
+    ],
+    "fields": [
+     {
+      "columns": 2,
+      "fieldname": "product_code",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Product Code",
+      "options": "Item",
+      "reqd": 1
+     },
+     {
+      "columns": 1,
+      "fieldname": "target_qty",
+      "fieldtype": "Int",
+      "in_list_view": 1,
+      "label": "Target Qty",
+      "width": "1"
+     },
+     {
+      "columns": 2,
+      "fieldname": "preform",
+      "fieldtype": "Link",
+      "in_list_view": 1,
+      "label": "Preform",
+      "options": "Item",
+      "width": "1"
+     },
+     {
+      "fieldname": "preforma_sign",
+      "fieldtype": "Link",
+      "label": "Preforma Sign",
+      "options": "Employee"
+     },
+     {
+      "fieldname": "rejection",
+      "fieldtype": "Int",
+      "label": "Rejection"
+     },
+     {
+      "fieldname": "column_break_4",
+      "fieldtype": "Column Break"
+     },
+     {
+      "columns": 1,
+      "fieldname": "start_time",
+      "fieldtype": "Time",
+      "in_list_view": 1,
+      "label": "Start Time",
+      "width": "1"
+     },
+     {
+      "columns": 1,
+      "fieldname": "end_time",
+      "fieldtype": "Time",
+      "in_list_view": 1,
+      "label": "End Time",
+      "width": "1"
+     },
+     {
+      "fieldname": "blowing",
+      "fieldtype": "Int",
+      "label": "Blowing "
+     },
+     {
+      "fieldname": "blowing_sign",
+      "fieldtype": "Link",
+      "label": "Blowing Sign",
+      "options": "Employee"
+     },
+     {
+      "fieldname": "white",
+      "fieldtype": "Int",
+      "label": "White"
+     },
+     {
+      "fieldname": "column_break_7",
+      "fieldtype": "Column Break"
+     },
+     {
+      "columns": 1,
+      "fieldname": "counter_start",
+      "fieldtype": "Int",
+      "in_list_view": 1,
+      "label": "Counter Start",
+      "width": "1"
+     },
+     {
+      "columns": 1,
+      "fieldname": "counter_end",
+      "fieldtype": "Int",
+      "in_list_view": 1,
+      "label": "Counter End",
+      "width": "1"
+     },
+     {
+      "fieldname": "blowing_perform",
+      "fieldtype": "Int",
+      "label": "Blowing Preform"
+     },
+     {
+      "fieldname": "blowing_perform_sign",
+      "fieldtype": "Link",
+      "label": "Blowing Preform Sign",
+      "options": "Employee"
+     },
+     {
+      "fieldname": "hot",
+      "fieldtype": "Int",
+      "label": "Hot"
+     },
+     {
+      "fetch_from": "product_code.stock_uom",
+      "fieldname": "uom",
+      "fieldtype": "Link",
+      "label": "UOM",
+      "options": "UOM",
+      "read_only": 1
+     },
+     {
+      "fieldname": "section_break_20",
+      "fieldtype": "Section Break"
+     },
+     {
+      "default": "Finished Goods - NP",
+      "fieldname": "fg_warehouse",
+      "fieldtype": "Link",
+      "label": "FG Warehouse",
+      "options": "Warehouse",
+      "read_only": 1
+     },
+     {
+      "fieldname": "column_break_23",
+      "fieldtype": "Column Break"
+     },
+     {
+      "default": "Stores - NP",
+      "fieldname": "rm_warehouse",
+      "fieldtype": "Link",
+      "label": "RM Warehouse",
+      "options": "Warehouse",
+      "read_only": 1
+     },
+     {
+      "default": "Scrap Warehouse - NP",
+      "fieldname": "rejection_warehouse",
+      "fieldtype": "Link",
+      "label": " Rejection Warehouse",
+      "options": "Warehouse",
+      "read_only": 1
+     },
+     {
+      "default": "Rejection",
+      "fieldname": "rejection_item",
+      "fieldtype": "Link",
+      "label": "Rejection Item",
+      "options": "Item",
+      "read_only": 1
+     },
+     {
+      "default": "Rejection White",
+      "fieldname": "rejection_white",
+      "fieldtype": "Link",
+      "label": "Rejection White",
+      "options": "Item",
+      "read_only": 1
+     },
+     {
+      "default": "Rejection Hot",
+      "fieldname": "rejection_hot",
+      "fieldtype": "Link",
+      "label": "Rejection Hot",
+      "options": "Item",
+      "read_only": 1
+     },
+     {
+      "description": "Basic Rate of Preform",
+      "fieldname": "basic_rate",
+      "fieldtype": "Currency",
+      "label": "Basic Rate",
+      "options": "Company:company:default_currency"
+     }
+    ],
+    "istable": 1,
+    "modified": "2021-07-12 17:56:20.141609",
+    "modified_by": "venkatesh.nayak@atriina.com",
+    "module": "Niyopolymers",
+    "name": "Shift Production Details",
+    "owner": "venkatesh.nayak@atriina.com",
+    "permissions": [],
+    "quick_entry": 1,
+    "show_preview_popup": 1,
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "track_changes": 1
+   }
+   
