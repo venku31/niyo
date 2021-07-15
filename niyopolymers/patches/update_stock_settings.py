@@ -6,7 +6,7 @@ def execute():
     stock_settings.update(
         {
             'action_if_quality_inspection_is_not_submitted': 'Stop',
-            'allow_negative_stock': 1,
+            'allow_negative_stock': 0,
             'auto_indent': 1,
             'auto_insert_price_list_rate_if_missing': 1,
             'automatically_set_serial_nos_based_on_fifo': 1,
