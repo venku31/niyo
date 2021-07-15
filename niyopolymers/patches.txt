@@ -12,6 +12,7 @@ niyopolymers.patches.update_buying_settings
 niyopolymers.patches.update_selling_settings
 niyopolymers.patches.update_stock_settings
 niyopolymers.patches.update_hr_settings
+niyopolymers.patches.create_custom_fields
 niyopolymers.patches.import_fiscal_year
 niyopolymers.patches.update_global_defaults
 niyopolymers.patches.update_website_settings
