@@ -909,7 +909,7 @@ def send_mail_to_employees_on_shift():
         checkin = frappe.db.sql("""select employee,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
 
         leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['employee','employee_name'] )
-        print("checkins = ",checkin)
+        # print("checkins = ",checkin)
     # calculating total employees name and count
         if employees:
             emp = {i.name:i.employee_name for i in employees}
@@ -1003,7 +1003,7 @@ def send_mail_to_employees_on_shift_end():
             frappe.logger().info(debug_data)
 
             checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
-            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.previous_day),as_dict=1)
+            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,previous_day),as_dict=1)
 
             doc.checkins = checkin
             args={'doc': doc}
