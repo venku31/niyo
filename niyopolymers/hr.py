@@ -1003,7 +1003,7 @@ def send_mail_to_employees_on_shift_end():
             frappe.logger().info(debug_data)
 
             checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
-            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.previous_day),as_dict=1)
+            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,previous_day),as_dict=1)
 
             doc.checkins = checkin
             args={'doc': doc}
