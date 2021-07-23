@@ -992,8 +992,8 @@ def send_mail_to_employees_on_shift_end():
             today = frappe.utils.today()
             ans = datetime.strptime(today,"%Y-%m-%d")
             previous_day = ans - timedelta(days=1)
-            previous_day = previous_day.strftime("%Y-%m-%d 00:00:00")
-            current_day = frappe.utils.now_datetime().strftime("%Y-%m-%d 23:59:59")
+            previous_day = previous_day.strftime("%Y-%m-%d")
+            current_day = frappe.utils.now_datetime().strftime("%Y-%m-%d")
 
             notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
             doc = frappe.get_doc('Shift Type', shift[0][0])
