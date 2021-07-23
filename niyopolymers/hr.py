@@ -889,9 +889,9 @@ def save_interview_round(formdata, job_applicant):
 
 def send_mail_to_employees_on_shift():
     now_datetime = frappe.utils.now_datetime()
-    from_time = now_datetime.strftime('%H:%m:%S')
+    from_time = now_datetime.strftime('%H:%M:%S')
     add_one_hour = now_datetime + timedelta(hours=1)
-    to_time = add_one_hour.strftime('%H:%m:%S')
+    to_time = add_one_hour.strftime('%H:%M:%S')
     shift = frappe.db.sql("""select name from `tabShift Type` where HOUR(start_time) = %s """,(int(now_datetime.hour) - 1))
     if shift:
         notification = frappe.get_doc('Notification', 'Employees on Shift')
@@ -926,7 +926,7 @@ def send_mail_to_employees_on_shift():
             chkn = {i.employee:i.employee_name for i in checkin}
             chkn_count = len(chkn)
             chkn_values = [chkn[i] for i in chkn]
-            chkn_time = [i.time.strftime('%Y-%m-%d %H:%m:%S') for i in checkin]
+            chkn_time = [i.time.strftime('%Y-%m-%d %H:%M:%S') for i in checkin]
             chkn_lst = []
             for i in chkn_values:
                 chkn_lst.append([i,chkn_time[chkn_values.index(i)]])
@@ -992,7 +992,8 @@ def send_mail_to_employees_on_shift_end():
             today = frappe.utils.today()
             ans = datetime.strptime(today,"%Y-%m-%d")
             previous_day = ans - timedelta(days=1)
-            previous_day = previous_day.strftime("%Y-%m-%d")
+            previous_day = previous_day.strftime("%Y-%m-%d 00:00:00")
+            current_day = frappe.utils.now_datetime().strftime("%Y-%m-%d 23:59:59")
 
             notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
             doc = frappe.get_doc('Shift Type', shift[0][0])
@@ -1002,8 +1003,8 @@ def send_mail_to_employees_on_shift_end():
             debug_data = {'query': query, 'desc': 'description of location of code'}
             frappe.logger().info(debug_data)
 
-            checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
-            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,previous_day),as_dict=1)
+            checkin = frappe.db.sql("""Select employee_name, shift, max(time) as checkin, min(time) as checkout From `tabEmployee Checkin` 
+            where shift=%s and DATE(time) between %s group by employee,DATE(time) order by time desc; """ ,(doc.name,(previous_day,current_date)),as_dict=1)
 
             doc.checkins = checkin
             args={'doc': doc}
