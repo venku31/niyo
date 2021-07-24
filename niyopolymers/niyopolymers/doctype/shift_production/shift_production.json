@@ -34,7 +34,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "supervisor.default_shift",
    "fieldname": "shift",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -109,8 +108,8 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2021-07-08 20:55:56.852462",
- "modified_by": "venkatesh.nayak@atriina.com",
+ "modified": "2021-07-24 13:18:07.943182",
+ "modified_by": "developers@atriina.com",
  "module": "Niyopolymers",
  "name": "Shift Production",
  "owner": "venkatesh.nayak@atriina.com",
