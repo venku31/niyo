@@ -28,8 +28,8 @@ tr:nth-child(even) {
   <tr>
     <td style="text-align: center">{{ j.employee_name }}</td>
     <td style="text-align: center">{{ j.shift }}</td>
-    <td style="text-align: center">{{ j.checkin.strftime('%Y-%m-%d %H:%m:%S') }}</td>
-    <td style="text-align: center">{{ j.checkout.strftime('%Y-%m-%d %H:%m:%S') }}</td>
+    <td style="text-align: center">{{ j.checkin }}</td>
+    <td style="text-align: center">{{ j.checkout }}</td>
   </tr>
   {% endfor %}
 </table>
