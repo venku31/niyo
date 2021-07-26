@@ -1003,8 +1003,16 @@ def send_mail_to_employees_on_shift_end():
             debug_data = {'query': query, 'desc': 'description of location of code'}
             frappe.logger().info(debug_data)
 
-            checkin = frappe.db.sql("""Select employee_name, shift, max(time) as checkin, min(time) as checkout From `tabEmployee Checkin` 
-            where shift=%s and DATE(time) between %s group by employee,DATE(time) order by time desc; """ ,(doc.name,(previous_day,current_date)),as_dict=1)
+            # checkin = frappe.db.sql("""Select employee_name as en, shift, max(time) as checkin, (select min(time) from `tabEmployee Checkin` where employ
+            #  ee_name = en and shift="Night Shift" and Date(time) = %s)as checkout From `tabEmployee Checkin` where shift = "Night Shift" and DATE(time) = 
+            #  %s group by employee order by time desc;""" ,("2021-07-24","2021-07-23"),as_dict=1)
+
+            checkin = frappe.db.sql("""Select employee_name as en, shift, max(time) as checkin, (select min(time) from `tabEmployee Checkin` where employee_name = en and shift="Night Shift" and Date(time) = %s)as checkout From `tabEmployee Checkin` where shift = "Night Shift" and DATE(time) = 
+             %s group by employee order by time desc;""" ,(current_date,previous_day),as_dict=1) 
+
+            for i in checkin:
+                i["checkin"] = i["checkin"].strftime("%Y-%m-%d %H:%M:%S")
+                i["checkout"] = i["checkout"].strftime("%Y-%m-%d %H:%M:%S")
 
             doc.checkins = checkin
             args={'doc': doc}
