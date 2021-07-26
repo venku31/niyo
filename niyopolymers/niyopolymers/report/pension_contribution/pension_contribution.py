@@ -14,7 +14,7 @@ def get_data(filters):
 	if 'start_date' in filters:
 		return frappe.db.sql("""
 			Select
-				c.employer_tax_Account,
+				c.employer_tax_account_for_pension,
 				c.employer_enterprise_no,
 				emp.tin_no,
 				emp.employee_name,
@@ -39,7 +39,7 @@ def get_data(filters):
 	elif 'end_date' in filters:
 		return frappe.db.sql("""
 			Select
-				c.employer_tax_Account,
+				c.employer_tax_account_for_pension,
 				c.employer_enterprise_no,
 				emp.tin_no,
 				emp.employee_name,
@@ -64,7 +64,7 @@ def get_data(filters):
 	if 'start_date' in filters and 'end_date' in filters:
 		return frappe.db.sql("""
 			Select
-				c.employer_tax_Account,
+				c.employer_tax_account_for_pension,
 				c.employer_enterprise_no,
 				emp.tin_no,
 				emp.employee_name,
@@ -89,7 +89,7 @@ def get_data(filters):
 	else:
 		return frappe.db.sql("""
 			Select
-				c.employer_tax_Account,
+				c.employer_tax_account_for_pension,
 				c.employer_enterprise_no,
 				emp.tin_no,
 				emp.employee_name,
