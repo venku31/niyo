@@ -39,3 +39,5 @@ niyopolymers.patches.import_department
 niyopolymers.patches.import_designation
 niyopolymers.patches.import_branch
 niyopolymers.patches.delivery_note_sla
+niyopolymers.patches.delete_custom_fields
+niyopolymers.patches.delete_doctype
