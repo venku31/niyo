@@ -174,7 +174,7 @@ doc_events = {
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
 	"Sales Invoice": {
-		"validate": "niyopolymers.accounts.before_insert_sales_invoice",
+		"before_insert": "niyopolymers.accounts.auto_set_fs_number",
 		"before_submit": "niyopolymers.accounts.set_approver_name"
 	},
 	"Sales Order": {
@@ -235,9 +235,9 @@ scheduler_events = {
 		]
 	},
 	"hourly": [
-        "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays"
-		# "niyopolymers.hr.send_mail_to_employees_on_shift",
-		# "niyopolymers.hr.send_mail_to_employees_on_shift_end"
+        "niyopolymers.niyopolymers.employee_checkin.process_auto_attendance_for_holidays",
+		"niyopolymers.hr.send_mail_to_employees_on_shift",
+		"niyopolymers.hr.send_mail_to_employees_on_shift_end"
     ],
 	"monthly": [
         "niyopolymers.hr.maternity_leave_mail",

@@ -889,21 +889,89 @@ def save_interview_round(formdata, job_applicant):
 
 def send_mail_to_employees_on_shift():
     now_datetime = frappe.utils.now_datetime()
-    from_time = now_datetime.strftime('%H:%m:%S')
+    from_time = now_datetime.strftime('%H:%M:%S')
     add_one_hour = now_datetime + timedelta(hours=1)
-    to_time = add_one_hour.strftime('%H:%m:%S')
+    to_time = add_one_hour.strftime('%H:%M:%S')
     shift = frappe.db.sql("""select name from `tabShift Type` where HOUR(start_time) = %s """,(int(now_datetime.hour) - 1))
     if shift:
         notification = frappe.get_doc('Notification', 'Employees on Shift')
         doc = frappe.get_doc('Shift Type', shift[0][0])
-        doc.from_time = from_time
-        doc.to_time = to_time
-        checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
-        checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 23:59:59')
-        employees = frappe.get_all('Employee', filters={'default_shift': doc.name}, fields=['employee_name'])
-        checkin = frappe.db.sql("""select name,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
-        doc.checkins = checkin
-        doc.employees = employees
+        # doc.from_time = from_time
+        # doc.to_time = to_time
+        # checkin_frm = frappe.utils.now_datetime().strftime('%Y-%m-%d 00:00:00')
+        # checkin_to = frappe.utils.now_datetime().strftime('%Y-%m-%d 23:59:59')
+        employees = frappe.get_all('Employee', filters={'default_shift': doc.name,"status":"Active"}, fields=['employee_name','name'])
+
+        query = """select employee,employee_name from `tabEmployee Checkin` where date(time) = '{0}' and shift = '{1}' group by employee """.format(frappe.utils.nowdate(),doc.name)
+        debug_data = {'query': query, 'desc': 'description of location of code'}
+        frappe.logger().info(debug_data)
+
+        checkin = frappe.db.sql("""select employee,employee_name,time from `tabEmployee Checkin` where date(time) = %s and shift = %s group by employee """ ,(frappe.utils.nowdate(),doc.name),as_dict=1)
+
+        leaves_employees = frappe.get_all('Attendance', filters={'attendance_date': frappe.utils.nowdate() ,'status': 'On Leave'}, fields=['employee','employee_name'] )
+        # print("checkins = ",checkin)
+    # calculating total employees name and count
+        if employees:
+            emp = {i.name:i.employee_name for i in employees}
+            emp_count = len(emp)
+            emp_values = [emp[i] for i in emp]
+        else:
+            emp_count = 0
+            emp_values = []
+        doc.emp_count = emp_count
+        doc.emp_values = emp_values
+
+    # calculating present employees name and count
+        if checkin:
+            chkn = {i.employee:i.employee_name for i in checkin}
+            chkn_count = len(chkn)
+            chkn_values = [chkn[i] for i in chkn]
+            chkn_time = [i.time.strftime('%Y-%m-%d %H:%M:%S') for i in checkin]
+            chkn_lst = []
+            for i in chkn_values:
+                chkn_lst.append([i,chkn_time[chkn_values.index(i)]])
+            
+        else:
+            chkn={}
+            chkn_count = 0
+            chkn_list = []
+        doc.chkn_count = chkn_count
+        doc.chkn_values = chkn_values
+        doc.chkn_lst = chkn_lst
+
+    # calculating on leave employees name and count    
+        if leaves_employees:
+            lv = {i.employee:i.employee_name for i in leave_employees}
+            lv_count = len(lv)
+            lv_values = [lv[i] for i in lv]
+        else:
+            lv = {}
+            lv_count = 0
+            lv_values = []
+        doc.lv_count = lv_count
+        doc.lv_values = lv_values
+        
+    # calculating absent employees name and count
+        absent = emp.copy()
+        for i in list(absent):
+            if i in chkn:
+                absent.pop(i,None)
+
+        for i in list(absent):
+            if i in lv:
+                absent.pop(i,None)
+
+        if absent:
+            absent_count = len(absent)
+            absent_values = [absent[i] for i in absent]
+
+        else:
+            absent_count = 0
+            absent_values = []   
+        doc.absent_count = absent_count
+        doc.absent_values = absent_values
+        # doc.checkins = checkin
+        # doc.employees = employees
         args={'doc': doc}
         recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
         frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
@@ -920,15 +988,55 @@ def send_mail_to_employees_on_shift_end():
     shift = frappe.db.sql("""select name from `tabShift Type` where ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000'))
      <= %s and ADDTIME(end_time, CONCAT(FLOOR(allow_check_out_after_shift_end_time/60),':',LPAD(MOD(allow_check_out_after_shift_end_time,60),2,'0'),':00.000000')) > %s;""",(upto,one_hour_before))
     if shift:
-        notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
-        doc = frappe.get_doc('Shift Type', shift[0][0])
-        checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
-        where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.utils.nowdate()),as_dict=1)
-        doc.checkins = checkin
-        args={'doc': doc}
-        recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
-        frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
-        subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+        if shift[0][0] == "Night Shift":
+            pass
+            # today = frappe.utils.today()
+            # ans = datetime.strptime(today,"%Y-%m-%d")
+            # previous_day = ans - timedelta(days=1)
+            # previous_day = previous_day.strftime("%Y-%m-%d")
+            # current_day = frappe.utils.now_datetime().strftime("%Y-%m-%d")
+
+            # notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
+            # doc = frappe.get_doc('Shift Type', shift[0][0])
+            
+            # query = """Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+            # where shift='{0}' and DATE(time) ='{1}' group by employee,DATE(time) order by time desc; """.format(doc.name,previous_day)
+            # debug_data = {'query': query, 'desc': 'description of location of code'}
+            # frappe.logger().info(debug_data)
+
+            # # checkin = frappe.db.sql("""Select employee_name as en, shift, max(time) as checkin, (select min(time) from `tabEmployee Checkin` where employ
+            # #  ee_name = en and shift="Night Shift" and Date(time) = %s)as checkout From `tabEmployee Checkin` where shift = "Night Shift" and DATE(time) = 
+            # #  %s group by employee order by time desc;""" ,("2021-07-24","2021-07-23"),as_dict=1)
+
+            # checkin = frappe.db.sql("""Select employee_name as en, shift, max(time) as checkin, (select min(time) from `tabEmployee Checkin` where employee_name = en and shift="Night Shift" and Date(time) = %s)as checkout From `tabEmployee Checkin` where shift = "Night Shift" and DATE(time) = 
+            #  %s group by employee order by time desc;""" ,(current_date,previous_day),as_dict=1) 
+
+            # for i in checkin:
+            #     i["checkin"] = i["checkin"].strftime("%Y-%m-%d %H:%M:%S")
+            #     i["checkout"] = i["checkout"].strftime("%Y-%m-%d %H:%M:%S")
+
+            # doc.checkins = checkin
+            # args={'doc': doc}
+            # recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+            # frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
+            # subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
+        else:
+            notification = frappe.get_doc('Notification', 'Employee on Shift Ends')
+            doc = frappe.get_doc('Shift Type', shift[0][0])
+            
+            query = """Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+            where shift='{0}' and DATE(time) ='{1}' group by employee,DATE(time) order by time desc; """.format(doc.name,frappe.utils.nowdate())
+            debug_data = {'query': query, 'desc': 'description of location of code'}
+            frappe.logger().info(debug_data)
+
+            checkin = frappe.db.sql("""Select employee_name, shift, min(time) as checkin, max(time) as checkout From `tabEmployee Checkin` 
+            where shift=%s and DATE(time) =%s group by employee,DATE(time) order by time desc; """ ,(doc.name,frappe.utils.nowdate()),as_dict=1)
+
+            doc.checkins = checkin
+            args={'doc': doc}
+            recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+            frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
+            subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
 
 def change_last_sync_of_checkin():
