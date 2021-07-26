@@ -1,0 +1,4 @@
+"Territory Name","Parent Territory","Is Group","Territory Manager","old_parent","ID (Targets)","Item Group (Targets)","Fiscal Year (Targets)","Target Qty (Targets)","Target  Amount (Targets)","Target Distribution (Targets)"
+"All Territories","",1,"","","","","","","",""
+"Ethiopia","All Territories",0,"","All Territories","","","","","",""
+"Rest Of The World","All Territories",0,"","All Territories","","","","","",""

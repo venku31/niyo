@@ -17,6 +17,12 @@
   "shift_incharge_name",
   "section_break_10",
   "items",
+  "section_break_13",
+  "remarks",
+  "cost_per_preform",
+  "column_break_14",
+  "total_qty",
+  "total_cost",
   "amended_from"
  ],
  "fields": [
@@ -105,6 +111,38 @@
    "options": "Shift Production",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_qty",
+   "fieldtype": "Int",
+   "label": "Total Qty",
+   "read_only": 1
+  },
+  {
+   "default": "2",
+   "description": "Manufacturing Cost",
+   "fieldname": "cost_per_preform",
+   "fieldtype": "Float",
+   "label": "Cost Per Preform"
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Float",
+   "label": "Total Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
   }
  ],
  "is_submittable": 1,
