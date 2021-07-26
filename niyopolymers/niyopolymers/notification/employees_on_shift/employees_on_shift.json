@@ -11,14 +11,14 @@
  "idx": 0,
  "is_standard": 1,
  "message": "<h2>Dashboard</h2>\n\n<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\ntr:nth-child(even) {\n  background-color: #dddddd;\n}\n</style>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Shift Name</th>\n    <th style=\"text-align: center\">Shift Employees</th>\n    <th style=\"text-align: center\">Present</th>\n    <th style=\"text-align: center\">Absent</th>\n    <th style=\"text-align: center\">On Leave</th>\n  </tr>\n  <tr>\n    <td style=\"text-align: center\">{{ doc.name }}</td>\n    <td style=\"text-align: center\">{{ doc.emp_count}}</td>\n    <td style=\"text-align: center\">{{ doc.chkn_count }}</td>\n    <td style=\"text-align: center\">{{ doc.absent_count }}</td>\n    <td style=\"text-align: center\">{{ doc.lv_count }}</td>\n  </tr>\n</table>\n\n<br>\n<p><b>Present Employees</b></p>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Employee Name</th>\n    <th style=\"text-align: center\">Shift Incharge</th>\n    <th style=\"text-align: center\">Reporting manager</th>\n    <th style=\"text-align: center\">Checkin Time</th>\n  </tr>\n  {% for j in doc.chkn_lst %}\n  <tr>\n    <td style=\"text-align: center\">{{ j[0] }}</td>\n    <td style=\"text-align: center\">{{ frappe.db.get_value(\"Employee\",{\"employee_name\":j[0]},[\"reporting_manager\"]) }}</td>\n    <td style=\"text-align: center\">{{ frappe.db.get_value(\"Employee\",{\"employee_name\":j[0]},[\"shift_incharge_name\"]) }}</td>\n    <td style=\"text-align: center\">{{ j[1] }}</td>\n  </tr>\n  {% endfor %}\n</table>\n\n\n<br>\n<p><b>Absent Employees</b></p>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Employee Name</th>\n    <th style=\"text-align: center\">Shift Incharge</th>\n    <th style=\"text-align: center\">Reporting manager</th>\n  </tr>\n  {% for i in doc.absent_values %}\n  <tr>\n    <td style=\"text-align: center\">{{ i }}</td>\n    <td style=\"text-align: center\">{{ frappe.db.get_value(\"Employee\",{\"employee_name\":i},[\"reporting_manager\"]) }}</td>\n    <td style=\"text-align: center\">{{ frappe.db.get_value(\"Employee\",{\"employee_name\":i},[\"shift_incharge_name\"]) }}</td>\n  </tr>\n  {% endfor %}\n</table>\n\n<br>\n<p><b>Employees on leave</b></p>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Employee Name</th>\n    <th style=\"text-align: center\">Shift Incharge</th>\n    <th style=\"text-align: center\">Reporting manager</th>\n  </tr>\n  {% for i in doc.lv_values %}\n  <tr>\n    <td style=\"text-align: center\">{{ i.name }}</td>\n    <td style=\"text-align: center\">{{ frappe.db.get_value(\"Employee\",{\"employee_name\":i.name},[\"reporting_manager\"]) }}</td>\n    <td style=\"text-align: center\">{{ frappe.db.get_value(\"Employee\",{\"employee_name\":i.name},[\"shift_incharge_name\"]) }}</td>\n  </tr>\n  {% endfor %}\n</table>",
- "modified": "2021-07-13 09:53:33.515325",
+ "modified": "2021-07-26 09:33:36.063346",
  "modified_by": "Administrator",
  "module": "Niyopolymers",
  "name": "Employees on Shift",
  "owner": "Administrator",
  "recipients": [
   {
-   "cc": "pradnyesh.patil@atriina.com"
+   "cc": "erp.niyo@gmail.com"
   },
   {
    "cc": "karan.bhanushali@atriina.com"
