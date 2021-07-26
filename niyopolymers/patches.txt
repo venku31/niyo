@@ -1,6 +1,9 @@
 execute:frappe.db.set_value('Currency', 'ETB', 'fraction', 'Cent')
-niyopolymers.patches.add_maternity_leave_type
 niyopolymers.patches.import_workstation
+niyopolymers.patches.import_operations
+niyopolymers.patches.add_maternity_leave_type
+niyopolymers.patches.import_customer_group
+niyopolymers.patches.import_territory
 niyopolymers.patches.import_operations
 niyopolymers.patches.import_price_list
 niyopolymers.patches.create_warning_letter_template
@@ -9,6 +12,7 @@ niyopolymers.patches.update_buying_settings
 niyopolymers.patches.update_selling_settings
 niyopolymers.patches.update_stock_settings
 niyopolymers.patches.update_hr_settings
+niyopolymers.patches.create_custom_fields
 niyopolymers.patches.import_fiscal_year
 niyopolymers.patches.update_global_defaults
 niyopolymers.patches.update_website_settings
@@ -38,4 +42,7 @@ niyopolymers.patches.import_loan_type
 niyopolymers.patches.import_department
 niyopolymers.patches.import_designation
 niyopolymers.patches.import_branch
+execute:frappe.db.set_value('Item Group', 'Products', 'is_group', 1)
 niyopolymers.patches.delivery_note_sla
+niyopolymers.patches.delete_custom_fields
+niyopolymers.patches.delete_doctype
