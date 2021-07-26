@@ -44,3 +44,5 @@ niyopolymers.patches.import_designation
 niyopolymers.patches.import_branch
 execute:frappe.db.set_value('Item Group', 'Products', 'is_group', 1)
 niyopolymers.patches.delivery_note_sla
+niyopolymers.patches.delete_custom_fields
+niyopolymers.patches.delete_doctype
