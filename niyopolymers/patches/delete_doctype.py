@@ -1,17 +1,26 @@
 import frappe
 
 def execute():
-        frappe.delete_doc('DocType', 'Import PO', delete_permanently=True)
+    try:
+        frappe.delete_doc('DocType', 'Import PO')
         frappe.db.sql("""
         drop table `tabImport PO`;
         """) 
-        frappe.delete_doc('DocType', 'Import PO Item', delete_permanently=True)
+    except Exception:
+        pass
+    try:
+        frappe.delete_doc('DocType', 'Import PO Item')
         frappe.db.sql("""
         drop table `tabImport PO Item`;
         """)
-        frappe.delete_doc('DocType', 'Payroll Setting', delete_permanently=True)
+    except Exception:
+        pass
+    try:
+        frappe.delete_doc('DocType', 'Payroll Setting')
         frappe.db.sql("""
         drop table `tabPayroll Setting`;
         """)
+    except Exception:
+        pass
 
     frappe.db.commit()
