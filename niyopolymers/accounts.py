@@ -29,7 +29,7 @@ def auto_set_fs_number(doc, method):
             doc.fs_number = "{0:08d}".format(int(selling_settings.last_fs_number)+1)
         else:
             cancelled_document = frappe.db.get_all('Sales Invoice', filters={'docstatus': ['=', 2]}, fields=['fs_number'])
-            for i in cancel_document:
+            for i in cancelled_document:
                 existing_document = frappe.db.get_value('Sales Invoice', {'fs_number': ['=', i['fs_number']], 'docstatus': ['<', 2]}, 'name')
                 if existing_document == None:
                     doc.fs_number = "{0:08d}".format(int(i['fs_number']))
