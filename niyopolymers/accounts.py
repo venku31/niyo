@@ -26,7 +26,7 @@ def auto_set_fs_number(doc, method):
         selling_settings = frappe.get_single('Selling Settings')
         if selling_settings.last_fs_number:
             sales_invoice = frappe.db.sql("""
-                select max(fs_number) from `tabSales Invoice`;
+                select coalesce(max(fs_number),0) from `tabSales Invoice`;
             """)
             if sales_invoice:
                 if sales_invoice[0][0] >= selling_settings.last_fs_number:
