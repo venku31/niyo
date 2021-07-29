@@ -5,6 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from datetime import datetime,timedelta
 
 class ShiftProduction(Document):
 	pass
@@ -47,5 +48,13 @@ def create_stock_entry(doc, handler=""):
                         se.append("items", { "item_code":se_item.rejection_hot, "qty": se_item.hot,"set_basic_rate_manually":1,"t_warehouse": se_item.rejection_warehouse,"transfer_qty" : se_item.rejection_hot,"conversion_factor": 1,"uom" : se_item.uom,"allow_zero_valuation_rate":1,"basic_rate": se_item.basic_rate})
 #    frappe.msgprint('Stock Entry is created please submit the stock entry')
 #        se.save()
+        se.set_posting_time = 1
+        se.posting_date = doc.date
+        shift_end = frappe.db.get_value("Shift Type",doc.shift, "end_time")
+        print("shift_end = ",shift_end)
+        actual_end = actual_end = frappe.db.get_value("Shift Type",doc.shift, "allow_check_out_after_shift_end_time")
+        actual_end_new = actual_end *60
+        new_end = shift_end+ timedelta(0,actual_end_new)
+        se.posting_time = new_end
         se.docstatus=1
         se.insert()
