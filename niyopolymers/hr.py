@@ -935,6 +935,8 @@ def send_mail_to_employees_on_shift():
             chkn={}
             chkn_count = 0
             chkn_list = []
+            chkn_values=[]
+            chkn_lst = []
         doc.chkn_count = chkn_count
         doc.chkn_values = chkn_values
         doc.chkn_lst = chkn_lst

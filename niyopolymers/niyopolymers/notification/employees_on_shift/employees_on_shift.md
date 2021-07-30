@@ -36,6 +36,7 @@ tr:nth-child(even) {
 
 <br>
 <p><b>Present Employees</b></p>
+{% if doc.chkn_lst %}
 <table>
   <tr>
     <th style="text-align: center">Employee Name</th>
@@ -52,7 +53,11 @@ tr:nth-child(even) {
   </tr>
   {% endfor %}
 </table>
-
+{% else %}
+<div>
+    No employees are have checked in
+</div>
+{% endif %}
 
 <br>
 <p><b>Absent Employees</b></p>
