@@ -34,3 +34,47 @@ def trigger_mail_of_pending_todo():
 		frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
 		subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
 
+def send_sales_and_purchase_details():
+	today_sales_invoice = frappe.db.sql("""
+		select coalesce(coalesce(sum(grand_total), 0), 0) from `tabSales Invoice`
+		where posting_date = '{}'
+	""".format(frappe.utils.nowdate()))
+	yearly_sales_invoice = frappe.db.sql("""
+		select coalesce(sum(grand_total), 0) from `tabSales Invoice`
+		where year(posting_date)=year(curdate())
+	""")
+	today_purchase_invoice = frappe.db.sql("""
+		select coalesce(sum(grand_total), 0) from `tabPurchase Invoice`
+		where posting_date = '{}'
+	""".format(frappe.utils.nowdate()))
+	yearly_purchase_invoice = frappe.db.sql("""
+		select coalesce(sum(grand_total), 0) from `tabPurchase Invoice`
+		where year(posting_date)=year(curdate())
+	""")
+	pay_payment_entry = frappe.db.sql("""
+		select coalesce(sum(paid_amount), 0) from `tabPayment Entry`
+		where posting_date = '{}' and payment_type = 'Pay'
+	""".format(frappe.utils.nowdate()))
+	receive_payment_entry = frappe.db.sql("""
+		select coalesce(sum(paid_amount), 0) from `tabPayment Entry`
+		where posting_date = '{}' and payment_type = 'Receive'
+	""")
+
+	notification = frappe.get_doc('Notification', 'Sales and Purchase Report')
+	get_sales_invoice = frappe.db.sql("""
+		select name from `tabSales Invoice`
+		where posting_date = '{}' limit 1
+	""".format(frappe.utils.nowdate()))
+	if get_sales_invoice:
+		doc = frappe.get_doc('Sales Invoice', get_sales_invoice[0][0])
+		args={'doc': doc}
+		doc.today_sales_invoice = today_sales_invoice[0][0]
+		doc.yearly_sales_invoice = yearly_sales_invoice[0][0]
+		doc.pay_payment_entry = pay_payment_entry[0][0]
+		doc.receive_payment_entry = receive_payment_entry[0][0]
+		doc.today_purchase_invoice = today_purchase_invoice[0][0]
+		doc.yearly_purchase_invoice = yearly_purchase_invoice[0][0]
+
+		recipients, cc, bcc = notification.get_list_of_recipients(doc, args)
+		frappe.enqueue(method=frappe.sendmail, recipients=recipients, cc = cc, bcc = bcc, sender=None, 
+		subject=frappe.render_template(notification.subject, args), message=frappe.render_template(notification.message, args))
