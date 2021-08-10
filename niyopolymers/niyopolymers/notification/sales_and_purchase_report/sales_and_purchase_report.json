@@ -1,0 +1,25 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2021-08-09 17:51:33.428333",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Sales Invoice",
+ "enabled": 1,
+ "event": "Custom",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\ntr:nth-child(even) {\n  background-color: #dddddd;\n}\n</style>\n<table>\n  <tr>\n    <th style=\"text-align: center\">Header</th>\n    <th style=\"text-align: center\">Total Sales of the day</th>\n    <th style=\"text-align: center\">Total Sales till now</th>\n    <th style=\"text-align: center\">Total Purchase of the day</th>\n    <th style=\"text-align: center\">Total Purchase till now</th>\n    <th style=\"text-align: center\">Amount Received Today</th>\n    <th style=\"text-align: center\">Amount Paid Today</th>\n  </tr>\n  <tr>\n    <td style=\"text-align: center\">Logic</td>\n    <td style=\"text-align: center\">{{ doc.today_sales_invoice }}</td>\n    <td style=\"text-align: center\">{{ doc.yearly_sales_invoice }}</td>\n    <td style=\"text-align: center\">{{ doc.today_purchase_invoice }}</td>\n    <td style=\"text-align: center\">{{ doc.yearly_purchase_invoice }}</td>\n    <td style=\"text-align: center\">{{ doc.receive_payment_entry }}</td>\n    <td style=\"text-align: center\">{{ doc.pay_payment_entry }}</td>\n  </tr>\n</table>",
+ "modified": "2021-08-09 20:18:58.024441",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Sales and Purchase Report",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "cc": "vinayakpolymers@gmail.com"
+  }
+ ],
+ "subject": "Sales and Purchase Report"
+}
