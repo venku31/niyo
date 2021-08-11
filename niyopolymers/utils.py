@@ -63,8 +63,8 @@ def send_sales_and_purchase_details():
 	notification = frappe.get_doc('Notification', 'Sales and Purchase Report')
 	get_sales_invoice = frappe.db.sql("""
 		select name from `tabSales Invoice`
-		where posting_date = '{}' limit 1
-	""".format(frappe.utils.nowdate()))
+		limit 1
+	""")
 	if get_sales_invoice:
 		doc = frappe.get_doc('Sales Invoice', get_sales_invoice[0][0])
 		args={'doc': doc}
