@@ -166,9 +166,9 @@ doc_events = {
 	"Leave Allocation": {
 		"before_submit": "niyopolymers.hr.before_submit_leave_allocation"
 	},
-	"Leave Application": {
-		"validate": "niyopolymers.hr.validate_leaves"
-	},
+	# "Leave Application": {
+	# 	"validate": "niyopolymers.hr.validate_leaves"
+	# },
 	"Payment Entry": {
 		"validate": "niyopolymers.accounts.before_insert_payment_entry",
 		"before_submit": "niyopolymers.accounts.set_approver_name"
