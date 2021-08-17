@@ -1090,9 +1090,12 @@ def validate_leaves(doc, method):
         num_months = (leave_allocation_list[0]['to_date'].year - leave_allocation_list[0]['from_date'].year) * 12 + (leave_allocation_list[0]['to_date'].month - leave_allocation_list[0]['from_date'].month)
         
         monthly_assign_leave = current_year_leaves / num_months
-       
-        months = datetime.strptime(doc.from_date, '%Y-%m-%d')
         
+        if isinstance(doc.from_date, str): 
+            months = datetime.strptime(doc.from_date, '%Y-%m-%d')
+        else:
+            months = doc.from_date
+            
         per_month_leaves = 0
         for i in range(leave_allocation_list[0]['from_date'].month, months.month+1):
             per_month_leaves += monthly_assign_leave 
