@@ -232,6 +232,9 @@ scheduler_events = {
 		"0 0 * * *": [
 			"niyopolymers.hr.trigger_mail_if_absent_consecutive_5_days",
 			"niyopolymers.utils.trigger_mail_of_pending_todo"
+		],
+		"0 21 * * *": [
+			"niyopolymers.utils.send_sales_and_purchase_details"
 		]
 	},
 	"hourly": [
