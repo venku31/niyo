@@ -1,0 +1,6 @@
+"ID","Warehouse Name","Warehouse Type","Parent Warehouse","Is Group","Account","Company","Disabled","Email Address","Phone No","Mobile No","Address Line 1","Address Line 2","City","State","PIN","Old Parent"
+"All Warehouses - NP","All Warehouses","","",1,"","Niyo Polymers",0,"","","","","","","","",""
+"Stores - NP","Stores","","All Warehouses - NP",0,"","Niyo Polymers",0,"","","","","","","","","All Warehouses - NP"
+"Work In Progress - NP","Work In Progress","","All Warehouses - NP",0,"","Niyo Polymers",0,"","","","","","","","","All Warehouses - NP"
+"Finished Goods - NP","Finished Goods","","All Warehouses - NP",0,"","Niyo Polymers",0,"","","","","","","","","All Warehouses - NP"
+"Scrap Warehouse - NP","Scrap Warehouse","","",0,"","Niyo Polymers",0,"","","","","","","","",""

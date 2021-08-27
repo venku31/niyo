@@ -1,0 +1,28 @@
+{
+ "attach_print": 0,
+ "channel": "Email",
+ "creation": "2021-06-11 10:12:39.628745",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Shift Type",
+ "enabled": 1,
+ "event": "Custom",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\ntr:nth-child(even) {\n  background-color: #dddddd;\n}\n</style>\n\n{% if doc.checkins %}\n<table>\n  <tr>\n    <th style=\"text-align: center\">Employee Name</th>\n    <th style=\"text-align: center\">Shift</th>\n    <th style=\"text-align: center\">Checkin</th>\n    <th style=\"text-align: center\">Checkout</th>\n  </tr>\n  {% for j in doc.checkins %}\n  <tr>\n    <td style=\"text-align: center\">{{ j.employee_name }}</td>\n    <td style=\"text-align: center\">{{ j.shift }}</td>\n    <td style=\"text-align: center\">{{ j.checkin }}</td>\n    <td style=\"text-align: center\">{{ j.checkout }}</td>\n  </tr>\n  {% endfor %}\n</table>\n{% else %}\n<b>No employee checkin checkout found for {{ doc.name }} </b>\n{% endif %}",
+ "modified": "2021-07-26 09:33:12.652713",
+ "modified_by": "Administrator",
+ "module": "Niyopolymers",
+ "name": "Employee on Shift Ends",
+ "owner": "pradnyesh.patil@atriina.com",
+ "recipients": [
+  {
+   "cc": "karan.bhanushali@atriina.com"
+  },
+  {
+   "cc": "erp.niyo@gmail.com"
+  }
+ ],
+ "subject": "Employees after {{doc.name}} Shift end"
+}
